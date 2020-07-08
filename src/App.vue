@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <OrderFormInfo/>
+    <login />
   </div>
 </template>
 
 <script>
 import OrderFormInfo from './components/OrderFormMgmt/OrderFormInfo'
+import login from "./components/login";
 
 export default {
   name: 'app',
   components: {
-    OrderFormInfo
+    OrderFormInfo,
+    login
   }
 }
 </script>
