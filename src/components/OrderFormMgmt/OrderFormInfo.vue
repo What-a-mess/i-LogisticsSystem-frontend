@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import myaxios from '../../plugins/myaxios'
+
 export default {
   data: function() {
     return {
@@ -134,6 +136,11 @@ export default {
         }
       ]
     };
+  },
+  mounted: function() {
+    myaxios.get('/orders').then(res => {
+      this.orderForms = res.data;
+    })
   }
   // computed: {
   //   status: function(statusString) {
