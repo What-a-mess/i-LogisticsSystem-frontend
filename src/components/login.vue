@@ -17,7 +17,8 @@
                     <verify-code style="position:absolute;left: 300px;top:10x"></verify-code>
                 </div>
 
-                <input type="submit" name="" value="submit" />
+                <router-link to="/main"><input type="submit" name="" value="submit" /></router-link>
+
 
             </form>
         </div>

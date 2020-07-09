@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import  VueRouter from 'vue-router'
+import login from "../components/login";
+import OrderFormInfo from "../components/OrderFormMgmt/OrderFormInfo";
 
-const routes = []
+const routes = [
+    { path: '/', components: { default: login } },
+    { path: '/main', components: { default: OrderFormInfo } },
+]
 
 Vue.use(VueRouter)
 

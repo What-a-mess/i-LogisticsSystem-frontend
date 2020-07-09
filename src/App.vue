@@ -1,19 +1,14 @@
 <template>
   <div id="app">
-    <OrderFormInfo/>
-    <login />
+    <router-view />
   </div>
 </template>
 
 <script>
-import OrderFormInfo from './components/OrderFormMgmt/OrderFormInfo'
-import login from "./components/login";
 
 export default {
   name: 'app',
   components: {
-    OrderFormInfo,
-    login
   }
 }
 </script>
