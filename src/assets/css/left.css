@@ -86,6 +86,7 @@ label #cancel{
 
 #check:checked ~ #page{
     margin-left: 300px;
+    width: 1400px;
     transition: all .5s;
 }
 
