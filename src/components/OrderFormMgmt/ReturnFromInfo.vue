@@ -7,55 +7,60 @@
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
-                  <el-form-item label="下单日期">
+                  <el-form-item label="退货单编号">
                     <span>{{props.row.createTime}}</span>
                   </el-form-item>
-                  <el-form-item label="付款日期">
+                  <el-form-item label="订单编号">
                     <span>{{props.row.paymentTime}}</span>
                   </el-form-item>
-                  <el-form-item label="订单金额">
+                  <el-form-item label="类型">
+                    <!-- 退货/换货 -->
                     <span>{{props.row.paymentAmount}}</span>
                   </el-form-item>
-                  <el-form-item label="运费">
+                  <el-form-item label="商品编号">
                     <span>{{props.row.freight}}</span>
                   </el-form-item>
-                  <el-form-item label="订单状态">
+                  <el-form-item label="退/换货数量">
+                    <span>{{props.row.freight}}</span>
+                  </el-form-item>
+                  <el-form-item label="申请时间">
+                    <span>{{props.row.freight}}</span>
+                  </el-form-item>
+                  <el-form-item label="退款金额">
+                    <span>{{props.row.paymentMethod}}</span>
+                  </el-form-item>
+                  <el-form-item label="处理状态">
                     <el-tag v-if="props.row.status=='N'" type="danger">未处理</el-tag>
                     <el-tag v-else-if="props.row.status=='P'" type="warning">处理中</el-tag>
                     <el-tag v-else-if="props.row.status=='D'" type="success">交易成功</el-tag>
                     <el-tag v-else-if="props.row.status=='C'" type="info">交易关闭</el-tag>
                   </el-form-item>
-                  <el-form-item label="支付方式">
-                    <span>{{props.row.paymentMethod}}</span>
-                  </el-form-item>
-                  <el-form-item label="收件人">
+                  <el-form-item label="申请时间">
                     <span>{{props.row.receiver}}</span>
                   </el-form-item>
-                  <el-form-item label="收件电话">
+                  <el-form-item label="处理时间">
                     <span>{{props.row.receiverPhone}}</span>
                   </el-form-item>
-                  <el-form-item label="收件地址">
-                    <span>{{props.row.receiverAddress}}</span>
-                  </el-form-item>
-                  <el-form-item label="备注">
-                    <span>{{props.row.remarks}}</span>
+                  <el-form-item label="申请原因">
+                    <span>{{props.row.reason}}</span>
                   </el-form-item>
                 </el-form>
               </template>
             </el-table-column>
-            <el-table-column label="订单ID" prop="orderId"></el-table-column>
-            <el-table-column label="收件人" prop="receiver"></el-table-column>
+            <el-table-column label="退货单ID" prop="rfId"></el-table-column>
+            <el-table-column label="类型" prop="receiver"></el-table-column>
             <el-table-column label="状态">
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.status=='N'" type="danger">未处理</el-tag>
-                <el-tag v-else-if="scope.row.status=='P'" type="warning">处理中</el-tag>
-                <el-tag v-else-if="scope.row.status=='D'" type="success">交易成功</el-tag>
-                <el-tag v-else-if="scope.row.status=='C'" type="info">交易关闭</el-tag>
+                <el-tag v-else-if="scope.row.status=='P'" type="warning">已处理</el-tag>
+                <el-tag v-else-if="scope.row.status=='I'" type="success">进行中</el-tag>
+                <el-tag v-else-if="scope.row.status=='Y'" type="info">成功</el-tag>
               </template>
             </el-table-column>
             <el-table-column label="操作">
               <template>
-                <el-button type="primary">任务单</el-button>
+                <el-button type="success">通过</el-button>
+                <el-button type="danger">拒绝</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -66,8 +71,6 @@
 </template>
 
 <script>
-import myaxios from "../../plugins/myaxios";
-
 export default {
   data: function() {
     return {
@@ -144,28 +147,7 @@ export default {
         }
       ]
     };
-  },
-  mounted: function() {
-    myaxios.get("/orders").then(res => {
-      this.orderForms = res.data;
-    });
   }
-  // computed: {
-  //   status: function(statusString) {
-  //     switch (statusString) {
-  //       case "N":
-  //         return "未处理";
-  //       case "P":
-  //         return "正在处理";
-  //       case "D":
-  //         return "交易成功";
-  //       case "C":
-  //         return "交易关闭";
-  //       default:
-  //         return "未定义";
-  //     }
-  //   }
-  // }
 };
 </script>
 

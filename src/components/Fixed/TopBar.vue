@@ -1,5 +1,5 @@
 <template>
-  <nav class="topnav bg-white">
+  <nav class="topnav bg-white shadow">
     <el-row type="flex" align="middle">
       <el-col :span="2">
         <a class="navbar-brand">物流管理系统</a>
@@ -95,6 +95,9 @@ export default {
   right: 0;
   left: 0;
   z-index: 1039;
+}
+.shadow {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(31, 45, 65, 0.15) !important;
 }
 .bg-white {
   background-color: #fff !important;
