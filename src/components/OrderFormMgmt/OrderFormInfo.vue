@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="20">
+      <el-col style="padding-left: 20px">
         <el-card>
           <el-table :data="orderForms">
             <el-table-column type="expand">

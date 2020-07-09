@@ -69,9 +69,14 @@ label #cancel{
     padding: 9px 9px;
     transition: all .4s;
 }
+label #cancel:hover{
+    transform: scale(1.2);
+    background: #eff3f9;
+}
 
 #check:checked ~ .sidebar{
     left: -150px;
+
 
 }
 #check:checked ~ label #btn{
@@ -86,16 +91,21 @@ label #cancel{
 
 #check:checked ~ #page{
     margin-left: 300px;
+    width: 1400px;
     transition: all .5s;
 }
 
 #page{
     background: #eff3f9;
     width: 1700px;
-    height: 738px;
+    height: 748px;
     position: absolute;
-    left: 0px;
+    left: 5px;
+    top:90px;
     z-index: -10;
+    border-radius: 10px;
 }
+
+
 
 
