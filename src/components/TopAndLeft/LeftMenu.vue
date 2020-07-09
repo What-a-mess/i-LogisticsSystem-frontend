@@ -82,7 +82,7 @@
             </el-menu>
         </el-col>
     </el-row>
-        <div id="page" style="background: #eff3f9;width: 1700px;height: 738px;position: absolute;left: 0px;z-index: -10">
+        <div id="page">
             <router-view ></router-view>
         </div>
     </div>

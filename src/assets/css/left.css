@@ -89,4 +89,13 @@ label #cancel{
     transition: all .5s;
 }
 
+#page{
+    background: #eff3f9;
+    width: 1700px;
+    height: 738px;
+    position: absolute;
+    left: 0px;
+    z-index: -10;
+}
+
 
