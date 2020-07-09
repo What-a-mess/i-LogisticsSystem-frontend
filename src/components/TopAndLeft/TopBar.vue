@@ -1,11 +1,14 @@
 <template>
   <nav class="topnav bg-white">
     <el-row type="flex" align="middle">
-      <el-col :span="2">
-        <a class="navbar-brand">物流管理系统</a>
+      <el-col :span="1">
+
       </el-col>
-      <el-col :span="1" :offset="1">
-        <el-button icon="el-icon-more" circle></el-button>
+      <el-col :span="2">
+        <h3><a class="navbar-brand">物流管理系统</a></h3>
+      </el-col>
+      <el-col :span="1">
+
       </el-col>
       <el-col :span="4" :offset="-1">
         <el-autocomplete
@@ -16,14 +19,16 @@
           <i class="el-icon-search el-input__icon" slot="suffix"></i>
         </el-autocomplete>
       </el-col>
-      <el-col :span="2" :offset="12">
+      <el-col :span="1" :offset="12">
+            <i class="el-icon-refresh" style="font-size: 20px"></i>
+      </el-col>
+      <el-col :span="1">
         <el-dropdown>
           <span class="el-dropdown-link">
-            下拉菜单
-            <i class="el-icon-arrow-down el-icon--right"></i>
+            <i class="el-icon-message-solid" style="font-size: 20px"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-              <!-- TODO: 目前还没有决定好这里面会有何条目 -->
+            <!-- TODO: 目前还没有决定好这里面会有何条目 -->
             <el-dropdown-item>黄金糕</el-dropdown-item>
             <el-dropdown-item>狮子头</el-dropdown-item>
             <el-dropdown-item>螺蛳粉</el-dropdown-item>
@@ -33,7 +38,7 @@
         </el-dropdown>
       </el-col>
 
-      <el-col :span="2">
+      <el-col :span="1">
         <el-dropdown>
           <div class="demo-basic--circle">
             <div class="block">
@@ -51,18 +56,24 @@
       </el-col>
     </el-row>
   </nav>
+
 </template>
 
 <script>
 export default {
+  name:'TopBar',
   data: function() {
     return {
       modules: [
-        { value: "客户管理" },
-        { value: "配置策略" },
-        { value: "订单管理" },
-        { value: "仓储管理" },
-        { value: "配送管理" }
+        { value: "买家管理" },
+        { value: "供应商管理" },
+        { value: "调货策略" },
+        { value: "补货策略" },
+        { value: "分配策略" },
+        { value: "发货策略" },
+        { value: "订单查询" },
+        { value: "新增订单" },
+        { value: "订单审核" },
       ],
       modulesKey: ""
     };

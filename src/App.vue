@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <TopBar />
     <router-view />
   </div>
 </template>
 
 <script>
-import TopBar from './components/Fixed/TopBar'
+
 
 export default {
   name: 'app',
   components: {
-    TopBar
   }
 }
 </script>
