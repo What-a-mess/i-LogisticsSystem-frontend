@@ -37,6 +37,6 @@
     }
 </script>
 
-<style type="text/css" src="../assets/css/login.css" scoped>
+<style type="text/css" src="../../assets/css/login.css" scoped>
 
 </style>
