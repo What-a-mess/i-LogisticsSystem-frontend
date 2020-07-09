@@ -1,13 +1,15 @@
 <template>
   <nav class="topnav bg-white">
     <el-row type="flex" align="middle">
-      <el-col :span="1"></el-col>
-      <el-col :span="2">
-        <h3>
-          <a class="navbar-brand">物流管理系统</a>
-        </h3>
+      <el-col :span="1">
+
       </el-col>
-      <el-col :span="1"></el-col>
+      <el-col :span="2">
+        <h3><a class="navbar-brand">物流管理系统</a></h3>
+      </el-col>
+      <el-col :span="1">
+
+      </el-col>
       <el-col :span="4" :offset="-1">
         <el-autocomplete
           v-model="modulesKey"
@@ -18,7 +20,7 @@
         </el-autocomplete>
       </el-col>
       <el-col :span="1" :offset="12">
-        <i class="el-icon-refresh" style="font-size: 20px"></i>
+            <i class="el-icon-refresh" style="font-size: 20px"></i>
       </el-col>
       <el-col :span="1">
         <el-dropdown>
@@ -54,11 +56,12 @@
       </el-col>
     </el-row>
   </nav>
+
 </template>
 
 <script>
 export default {
-  name: "TopBar",
+  name:'TopBar',
   data: function() {
     return {
       modules: [
@@ -70,7 +73,7 @@ export default {
         { value: "发货策略" },
         { value: "订单查询" },
         { value: "新增订单" },
-        { value: "订单审核" }
+        { value: "订单审核" },
       ],
       modulesKey: ""
     };
