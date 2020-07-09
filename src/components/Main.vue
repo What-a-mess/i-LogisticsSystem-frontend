@@ -8,7 +8,7 @@
       <el-container>
         <el-aside>
           <br/><br />
-          <LeftMenu @checked="checked" />
+          <LeftMenu />
         </el-aside>
         <el-main :style="note">
           <router-view style="padding-top: 10px"></router-view>
