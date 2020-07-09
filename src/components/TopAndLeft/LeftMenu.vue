@@ -9,7 +9,7 @@
         </label>
     <el-row class="sidebar">
         <el-col >
-            <h3 style="padding-left: 100px;padding-top: 10px;padding-bottom: 20px">神奇的物流管理系统
+            <h3 style="padding-left: 100px;padding-top: 10px;padding-bottom: 20px">管理菜单
 
             </h3>
 
@@ -48,11 +48,11 @@
                         <span>订单管理</span>
                     </template>
                     <el-menu-item-group>
-                        <el-menu-item index="3-1"><span class="cursorHover"><a>订单查询</a></span></el-menu-item>
+                        <router-link to="/main/orderFrom"><el-menu-item index="3-1"><span class="cursorHover"><a>订单查询</a></span></el-menu-item></router-link>
                         <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>
                     </el-menu-item-group>
                     <el-menu-item index="3-3"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
-                    <el-menu-item index="3-4"><span class="cursorHover"><a>退货换单</a></span></el-menu-item>
+                    <router-link to="/main/returnFrom"><el-menu-item index="3-4"><span class="cursorHover"><a>退货换单</a></span></el-menu-item></router-link>
                 </el-submenu>
 
                 <el-submenu index="4" class="center">
@@ -82,8 +82,8 @@
             </el-menu>
         </el-col>
     </el-row>
-        <div id="page" style="background: #eff3f9;width: 1650px;height: 738px;position: absolute;left: 50px;z-index: -10">
-            <router-view></router-view>
+        <div id="page" style="background: #eff3f9;width: 1700px;height: 738px;position: absolute;left: 0px;z-index: -10">
+            <router-view ></router-view>
         </div>
     </div>
 

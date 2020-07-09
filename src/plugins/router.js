@@ -3,11 +3,17 @@ import  VueRouter from 'vue-router'
 import login from "../components/Login/login";
 import OrderFormInfo from "../components/OrderFormMgmt/OrderFormInfo";
 import ReturnFromInfo from "../components/OrderFormMgmt/ReturnFromInfo"
+import Main from "../components/Main";
 
 const routes = [
     { path: '/', components: { default: login } },
-    { path: '/main', components: { default: OrderFormInfo } },
-    { path: '/returnFrom', components: {default: ReturnFromInfo} }
+    { path: '/main', component: Main,
+        children: [
+            { path: '', component: OrderFormInfo },
+            { path: 'returnFrom', component: ReturnFromInfo },
+            { path: 'orderFrom', component: OrderFormInfo },
+        ]
+    }
 ]
 
 Vue.use(VueRouter)

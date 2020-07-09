@@ -30,11 +30,11 @@
 }
 
 
-.el-menu-item:hover:hover span a{
+.el-menu-item:hover:hover span {
     padding-left: 20px;
 }
 
-span a{
+span {
     font-size: 13px;
     transition: .3s;
 }
@@ -85,6 +85,8 @@ label #cancel{
 }
 
 #check:checked ~ #page{
-    margin-left: 250px;
+    margin-left: 300px;
     transition: all .5s;
 }
+
+
