@@ -1,13 +1,13 @@
 <template>
   <div class="bodyl">
-    <input type="checkbox" id="check" @click="clicked"/>
+    <input type="checkbox" id="check" />
     <label for="check">
       <i class="el-icon-menu" id="btn"></i>
       <i class="el-icon-menu" id="cancel"></i>
     </label>
     <el-row class="sidebar">
       <el-col>
-        <h3 style="padding-left: 100px;padding-top:8px;padding-bottom: 20px">管理菜单</h3>
+        <h3 style="padding-left: 100px;padding-top: 10px;padding-bottom: 20px">管理菜单</h3>
 
         <el-menu>
           <el-submenu index="1" class="center">
@@ -146,24 +146,11 @@
       </el-col>
     </el-row>
   </div>
-
-
 </template>
 
 <script>
 export default {
-  name: "LeftMenu",
-    data:function(){
-      return{
-
-      }
-    },
-    methods:{
-      clicked:function () {
-         let check = document.getElementById("check").checked;
-         this.$emit("checked",check);
-      }
-    }
+  name: "LeftMenu"
 };
 </script>
 
