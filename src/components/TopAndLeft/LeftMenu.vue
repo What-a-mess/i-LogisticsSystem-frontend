@@ -161,6 +161,7 @@ export default {
     methods:{
       clicked:function () {
          let check = document.getElementById("check").checked;
+         console.log("clicked触发")
          this.$emit("checked",check);
       }
     }
