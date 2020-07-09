@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col>
+      <el-col :span="20">
         <el-card>
           <el-table :data="orderForms">
             <el-table-column type="expand">
@@ -74,6 +74,7 @@
 export default {
   data: function() {
     return {
+      spanValue: 20,
       orderForms: [
         {
           orderId: 3582048,
