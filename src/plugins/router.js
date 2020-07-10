@@ -6,7 +6,6 @@ import ReturnFromInfo from "../components/OrderFormMgmt/ReturnFromInfo"
 import Main from "../components/Main";
 import OrderFormDetails from '../components/OrderFormMgmt/OrderFormDetails'
 import TestComponents from "../components/TestComponents";
-import AddOrder from "../components/OrderFormMgmt/add-order";
 
 // ClienteleMgmt
 import CustomerInfo from '../components/ClienteleMgmt/CustomerInfo'
@@ -26,8 +25,7 @@ const routes = [
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo }
         ]
-    },
-    { path: '/add', components: { default: AddOrder} },
+    }
 ]
 
 Vue.use(VueRouter)

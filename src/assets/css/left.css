@@ -102,6 +102,7 @@ label #cancel:hover{
     position: absolute;
     left: 5px;
     top:90px;
+    z-index: -10;
     border-radius: 10px;
 }
 
