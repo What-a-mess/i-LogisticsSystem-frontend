@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from "../components/Login/login";
 import OrderFormInfo from "../components/OrderFormMgmt/OrderFormInfo";
-import ReturnFromInfo from "../components/OrderFormMgmt/ReturnFromInfo"
+import ReturnFormInfo from "../components/OrderFormMgmt/ReturnFormInfo"
 import Main from "../components/Main";
 import OrderFormDetails from '../components/OrderFormMgmt/OrderFormDetails'
 import TestComponents from "../components/TestComponents";
@@ -19,8 +19,8 @@ const routes = [
         path: '/main', component: Main,
         children: [
             { path: '', component: OrderFormInfo },
-            { path: 'returnFrom', component: ReturnFromInfo },
-            { path: 'orderFrom', component: OrderFormInfo },
+            { path: 'returnForm', component: ReturnFormInfo },
+            { path: 'orderForm', component: OrderFormInfo },
             { path: 'order/:orderId/details', component: OrderFormDetails },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo }
