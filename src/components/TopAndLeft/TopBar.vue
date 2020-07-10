@@ -15,9 +15,8 @@
           v-model="modulesKey"
           :fetch-suggestions="queryModules"
           placeholder="Search"
-          class="search-txt"
         >
-          <i class="el-icon-search el-input__icon" style="position: relative;left: 38px;color: black"  slot="suffix"></i>
+          <i class="el-icon-search el-input__icon" slot="suffix"></i>
         </el-autocomplete>
       </el-col>
       <el-col :span="1" :offset="12">
@@ -129,25 +128,6 @@ export default {
   font-size: 12px;
 }
 
-.search-txt{
-  border:none;
-  background: none;
-  outline: none;
-  float: left;
-  padding: 0;
-  color: white;
-  font-size:16px;
-  transition: 0.4s;
-  line-height: 40px;
-  width: 0px;
-  position: relative;
-  left: 40px;
-  transition: all 0.7s;
-}
-.search-txt:hover{
-  width: 240px;
-  padding: 0 6px;
 
-}
 
 </style>

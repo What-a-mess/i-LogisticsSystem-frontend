@@ -1,4 +1,8 @@
 <template>
+
+
+
+
   <el-row>
     <el-col :span="12">
       <el-card>
@@ -19,12 +23,14 @@
       </el-card>
     </el-col>
   </el-row>
+
 </template>
 
 <script>
 export default {
   data: () => {
     return {
+
       taskForms: [
         {
           taskId: 10101,
