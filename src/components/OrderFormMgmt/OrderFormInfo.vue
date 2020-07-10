@@ -1,8 +1,6 @@
 <template>
   <div>
     <el-row>
-
-
       <el-col :span="1" :offset="22">
         <add-order></add-order>
       </el-col>
@@ -14,19 +12,19 @@
           <el-row>
             <el-col>
               <el-form :inline="true" :model="inlineQuery">
-                <el-form-item label="用户ID" >
+                <el-form-item label="用户ID">
                   <el-autocomplete
-                    class="inline-input"
+                    style="width: 140px"
                     v-model="inlineQuery.userIdQuery"
                     :fetch-suggestions="userIdAutoCmpl"
                     :trigger-on-focus="false"
                   ></el-autocomplete>
                 </el-form-item>
                 <el-form-item label=" 订单ID">
-                  <el-input v-model="inlineQuery.orderIdQuery"></el-input>
+                  <el-input style="width: 140px" v-model="inlineQuery.orderIdQuery"></el-input>
                 </el-form-item>
                 <el-form-item label=" 订单状态">
-                  <el-select v-model="inlineQuery.orderStatus">
+                  <el-select style="width: 150px" v-model="inlineQuery.orderStatus">
                     <el-option label="未处理" value="N"></el-option>
                     <el-option label="处理中" value="P"></el-option>
                     <el-option label="交易成功" value="D"></el-option>
@@ -35,7 +33,6 @@
                 </el-form-item>
                 <el-form-item label=" 日期">
                   <el-date-picker
-
                     v-model="value1"
                     type="datetimerange"
                     start-placeholder="开始日期"
@@ -107,8 +104,6 @@
         </el-card>
       </el-col>
     </el-row>
-
-
   </div>
 </template>
 
@@ -117,7 +112,7 @@ import myaxios from "../../plugins/myaxios";
 import AddOrder from "./add-order";
 
 export default {
-  components: {AddOrder},
+  components: { AddOrder },
   data: function() {
     return {
       input: "",
@@ -126,7 +121,6 @@ export default {
       value2: "",
       sDay: "",
       eDay: "",
-
 
       inlineQuery: {
         userIdQuery: "",
@@ -226,10 +220,7 @@ export default {
     },
     userIdAutoCmpl(queryString, cb) {
       queryString;
-      cb([
-        {value: "123"},
-        {value: "321"}
-      ])
+      cb([{ value: "123" }, { value: "321" }]);
     }
   },
   mounted: function() {
