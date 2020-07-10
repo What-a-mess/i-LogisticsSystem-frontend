@@ -12,7 +12,7 @@
     text-decoration: none;
 }
 
-.sidebar{
+.sidebar-self{
     position: fixed;
     left: -600px;
     width: 450px;
@@ -74,7 +74,7 @@ label #cancel:hover{
     background: #eff3f9;
 }
 
-#check:checked ~ .sidebar{
+#check:checked ~ .sidebar-self{
     left: -150px;
 
 

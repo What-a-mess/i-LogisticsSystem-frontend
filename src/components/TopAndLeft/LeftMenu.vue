@@ -7,7 +7,7 @@
             <i class="el-icon-menu" id="btn"></i>
             <i class="el-icon-menu" id="cancel"></i>
         </label>
-    <el-row class="sidebar">
+    <el-row class="sidebar-self">
         <el-col >
             <h3 style="padding-left: 100px;padding-top: 10px;padding-bottom: 20px">管理菜单
 

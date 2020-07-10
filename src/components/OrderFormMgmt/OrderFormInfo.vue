@@ -12,7 +12,7 @@
 <!--            <el-button slot="append" icon="el-icon-search"></el-button>-->
 <!--          </el-input>-->
 <!--        </el-col>-->
-        <el-col :span="10" :offset="14">
+        <el-col :span="10" :offset="12">
           <div class="block">
             <span class="demonstration"><b>日期检索: </b> </span>
             <el-date-picker
@@ -22,8 +22,12 @@
                     end-placeholder="结束日期"
                     :default-time="['12:00:00']"
             >
+
             </el-date-picker>
           </div>
+        </el-col>
+        <el-col :span="1">
+          <el-button type="primary" @click="open" round>新增订单</el-button>
         </el-col>
       </el-row>
     <el-row>
@@ -88,6 +92,11 @@
         </el-card>
       </el-col>
     </el-row>
+<!--    <el-row>-->
+<!--      <el-col :span="1" :offset="21">-->
+<!--        <el-button type="primary" @click="open" round>新增订单</el-button>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
   </div>
 </template>
 
@@ -186,6 +195,26 @@ export default {
         console.log(startDate);
         console.log(endDate);
       }
+  },
+  methods:{
+    open() {
+      this.$prompt('请输入邮箱', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '你的邮箱是: ' + value
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
+    }
   },
   mounted: function() {
     myaxios.get("/orders").then(res => {
