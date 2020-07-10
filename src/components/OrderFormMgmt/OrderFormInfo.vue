@@ -1,20 +1,10 @@
 <template>
   <div>
     <el-row>
-      <!--        <el-col :span="4" :offset="1">-->
-      <!--          <el-input placeholder="请输入内容" v-model="input" style="width: 300px">-->
-      <!--            <el-select v-model="select" slot="prepend" placeholder="请选择">-->
-      <!--              <el-option label="餐厅名" value="1"></el-option>-->
-      <!--              <el-option label="订单号" value="2"></el-option>-->
-      <!--              <el-option label="用户电话" value="3"></el-option>-->
-      <!--            </el-select>-->
-      <!--            <el-button slot="append" icon="el-icon-search"></el-button>-->
-      <!--          </el-input>-->
-      <!--        </el-col>-->
-      <el-col :span="10" :offset="12"></el-col>
 
-      <el-col :span="1">
-        <el-button type="primary" @click="dialogFormVisible = true" round>新增订单</el-button>
+
+      <el-col :span="1" :offset="22">
+        <add-order></add-order>
       </el-col>
     </el-row>
     <el-row>
@@ -22,9 +12,9 @@
         <el-card>
           <!-- 筛选信息行 -->
           <el-row>
-            <el-col :span="20">
+            <el-col>
               <el-form :inline="true" :model="inlineQuery">
-                <el-form-item label="用户ID">
+                <el-form-item label="用户ID" >
                   <el-autocomplete
                     class="inline-input"
                     v-model="inlineQuery.userIdQuery"
@@ -45,6 +35,7 @@
                 </el-form-item>
                 <el-form-item label=" 日期">
                   <el-date-picker
+
                     v-model="value1"
                     type="datetimerange"
                     start-placeholder="开始日期"
@@ -54,11 +45,6 @@
                 </el-form-item>
                 <el-button type="primary" @click="fetchData">搜索</el-button>
               </el-form>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="7">
-              <el-form :inline="true"></el-form>
             </el-col>
           </el-row>
 
@@ -122,30 +108,16 @@
       </el-col>
     </el-row>
 
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import myaxios from "../../plugins/myaxios";
+import AddOrder from "./add-order";
 
 export default {
+  components: {AddOrder},
   data: function() {
     return {
       input: "",
@@ -155,18 +127,6 @@ export default {
       sDay: "",
       eDay: "",
 
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
 
       inlineQuery: {
         userIdQuery: "",
