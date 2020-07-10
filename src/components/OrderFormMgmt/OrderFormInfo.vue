@@ -1,5 +1,31 @@
 <template>
   <div>
+
+      <el-row>
+<!--        <el-col :span="4" :offset="1">-->
+<!--          <el-input placeholder="请输入内容" v-model="input" style="width: 300px">-->
+<!--            <el-select v-model="select" slot="prepend" placeholder="请选择">-->
+<!--              <el-option label="餐厅名" value="1"></el-option>-->
+<!--              <el-option label="订单号" value="2"></el-option>-->
+<!--              <el-option label="用户电话" value="3"></el-option>-->
+<!--            </el-select>-->
+<!--            <el-button slot="append" icon="el-icon-search"></el-button>-->
+<!--          </el-input>-->
+<!--        </el-col>-->
+        <el-col :span="10" :offset="14">
+          <div class="block">
+            <span class="demonstration"><b>日期检索: </b> </span>
+            <el-date-picker
+                    v-model="value1"
+                    type="datetimerange"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    :default-time="['12:00:00']"
+            >
+            </el-date-picker>
+          </div>
+        </el-col>
+      </el-row>
     <el-row>
       <el-col style="padding-left: 20px">
         <el-card>
@@ -71,6 +97,12 @@ import myaxios from "../../plugins/myaxios";
 export default {
   data: function() {
     return {
+      input:'',
+      select:'',
+      value1: '',
+      value2: '',
+      sDay:'',
+      eDay:'',
       orderForms: [
         {
           orderId: 3582048,
@@ -145,6 +177,16 @@ export default {
       ]
     };
   },
+  watch:{
+      value1(val){
+        var startDate = JSON.stringify(val[0]).substr(0,11);
+        var endDate = JSON.stringify(val[1]).substr(0,11);
+        this.sDay = startDate;
+        this.eDay = endDate;
+        console.log(startDate);
+        console.log(endDate);
+      }
+  },
   mounted: function() {
     myaxios.get("/orders").then(res => {
       this.orderForms = res.data;
@@ -185,4 +227,7 @@ export default {
   margin-bottom: 0;
   width: 50%;
 }
+
+
+
 </style>
