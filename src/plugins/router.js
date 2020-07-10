@@ -4,6 +4,7 @@ import login from "../components/Login/login";
 import OrderFormInfo from "../components/OrderFormMgmt/OrderFormInfo";
 import ReturnFromInfo from "../components/OrderFormMgmt/ReturnFromInfo"
 import Main from "../components/Main";
+import OrderFormDetails from '../components/OrderFormMgmt/OrderFormDetails'
 
 const routes = [
     { path: '/', components: { default: login } },
@@ -12,6 +13,7 @@ const routes = [
             { path: '', component: OrderFormInfo },
             { path: 'returnFrom', component: ReturnFromInfo },
             { path: 'orderFrom', component: OrderFormInfo },
+            { path: 'order/:orderId/details', component:OrderFormDetails }
         ]
     }
 ]
