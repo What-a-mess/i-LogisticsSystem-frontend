@@ -1,40 +1,67 @@
 <template>
   <div>
+    <el-row>
+      <!--        <el-col :span="4" :offset="1">-->
+      <!--          <el-input placeholder="请输入内容" v-model="input" style="width: 300px">-->
+      <!--            <el-select v-model="select" slot="prepend" placeholder="请选择">-->
+      <!--              <el-option label="餐厅名" value="1"></el-option>-->
+      <!--              <el-option label="订单号" value="2"></el-option>-->
+      <!--              <el-option label="用户电话" value="3"></el-option>-->
+      <!--            </el-select>-->
+      <!--            <el-button slot="append" icon="el-icon-search"></el-button>-->
+      <!--          </el-input>-->
+      <!--        </el-col>-->
+      <el-col :span="10" :offset="12"></el-col>
 
-      <el-row>
-<!--        <el-col :span="4" :offset="1">-->
-<!--          <el-input placeholder="请输入内容" v-model="input" style="width: 300px">-->
-<!--            <el-select v-model="select" slot="prepend" placeholder="请选择">-->
-<!--              <el-option label="餐厅名" value="1"></el-option>-->
-<!--              <el-option label="订单号" value="2"></el-option>-->
-<!--              <el-option label="用户电话" value="3"></el-option>-->
-<!--            </el-select>-->
-<!--            <el-button slot="append" icon="el-icon-search"></el-button>-->
-<!--          </el-input>-->
-<!--        </el-col>-->
-        <el-col :span="10" :offset="12">
-          <div class="block">
-            <span class="demonstration"><b>日期检索: </b> </span>
-            <el-date-picker
+      <el-col :span="1">
+        <el-button type="primary" @click="dialogFormVisible = true" round>新增订单</el-button>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col style="padding-left: 20px">
+        <el-card>
+          <!-- 筛选信息行 -->
+          <el-row>
+            <el-col :span="20">
+              <el-form :inline="true" :model="inlineQuery">
+                <el-form-item label="用户ID">
+                  <el-autocomplete
+                    class="inline-input"
+                    v-model="inlineQuery.userIdQuery"
+                    :fetch-suggestions="userIdAutoCmpl"
+                    :trigger-on-focus="false"
+                  ></el-autocomplete>
+                </el-form-item>
+                <el-form-item label=" 订单ID">
+                  <el-input v-model="inlineQuery.orderIdQuery"></el-input>
+                </el-form-item>
+                <el-form-item label=" 订单状态">
+                  <el-select v-model="inlineQuery.orderStatus">
+                    <el-option label="未处理" value="N"></el-option>
+                    <el-option label="处理中" value="P"></el-option>
+                    <el-option label="交易成功" value="D"></el-option>
+                    <el-option label="交易关闭" value="C"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label=" 日期">
+                  <el-date-picker
                     v-model="value1"
                     type="datetimerange"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     :default-time="['12:00:00']"
-            >
+                  ></el-date-picker>
+                </el-form-item>
+                <el-button type="primary" @click="fetchData">搜索</el-button>
+              </el-form>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="7">
+              <el-form :inline="true"></el-form>
+            </el-col>
+          </el-row>
 
-            </el-date-picker>
-          </div>
-        </el-col>
-
-        <el-col :span="1">
-          <el-button type="primary" @click="dialogFormVisible = true" round>新增订单</el-button>
-        </el-col>
-
-      </el-row>
-    <el-row>
-      <el-col style="padding-left: 20px">
-        <el-card>
           <el-table :data="orderForms">
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -95,7 +122,6 @@
       </el-col>
     </el-row>
 
-
     <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="活动名称" :label-width="formLabelWidth">
@@ -113,9 +139,6 @@
         <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
       </div>
     </el-dialog>
-
-
-
   </div>
 </template>
 
@@ -125,27 +148,31 @@ import myaxios from "../../plugins/myaxios";
 export default {
   data: function() {
     return {
-      input:'',
-      select:'',
-      value1: '',
-      value2: '',
-      sDay:'',
-      eDay:'',
-
+      input: "",
+      select: "",
+      value1: "",
+      value2: "",
+      sDay: "",
+      eDay: "",
 
       dialogFormVisible: false,
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
         delivery: false,
         type: [],
-        resource: '',
-        desc: ''
+        resource: "",
+        desc: ""
       },
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
 
+      inlineQuery: {
+        userIdQuery: "",
+        orderIdQuery: "",
+        orderStatus: ""
+      },
 
       orderForms: [
         {
@@ -221,23 +248,32 @@ export default {
       ]
     };
   },
-  watch:{
-      value1(val){
-        var startDate = JSON.stringify(val[0]).substr(0,11);
-        var endDate = JSON.stringify(val[1]).substr(0,11);
-        this.sDay = startDate;
-        this.eDay = endDate;
-        console.log(startDate);
-        console.log(endDate);
-      }
+  watch: {
+    value1(val) {
+      var startDate = JSON.stringify(val[0]).substr(0, 11);
+      var endDate = JSON.stringify(val[1]).substr(0, 11);
+      this.sDay = startDate;
+      this.eDay = endDate;
+      console.log(startDate);
+      console.log(endDate);
+    }
   },
-  methods:{
-
+  methods: {
+    fetchData() {
+      myaxios.get("/orders").then(res => {
+        this.orderForms = res.data;
+      });
+    },
+    userIdAutoCmpl(queryString, cb) {
+      queryString;
+      cb([
+        {value: "123"},
+        {value: "321"}
+      ])
+    }
   },
   mounted: function() {
-    myaxios.get("/orders").then(res => {
-      this.orderForms = res.data;
-    });
+    this.fetchData();
   }
   // computed: {
   //   status: function(statusString) {
@@ -274,7 +310,4 @@ export default {
   margin-bottom: 0;
   width: 50%;
 }
-
-
-
 </style>
