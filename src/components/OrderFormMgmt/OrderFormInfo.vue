@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="1" :offset="22">
-        <add-order></add-order>
+        <AddOrder @addOrder="addOrder" />
       </el-col>
     </el-row>
     <el-row>
@@ -218,6 +218,12 @@ export default {
         this.orderForms = res.data;
       });
     },
+
+    addOrder:function(e){
+      console.log(e);
+      this.orderForms.push(e);
+    },
+
     userIdAutoCmpl(queryString, cb) {
       queryString;
       cb([{ value: "123" }, { value: "321" }]);
