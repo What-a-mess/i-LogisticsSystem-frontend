@@ -25,7 +25,7 @@
             VueFunnelGraph
         },data() {
             return {
-                labels: ['Impressions', 'Add To Cart', 'Buy'],
+                labels: ['进货数', '订单数', '退单数'],
                 subLabels: [],
                 values: [12000, 5700, 930],
                 colors: ['#FFB178', '#FF3C8E'],
@@ -39,20 +39,20 @@
         },
         methods: {
             useDataSet1() {
-                this.labels = ['Impressions', 'Add To Cart', 'Buy'];
+                this.labels = ['进货数', '订单数', '退单数'];
                 this.subLabels = [];
                 this.values = [12000, 4700, 930];
                 this.colors = ['#FFB178', '#FF3C8E'];
             },
             useDataSet2() {
-                this.labels = ['Impressions', 'Add To Cart', 'Buy'];
+                this.labels = ['进货数', '订单数', '退单数'];
                 this.subLabels = [];
                 this.values = [14000, 9100, 1230];
                 this.colors = ['#A0BBFF', '#EC77FF'];
             },
             useDataSet3() {
-                this.labels = ['Impressions', 'Add To Cart', 'Buy'];
-                this.subLabels = ['Direct', 'Social Media', 'Ads'];
+                this.labels = ['进货数', '订单数', '退单数'];
+                this.subLabels = ['食品', '电子产品', '生活用品'];
                 this.values = [
                     [3000, 2500, 6500],
                     [3000, 1700, 1000],
@@ -65,20 +65,20 @@
                 ];
             },
             useDataSet4() {
-                this.labels = ['Impressions', 'Add To Cart', 'Buy', 'Return'];
+                this.labels = ['未处理', '处理中', '交易成功', '交易关闭'];
                 this.subLabels = [];
                 this.values = [14000, 9100, 4230, 260];
                 this.colors = ['#FF4589', '#FF5050'];
             },
             useDataSet5() {
-                this.labels = ['Impressions', 'Add To Cart', 'Buy'];
+                this.labels = ['未处理', '处理中', '交易成功', '交易关闭'];
                 this.subLabels = [];
-                this.values = [12650, 4230, 263];
-                this.colors = ['#FF9A9A', '#FFB178'];
+                this.values = [12650, 4230, 263,3306];
+                this.colors = ['#FF9A9A', '#FFB178','#FF9B1A'];
             },
             useDataSet6() {
-                this.labels = ['Impressions', 'Add To Cart', 'Buy'];
-                this.subLabels = ['Direct', 'Social Media', 'Ads', 'Other'];
+                this.labels = ['未处理', '处理中', '交易成功', '交易关闭'];
+                this.subLabels = ['食品', '饮品', '生活用品','电子产品'];
                 this.values = [
                     [3000, 2500, 2000, 4500],
                     [3000, 1700, 500, 500],
@@ -116,7 +116,7 @@
             },
             getNextSet() {
                 this.dataSetNum++;
-                if (this.dataSetNum > 6) {
+                if (this.dataSetNum > 3) {
                     this.dataSetNum = 1;
                 }
 
