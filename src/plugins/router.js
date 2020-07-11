@@ -15,6 +15,9 @@ import PreSortRes from "../components/OrderFormMgmt/PreSortRes"
 import CustomerInfo from '../components/ClienteleMgmt/CustomerInfo'
 import SupplierInfo from '../components/ClienteleMgmt/SupplierInfo'
 
+// StorageMgmt
+import MainSiteIOInfo from '../components/SotrageMgmt/MainSiteIOInfo'
+
 import Charts from "../components/Charts";
 
 const routes = [
@@ -32,7 +35,8 @@ const routes = [
             { path: 'PreSortRes', component: PreSortRes },
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
-            { path: 'suppliers', component: SupplierInfo }
+            { path: 'suppliers', component: SupplierInfo },
+            { path: 'mainSiteIO', component: MainSiteIOInfo }
         ]
     }
 ]
