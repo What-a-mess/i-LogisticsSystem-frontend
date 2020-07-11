@@ -33,3 +33,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## axios
 + 进行了封装，使用时请引入`src/plugins/myaxios`
 + [axios](https://github.com/axios/axios)
+
+## stompjs
++ 是基于STOMP协议的web socket实现, rabbitmq服务端带有stomp插件
++ 进行了封装，使用时请引入`src/plugins/rabbitmq`
++ 示例：
+```js
+mq.connect('test',msg=>{console.log("msg:"+msg),err=>{console.log("err:"+err)}})
+```
