@@ -10,8 +10,8 @@ mq.client = stomp.client(SERVER);
 
 /**
  * @param {string} topic 主题设置
- * @param {function(string) => void} onMessage 消息响应回调函数
- * @param {function(string) => void} onFailed 错误响应回调函数
+ * @param {function(frame) => void} onMessage 消息响应回调函数
+ * @param {function(frame) => void} onFailed 错误响应回调函数
  * 
  */
 mq.connect = function(topic,onMessage,onFailed){

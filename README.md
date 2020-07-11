@@ -39,5 +39,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 + 进行了封装，使用时请引入`src/plugins/rabbitmq`
 + 示例：
 ```js
-mq.connect('test',msg=>{console.log("msg:"+msg),err=>{console.log("err:"+err)}})
+mq.connect('test',frame=>{console.log("msg: "+frame.body),frame=>{console.log("err: "+frame)}})
 ```
