@@ -15,9 +15,12 @@ import PreSortRes from "../components/OrderFormMgmt/PreSortRes"
 import CustomerInfo from '../components/ClienteleMgmt/CustomerInfo'
 import SupplierInfo from '../components/ClienteleMgmt/SupplierInfo'
 
+import Charts from "../components/Charts";
+
 const routes = [
     // 组件测试路由
     { path: '/test', components: { default: TestComponents} },
+    { path: '/charts', components: { default: Charts} },
     { path: '/', components: { default: login } },
     {
         path: '/main', component: Main,

@@ -49,7 +49,8 @@
                     </template>
                     <el-menu-item-group>
                         <router-link to="/main/orderForm"><el-menu-item index="3-1"><span class="cursorHover"><a>订单查询</a></span></el-menu-item></router-link>
-<!--                        <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>-->
+                        <router-link to="/charts"><el-menu-item index="3-2"><span class="cursorHover"><a>统计报表</a></span></el-menu-item></router-link>
+                        <!--                        <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>-->
                     </el-menu-item-group>
                     <el-menu-item index="3-3"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
                     <router-link to="/main/returnForm"><el-menu-item index="3-4"><span class="cursorHover"><a>退货换单</a></span></el-menu-item></router-link>
