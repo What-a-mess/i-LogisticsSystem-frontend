@@ -220,8 +220,11 @@ export default {
     },
 
     addOrder:function(e){
-      console.log(e);
-      this.orderForms.push(e);
+      var newOrder = {};
+      for(var k in e){
+        newOrder[k] = e[k];
+      }
+      this.orderForms.push(newOrder);
     },
 
     userIdAutoCmpl(queryString, cb) {
