@@ -2,8 +2,8 @@
     <div>
     <el-button type="primary" @click="dialogFormVisible = true" round>新增订单</el-button>
 
-    <el-dialog title="订单详情" :destroy-on-close="true" :visible.sync="dialogFormVisible" width="35%" top="3%">
-        <el-form ref="form" :model="form" label-width="80px">
+    <el-dialog title="订单详情" :destroy-on-close="true" :visible.sync="dialogFormVisible"  width="35%" top="3%">
+        <el-form ref="order" :model="order" label-width="80px">
             <el-form-item label="订单ID">
                 <el-input v-model="order.orderId" style="width:90%"></el-input>
             </el-form-item>
