@@ -1,14 +1,16 @@
 <template>
   <div>
-    <BasicCard header="订单总览">
     <el-row>
       <el-col :span="1" :offset="22">
         <AddOrder @addOrder="addOrder" />
       </el-col>
     </el-row>
+    <br />
+    <BasicCard header="订单总览" style="left: 1%">
+
     <el-row>
       <el-col style="padding-left: 20px">
-        <el-card>
+
           <!-- 筛选信息行 -->
           <el-row>
             <el-col>
@@ -102,7 +104,7 @@
               </template>
             </el-table-column>
           </el-table>
-        </el-card>
+
       </el-col>
     </el-row>
     </BasicCard>
