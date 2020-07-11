@@ -23,3 +23,4 @@ pnpm-debug.log*
 
 # config
 rabbitmq-configs.js
+src/components/OrderFormMgmt/OrderFormInfo.vue

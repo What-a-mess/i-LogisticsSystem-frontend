@@ -6,7 +6,7 @@
       </el-col>
     </el-row>
     <br />
-    <BasicCard header="订单总览" style="left: 1%">
+    <BasicCard header="订单总览" style="left: 1.5%">
 
     <el-row>
       <el-col style="padding-left: 20px">
