@@ -103,9 +103,11 @@
                 handler: function(route) {
                     if(route.path == "/main/charts"){
                         document.getElementById("page").style.background = "#706caa";
+                        document.getElementById("page").style.transition = "1.5s";
                     }
                     else{
                         document.getElementById("page").style.background = "#eff3f9";
+                        document.getElementById("page").style.transition = "1s";
                     }
                 },
 

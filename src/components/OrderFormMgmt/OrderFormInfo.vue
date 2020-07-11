@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="1" :offset="22">
-        <AddOrder @addOrder="addOrder" />
+        <AddOrder />
       </el-col>
     </el-row>
     <br />
@@ -134,6 +134,7 @@ export default {
         orderStatus: ""
       },
 
+
       orderForms: [
         {
           orderId: 3582048,
@@ -216,7 +217,8 @@ export default {
       this.eDay = endDate;
       console.log(startDate);
       console.log(endDate);
-    }
+    },
+
   },
   methods: {
     fetchData() {
@@ -225,13 +227,13 @@ export default {
       });
     },
 
-    addOrder:function(e){
-      var newOrder = {};
-      for(var k in e){
-        newOrder[k] = e[k];
-      }
-      this.orderForms.push(newOrder);
-    },
+    // addOrder:function(e){
+    //   var newOrder = {};
+    //   for(var k in e){
+    //     newOrder[k] = e[k];
+    //   }
+    //   this.orderForms.push(newOrder);
+    // },
 
     userIdAutoCmpl(queryString, cb) {
       queryString;

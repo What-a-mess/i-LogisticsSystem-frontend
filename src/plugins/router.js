@@ -20,10 +20,12 @@ import MainSiteIOInfo from '../components/SotrageMgmt/MainSiteIOInfo'
 
 import Charts from "../components/Charts";
 
+import cascadeSelection from "../components/OrderFormMgmt/cascadeSelection";
+
 const routes = [
     // 组件测试路由
     { path: '/test', components: { default: TestComponents} },
-
+    { path: '/cS', components: { default: cascadeSelection} },
     { path: '/', components: { default: login } },
     {
         path: '/main', component: Main,
