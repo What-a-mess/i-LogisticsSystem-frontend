@@ -40,4 +40,21 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 + 示例：
 ```js
 mq.connect('test',frame=>{console.log("msg: "+frame.body),frame=>{console.log("err: "+frame)}})
+
+```
+
+```js
+//可关闭的心跳检测
+mq.client.heartbeat.outgoing=0;
+mq.client.heartbeat.incoming=0;
+mq.connect('test',frame=>{
+  //处理消息
+  
+  //...
+
+  //处理完成后返回ack（没完成则不返回）
+  frame.ack();
+},err=>{
+    console.log("err:"+err);
+});
 ```

@@ -16,7 +16,7 @@ mq.client = stomp.client(SERVER);
  */
 mq.connect = function(topic,onMessage,onFailed){
     mq.client.connect({login:USERNAME,passcode:PASSWORD},function(){
-        mq.client.subscribe(topic,onMessage,onFailed);
+        mq.client.subscribe(topic,onMessage,{ack:'client'});
     },onFailed);
 }
 
