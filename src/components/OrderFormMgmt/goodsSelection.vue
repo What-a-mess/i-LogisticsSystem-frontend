@@ -2,7 +2,7 @@
     <div >
         <el-cascader
                 style="left: -22%"
-                v-model="value"
+                v-model="value1"
                 :options="options"
                 :props="{ expandTrigger: 'hover' }"
                 @change="handleChange"></el-cascader>
@@ -24,7 +24,7 @@
                     imgUrl	:"",
                     status:"",
                 },
-
+                value1: [],
                 options: [{
                     value: 'zhinan',
                     label: '指南',
@@ -77,10 +77,9 @@
             }
         },
         methods: {
-            handleChange(value) {
-                var GoodsItem=[];
-                GoodsItem = value;
-                this.$emit("emitGoodsItem",GoodsItem);
+            handleChange(value1) {
+                this.$emit("emitGoodsItem",value1);
+                console.log("我传递商品给父组件了")
             }
         }
     }

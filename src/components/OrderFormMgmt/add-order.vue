@@ -18,8 +18,8 @@
             <el-form-item label="收件人">
                 <el-input v-model="order.billName" style="width:90%"></el-input>
             </el-form-item>
-            <el-form-item label="选择商品" @emitGoodsItem="handleGoodsItem" @emmitGoodsItem="handleGoodsItem">
-                <GoodsSelection />
+            <el-form-item label="选择商品">
+                <GoodsSelection  @emitGoodsItem="handleGoodsItem" />
             </el-form-item>
 
             <el-form-item label="商品数量" @emitGoodsItem="handleGoodsItem">
@@ -27,7 +27,7 @@
             </el-form-item>
 
             <el-form-item label="付款状态">
-            <el-select v-model="order.payStatus" placeholder="请选择">
+            <el-select v-model="order.payStatus" placeholder="请选择" style="left: -22%">
                 <el-option
                         v-for="item in payOptions"
                         :key="item.value"
@@ -37,7 +37,7 @@
             </el-select>
             </el-form-item>
             <el-form-item label="订单状态">
-                <el-select v-model="order.processStatus" placeholder="请选择">
+                <el-select v-model="order.processStatus" placeholder="请选择" style="left: -22%">
                     <el-option
                             v-for="item in orderOptions"
                             :key="item.value"
@@ -82,9 +82,9 @@
                 <el-input v-model="order.billAddr" style="width:90%"></el-input>
             </el-form-item>
 
-<!--            <el-form-item label="选择商品"><cascade-selection  v-model="order.receiverAddress">-->
-<!--            </cascade-selection></el-form-item>-->
-            <el-form-item label="是否为手动订单" :label-width="50">
+            <el-form-item label="选择商品"><cascade-selection  v-model="order.receiverAddress">
+            </cascade-selection></el-form-item>
+            <el-form-item label="是否为手动订单" :label-width=2 style="right: 22%">
             <el-switch
                     v-model="manual"
                     active-color="#13ce66">
@@ -116,11 +116,12 @@
             handleAddr:function(e){
                 var Addr = e;
                 this.receiverAddress = Addr;
+
             },
             handleGoodsItem:function(e){
                 var GoodsItem = e;
                 this.orderItem.goodsItem= GoodsItem;
-
+                console.log(this.orderItem.goodsItem)
             },
             emitOrder:function () {
                 //封装数据到sendData数组中
@@ -134,13 +135,13 @@
                 var isHand = false;
                  isHand =  this.manual;
                  this.sendData.push(isHand);
-
+                console.log(this.sendData)
 
                 /*
                 这一部分代码为发送数据给后端
                 */
 
-                setTimeout(this.clear,500)
+               // setTimeout(this.clear,500)
 
             },
             clear:function () {
@@ -150,6 +151,7 @@
                 this.orderItem.taskId ="";
                 this.orderItem.quantity = 1;
                 this.manual = false;
+                this.sendData=[];
             }
         },
         data: function() {
@@ -196,10 +198,10 @@
                     note: "",
                 },
                 orderItem: {
-                    orderId:this.orderId,
+                    orderId:"",
                     taskId:"",
                     quantity:"",
-                    status: this.order.processStatus,
+                    status: "",
 
                     goodsItem: {},
                 },
