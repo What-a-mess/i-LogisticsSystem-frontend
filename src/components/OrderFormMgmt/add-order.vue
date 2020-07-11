@@ -78,6 +78,9 @@
                     if(k!="taskForms") {
                         this.order[k] = "";
                     }
+                    else {
+                        this.order[k] = [];
+                    }
                 }
             }
         },
