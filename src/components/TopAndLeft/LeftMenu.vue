@@ -7,13 +7,13 @@
             <i class="el-icon-menu" id="btn"></i>
             <i class="el-icon-menu" id="cancel"></i>
         </label>
-    <el-row class="sidebar-self">
+    <el-row class="sidebar-self" style="background: #f7f7f7;border-radius: 10px">
         <el-col >
             <h3 style="padding-left: 100px;padding-top: 10px;padding-bottom: 20px">管理菜单
 
             </h3>
 
-            <el-menu>
+            <el-menu style="background: #f7f7f7;">
                 <el-submenu index="1" class="center">
                     <template slot="title" style="background: #fefffe;">
                         <i class="el-icon-user-solid"></i>
@@ -49,7 +49,7 @@
                     </template>
                     <el-menu-item-group>
                         <router-link to="/main/orderForm"><el-menu-item index="3-1"><span class="cursorHover"><a>订单查询</a></span></el-menu-item></router-link>
-                        <router-link to="/charts"><el-menu-item index="3-2"><span class="cursorHover"><a>统计报表</a></span></el-menu-item></router-link>
+                        <router-link to="/main/charts"><el-menu-item index="3-2"><span class="cursorHover" ><a>统计报表</a></span></el-menu-item></router-link>
                         <!--                        <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>-->
                     </el-menu-item-group>
                     <el-menu-item index="3-3"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
@@ -93,6 +93,24 @@
 <script>
     export default {
         name: "LeftMenu",
+        data:function(){
+          return{
+              isDeepColor:false,
+          }
+        },
+        watch: {
+            $route: {
+                handler: function(route) {
+                    if(route.path == "/main/charts"){
+                        document.getElementById("page").style.background = "#706caa";
+                    }
+                    else{
+                        document.getElementById("page").style.background = "#eff3f9";
+                    }
+                },
+
+            }
+        },
 
     }
 </script>

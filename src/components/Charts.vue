@@ -137,11 +137,13 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
     }
 
     .funnels {
         height: 580px;
         margin-top: 32px;
+
     }
 
     .funnel:not(.svg-funnel-js--vertical) {

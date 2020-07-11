@@ -20,7 +20,7 @@ import Charts from "../components/Charts";
 const routes = [
     // 组件测试路由
     { path: '/test', components: { default: TestComponents} },
-    { path: '/charts', components: { default: Charts} },
+
     { path: '/', components: { default: login } },
     {
         path: '/main', component: Main,
@@ -30,7 +30,7 @@ const routes = [
             { path: 'orderForm', component: OrderFormInfo },
             { path: 'order/:orderId/details', component: OrderFormDetails },
             { path: 'PreSortRes', component: PreSortRes },
-
+            { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo }
         ]

@@ -98,11 +98,12 @@ label #cancel:hover{
 #page{
     background: #eff3f9;
     width: 1700px;
-    height: 748px;
+    height: 738px;
     position: absolute;
     left: 5px;
-    top:100px;
+    top:98px;
     border-radius: 10px;
+    transition: 3s;
 }
 
 
