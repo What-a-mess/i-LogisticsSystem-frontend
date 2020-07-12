@@ -19,6 +19,7 @@ import SupplierInfo from '../components/ClienteleMgmt/SupplierInfo'
 
 // StorageMgmt
 import MainSiteIOInfo from '../components/SotrageMgmt/MainSiteIOInfo'
+import MainSiteInDetail from '../components/SotrageMgmt/MainSiteInDetail'
 
 import Charts from "../components/Charts";
 
@@ -40,7 +41,8 @@ const routes = [
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
-            { path: 'mainSiteIO', component: MainSiteIOInfo },
+            { path: 'mainsites/:mainsiteId/inventory/siteios', component: MainSiteIOInfo },
+            { path: 'mainsites/:mainsiteId/inventory/siteios/:recordId', component: MainSiteInDetail },
             { path: 'orderExamine', component: OrderExamine },
             { path: 'examineDetail/:id', component: ExamineDetail}
         ]
