@@ -1,9 +1,9 @@
 <template>
     <div>
-    <el-button type="primary" @click="addNewOrder()" v-bind:Goods="getGoods()" round>新增订单</el-button>
+    <el-button type="primary" @click="addNewOrder()"  round>新增订单</el-button>
 
     <el-dialog title="订单详情" :destroy-on-close="true" :visible.sync="dialogFormVisible"  width="35%" top="3%">
-        <el-form  label-width="80px">
+        <el-form label-width="80px">
             <el-form-item label="订单ID">
                 <el-input v-model="order.orderId" style="width:90%"></el-input>
             </el-form-item>
@@ -16,14 +16,23 @@
                 <el-input v-model="order.billName" style="width:90%"></el-input>
             </el-form-item>
             <el-form-item label="选择商品">
-                <GoodsSelection  @emitGoodsItem="handleGoodsItem" />
+                <GoodsSelection v-bind:Goods="getGoods()"  @emitGoodsItemId="handleGoodsItemId" />
             </el-form-item>
 
-            <el-form-item label="商品数量" @emitGoodsItem="handleGoodsItem">
-                <el-input-number style="left: -26%" v-model="orderItemList[0].quantity" :min="1" :max="99"></el-input-number>
-<!--                <el-button @click="clickfun">选择</el-button>-->
+            <el-form-item label="商品数量">
+                <el-input-number style="left: -19%" v-model="orderItemList[number_of_Items].quantity" :min="0" :max="99"></el-input-number>
+                <el-button type="success" plain @click="clickAddItem">选择</el-button>
             </el-form-item>
-
+            <el-form-item label="已选择商品: "  label-width="20">
+            <el-tag
+                    :key="tag"
+                    v-for="tag in dynamicTags"
+                    closable
+                    :disable-transitions="false"
+                    @close="handleClose(tag)">
+                {{tag}}
+            </el-tag>
+            </el-form-item>
             <el-form-item label="付款状态">
             <el-select v-model="order.payStatus" placeholder="请选择" style="left: -22%">
                 <el-option
@@ -105,6 +114,7 @@
 <script>
     import cascadeSelection from "./cascadeSelection";
     import GoodsSelection from "./goodsSelection";
+    import {Loading} from 'element-ui'
     export default {
         name: "add-order",
 
@@ -115,7 +125,6 @@
         methods:{
             addNewOrder:function(){
                 this.dialogFormVisible = true;
-                console.log(this.getGoods());
             },
             getGoods:function(){
                 //应该是向后端请求 货物数据
@@ -125,11 +134,11 @@
                     items:[{
                         itemId:"EST-18",
                         itemName:"banana",
-                        itemPrice: 15
+                        listPrice: 15
                     },{
                         itemId:"EST-19",
                         itemName:"apple",
-                        itemPrice: 25
+                        listPrice: 25
                     }]
                 },
                     {
@@ -138,66 +147,103 @@
                         items:[{
                             itemId:"ESK-18",
                             itemName:"milk",
-                            itemPrice: 20
+                            listPrice: 20
                         },{
                             itemId:"ESK-19",
                             itemName:"coco",
-                            itemPrice: 30
+                            listPrice: 30
                         }]
                     },
                 ]
             },
+            handleGoodsItemId:function(e){
+                var goodsItemId = e;
+                this.orderItemList[this.number_of_Items].item.itemId= goodsItemId;
+            },
             handleAddr:function(e){
                 var Addr = e;
-                this.billPro = Addr[0];
-                this.billCity = Addr[1];
-                this.billDistrict = Addr[2];
-
+                this.order.billPro = Addr[0];
+                this.order.billCity = Addr[1];
+                this.order.billDistrict = Addr[2];
             },
-            handleGoodsItem:function(e){
-                var GoodsItem = e;
-                this.orderItemList[0].item= GoodsItem;
-                console.log(this.orderItemList[0].item)
+            clickAddItem:function(){
+                // console.log("第"+this.number_of_Items+"个商品数量为"+this.orderItemList[this.number_of_Items].quantity+"商品为：");
+                // console.log(this.orderItemList);
+                var allGoods = this.getGoods();
+
+                for(var i=0;i<allGoods.length;i++){
+                    for(var j=0;j<allGoods[i].items.length;j++){
+                        console.log()
+                        if(this.orderItemList[this.number_of_Items].item.itemId == allGoods[i].items[j].itemId){
+                            this.orderItemList[this.number_of_Items].totalPrice = this.orderItemList[this.number_of_Items].quantity *allGoods[i].items[j].listPrice;
+                            break;
+                        }
+                    }
+                }
+                //console.log(this.orderItemList);
+                this.number_of_Items +=1;
+                var newItem = {
+                    quantity:1,
+                    totalPrice:0,
+                    item:{
+                        itemId:"",
+                    }
+                };
+                this.orderItemList.push(newItem);
             },
             emitOrder:function () {
-                for(var i=0;i<this.orderItemList.length;i++){
-                    this.orderItemList[i].totalPrice = 20*this.orderItemList[i].quantity;
-                }
-
-                //封装数据到OrderAddReq数组中
+                let loadingInstance1 = Loading.service({ fullscreen: true });
+                //视觉关闭
                 this.dialogFormVisible = false;
-                var order = {};
-                order =  this.order;
-                this.OrderAddReq.push(order);
 
+                //弹出最后一个空对象
+                this.orderItemList.pop();
+                //计算此订单的总价
+                for(var k=0;k<this.orderItemList.length;k++){
+                    this.order.totalPrice += this.orderItemList[k].totalPrice;
+                }
+                //封装数据到OrderAddReq数组中
+                this.OrderAddReq.push(this.order);
                 this.OrderAddReq.push(this.orderItemList);
+                 this.OrderAddReq.push(this.manual);
+                console.log(this.OrderAddReq);
 
-                var isHand = false;
-                 isHand =  this.manual;
-                 this.OrderAddReq.push(isHand);
-
-                 var sendData = [];
-                 sendData = this.OrderAddReq;
-                console.log(sendData);
                 /*
+
                 这一部分代码为发送数据给后端  注意传的是sendData
 
                 */
+                 setTimeout(loadingInstance1.close(),2000)
+                 setTimeout(this.clear,1000);
 
-               // setTimeout(this.clear,500)
+            },
+            closeDialog(){
 
             },
             clear:function () {
                 for(var k in this.order){
                         this.order[k] = "";
                 }
-
+                this.orderItemList=[ {
+                    quantity:1,
+                    totalPrice: "",
+                    item: {
+                        itemId:"",
+                    },
+                }
+                ];
                 this.manual = false;
                 this.OrderAddReq=[];
-            }
+            },
+            handleClose(tag) {
+                this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+            },
         },
         data: function() {
             return {
+                dynamicTags: ['milk * 3', 'bananas * 2', 'coco * 9'],
+                inputValue: '',
+
                 OrderAddReq :[],
                 dialogFormVisible: false,
 
@@ -231,7 +277,7 @@
 
 
                 order: {
-                    orderId: "1",
+                    orderId: "",
                     createDateTime: "",
                     payDateTime: "",
                     totalPrice: "",
@@ -248,13 +294,14 @@
                     note: "",
                 },
                 orderItemList:[ {
-                    quantity:"",
+                    quantity:1,
                     totalPrice: "",
                     item: {
                         itemId:"",
                     },
                 }
                 ],
+                number_of_Items:0,
 
                 manual : false,
 

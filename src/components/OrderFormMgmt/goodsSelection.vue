@@ -38,32 +38,6 @@
                     }, {
                         value: 'form',
                         label: 'Form表单',
-                    }, {
-                        value: 'data',
-                        label: 'Data数据',
-                    }, {
-                        value: 'notice',
-                        label: 'Notice通知',
-                    }, {
-                        value: 'navigation',
-                        label: 'Navigation导航',
-
-                    }, {
-                        value: 'others',
-                        label: 'Others',
-                    }]
-                }, {
-                    value: 'ziyuan',
-                    label: '资源',
-                    children: [{
-                        value: 'axure',
-                        label: 'Axure组件'
-                    }, {
-                        value: 'sketch',
-                        label: 'Sketch模板'
-                    }, {
-                        value: 'jiaohu',
-                        label: '组件交互文档'
                     }]
                 }],
 
@@ -72,20 +46,32 @@
         },
         methods: {
             handleChange(value1) {
-                console.log(value1);
 
-                console.log(this.Goods)
-                // this.$watch('Goods', function(newVal, oldVal){
-                //     console.log('newVal');
-                // });
-                    //this.$emit("emitGoodsItem", itemId);
+                    this.$emit("emitGoodsItemId", value1[1]);
 
             },
+
+        },
+        created() {
+            for(var i=0;i<this.Goods.length;i++){
+                this.options[i].value = this.Goods[i].categoryId;
+                this.options[i].label = this.Goods[i].categoryName;
+                for(var j=0;j<this.Goods[i].items.length;j++){
+                    this.options[i].children[j].value = this.Goods[i].items[j].itemId;
+                    this.options[i].children[j].label = this.Goods[i].items[j].itemName;
+                }
+            }
         },
         // watch:{
-        //     Goods:function (newVal,oldVal) {
-        //         console.log(newVal);
-        //         console.log(oldVal);
+        //     Goods:function (val) {
+        //         for(var i=0;i<val.length;i++){
+        //             this.options[i].value = val[i].categoryId;
+        //             this.options[i].label = val[i].categoryName;
+        //             for(var j=0;j<val[i].items.length;j++){
+        //                 this.options[i].children[j].value = val[i].items[j].itemId;
+        //                 this.options[i].children[j].label = val[i].items[j].itemName;
+        //             }
+        //         }
         //     }
         // }
     }
