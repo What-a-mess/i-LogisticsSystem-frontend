@@ -22,7 +22,7 @@
       <el-row v-for="item in checkOutItems" :key="item.recordId">
         <BasicCard :header="'入库请求 '+item.recordId">
           <el-row type="flex" align="center">
-            <el-col :span="20">
+            <el-col :span="18">
               <el-row class="form-line">
                 <el-col :span="12">
                   <div class="text-label">商品ID：</div>
@@ -44,9 +44,10 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
               <el-button type="danger">拒绝</el-button>
               <el-button type="success" @click="passOnClick(item)">通过</el-button>
+              <el-button type="primary">详细信息</el-button>
             </el-col>
           </el-row>
         </BasicCard>
