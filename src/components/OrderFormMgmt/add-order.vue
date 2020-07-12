@@ -1,6 +1,6 @@
 <template>
     <div>
-    <el-button type="primary" @click="dialogFormVisible = true" round>新增订单</el-button>
+    <el-button type="primary" @click="addNewOrder()" v-bind:Goods="getGoods()" round>新增订单</el-button>
 
     <el-dialog title="订单详情" :destroy-on-close="true" :visible.sync="dialogFormVisible"  width="35%" top="3%">
         <el-form  label-width="80px">
@@ -8,9 +8,6 @@
                 <el-input v-model="order.orderId" style="width:90%"></el-input>
             </el-form-item>
 
-            <el-form-item label="任务单ID" >
-                <el-input v-model="orderItem.taskId" style="width:90%"></el-input>
-            </el-form-item>
 
             <el-form-item label="收件人ID">
                 <el-input v-model="order.customerId" style="width:90%"></el-input>
@@ -23,7 +20,8 @@
             </el-form-item>
 
             <el-form-item label="商品数量" @emitGoodsItem="handleGoodsItem">
-                <el-input-number style="left: -26%" v-model="orderItem.quantity" :min="1" :max="99"></el-input-number>
+                <el-input-number style="left: -26%" v-model="orderItemList[0].quantity" :min="1" :max="99"></el-input-number>
+<!--                <el-button @click="clickfun">选择</el-button>-->
             </el-form-item>
 
             <el-form-item label="付款状态">
@@ -63,9 +61,9 @@
                 </el-date-picker>
             </el-form-item>
 
-            <el-form-item label="总付款">
-                <el-input v-model="order.totalPrice" style="width:90%"></el-input>
-            </el-form-item>
+<!--            <el-form-item label="总付款">-->
+<!--                <el-input v-model="order.totalPrice" style="width:90%"></el-input>-->
+<!--            </el-form-item>-->
 
             <el-form-item label="运费">
                 <el-input v-model="order.shippingCost" style="width:90%"></el-input>
@@ -82,12 +80,13 @@
                 <el-input v-model="order.billAddr" style="width:90%"></el-input>
             </el-form-item>
 
-            <el-form-item label="选择商品"><cascade-selection  v-model="order.receiverAddress">
-            </cascade-selection></el-form-item>
-            <el-form-item label="是否为手动订单" :label-width=2 style="right: 22%">
+
+            <el-form-item label="是否为手动订单" label-width="20">
             <el-switch
                     v-model="manual"
-                    active-color="#13ce66">
+                    active-color="#13ce66"
+                    style="left: -35%"
+                    >
             </el-switch>
             </el-form-item>
 
@@ -108,37 +107,81 @@
     import GoodsSelection from "./goodsSelection";
     export default {
         name: "add-order",
+
         components:{
             GoodsSelection,
             cascadeSelection
         },
         methods:{
+            addNewOrder:function(){
+                this.dialogFormVisible = true;
+                console.log(this.getGoods());
+            },
+            getGoods:function(){
+                //应该是向后端请求 货物数据
+                return [{
+                    categoryId: 12312,
+                    categoryName:"food",
+                    items:[{
+                        itemId:"EST-18",
+                        itemName:"banana",
+                        itemPrice: 15
+                    },{
+                        itemId:"EST-19",
+                        itemName:"apple",
+                        itemPrice: 25
+                    }]
+                },
+                    {
+                        categoryId: 12313,
+                        categoryName:"drink",
+                        items:[{
+                            itemId:"ESK-18",
+                            itemName:"milk",
+                            itemPrice: 20
+                        },{
+                            itemId:"ESK-19",
+                            itemName:"coco",
+                            itemPrice: 30
+                        }]
+                    },
+                ]
+            },
             handleAddr:function(e){
                 var Addr = e;
-                this.receiverAddress = Addr;
+                this.billPro = Addr[0];
+                this.billCity = Addr[1];
+                this.billDistrict = Addr[2];
 
             },
             handleGoodsItem:function(e){
                 var GoodsItem = e;
-                this.orderItem.goodsItem= GoodsItem;
-                console.log(this.orderItem.goodsItem)
+                this.orderItemList[0].item= GoodsItem;
+                console.log(this.orderItemList[0].item)
             },
             emitOrder:function () {
-                //封装数据到sendData数组中
+                for(var i=0;i<this.orderItemList.length;i++){
+                    this.orderItemList[i].totalPrice = 20*this.orderItemList[i].quantity;
+                }
+
+                //封装数据到OrderAddReq数组中
                 this.dialogFormVisible = false;
                 var order = {};
                 order =  this.order;
-                this.sendData.push(order);
-                var orderIt = [];
-                 orderIt =   this.orderItem;
-                this.sendData.push(orderIt);
+                this.OrderAddReq.push(order);
+
+                this.OrderAddReq.push(this.orderItemList);
+
                 var isHand = false;
                  isHand =  this.manual;
-                 this.sendData.push(isHand);
-                console.log(this.sendData)
+                 this.OrderAddReq.push(isHand);
 
+                 var sendData = [];
+                 sendData = this.OrderAddReq;
+                console.log(sendData);
                 /*
-                这一部分代码为发送数据给后端
+                这一部分代码为发送数据给后端  注意传的是sendData
+
                 */
 
                // setTimeout(this.clear,500)
@@ -148,19 +191,24 @@
                 for(var k in this.order){
                         this.order[k] = "";
                 }
-                this.orderItem.taskId ="";
-                this.orderItem.quantity = 1;
+
                 this.manual = false;
-                this.sendData=[];
+                this.OrderAddReq=[];
             }
         },
         data: function() {
             return {
-                sendData :[],
-
+                OrderAddReq :[],
                 dialogFormVisible: false,
 
                 payOptions: [{
+                    value: 'P',
+                    label: '已付款'
+                }, {
+                    value: 'W',
+                    label: '未付款'
+                }],
+                goodsOptions: [{
                     value: 'P',
                     label: '已付款'
                 }, {
@@ -183,7 +231,7 @@
 
 
                 order: {
-                    orderId: "",
+                    orderId: "1",
                     createDateTime: "",
                     payDateTime: "",
                     totalPrice: "",
@@ -193,18 +241,21 @@
                     processStatus: "",
                     payMethod: "",
                     customerId: "",
-                    receiverAddress: [],
+                    billPro: "",
+                    billCity: "",
+                    billDistrict: "",
                     billAddr:"",
                     note: "",
                 },
-                orderItem: {
-                    orderId:"",
-                    taskId:"",
+                orderItemList:[ {
                     quantity:"",
-                    status: "",
+                    totalPrice: "",
+                    item: {
+                        itemId:"",
+                    },
+                }
+                ],
 
-                    goodsItem: {},
-                },
                 manual : false,
 
             }

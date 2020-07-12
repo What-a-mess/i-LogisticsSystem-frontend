@@ -5,32 +5,26 @@
                 v-model="value1"
                 :options="options"
                 :props="{ expandTrigger: 'hover' }"
-                @change="handleChange"></el-cascader>
+                @change="handleChange"
+        ></el-cascader>
+
     </div>
 </template>
 
 <script>
     export default {
         name: "goodsSelection",
+        props:["Goods"],
         data:function () {
             return{
-                goodsItem:{
-                    itemId:"",
-                    categoryId:"",
-                    name:"",
-                    descn:"",
-                    unitCost:"",
-                    listPrice:"",
-                    imgUrl	:"",
-                    status:"",
-                },
+
                 value1: [],
                 options: [{
-                    value: 'zhinan',
-                    label: '指南',
+                    value: 'food',
+                    label: '食品',
                     children: [{
-                        value: 'shejiyuanze',
-                        label: '设计原则',
+                        value: 'apple',
+                        label: '苹果',
                     }, {
                         value: 'daohang',
                         label: '导航',
@@ -78,10 +72,22 @@
         },
         methods: {
             handleChange(value1) {
-                this.$emit("emitGoodsItem",value1);
-                console.log("我传递商品给父组件了")
-            }
-        }
+                console.log(value1);
+
+                console.log(this.Goods)
+                // this.$watch('Goods', function(newVal, oldVal){
+                //     console.log('newVal');
+                // });
+                    //this.$emit("emitGoodsItem", itemId);
+
+            },
+        },
+        // watch:{
+        //     Goods:function (newVal,oldVal) {
+        //         console.log(newVal);
+        //         console.log(oldVal);
+        //     }
+        // }
     }
 </script>
 
