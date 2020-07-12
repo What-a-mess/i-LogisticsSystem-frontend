@@ -1,186 +1,211 @@
 <template>
-  <div class="display-box">
+  <div>
+    <el-dialog title="编辑信息" :visible.sync="dialogVisible" width="500px">
+      <el-form :model="formData" label-position="right" label-width="80px">
+        <el-row>
+          <el-col :span="14" :offset="4">
+            <el-form-item label="主站ID">
+              <el-input v-model="formData.mainsiteId"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="14" :offset="4">
+            <el-form-item label="运费">
+              <el-input v-model="formData.shippingCost" type="number"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-button @click="dialogVisible=false">取消</el-button>
+        <el-button type="primary" @click="updateOnClick">确定</el-button>
+      </el-form>
+    </el-dialog>
+    <div class="display-box">
       <el-row :gutter="80">
-          <el-col :span="1" :offset="20">
-              <el-button type="danger">拒绝</el-button>
-          </el-col>
-          <el-col :span="1">
-              <el-button type="success">通过</el-button>
-          </el-col>
+        <el-col :span="1" :offset="19">
+          <el-button type="danger">拒绝</el-button>
+        </el-col>
+        <el-col :span="1">
+          <el-button type="primary" @click="dialogVisible=true">编辑</el-button>
+        </el-col>
+        <el-col :span="1">
+          <el-button type="success">通过</el-button>
+        </el-col>
       </el-row>
-      <br/>
-    <el-row :gutter="50">
-      <el-col :span="12">
-        <BasicCard header="订单基本信息">
-          <el-row>
-            <el-col :span="12" style="text-align: left">
-              <h3>
-                <div class="text-label">订单编号:</div>
-                <div class="text-value">{{orderInfo.order.orderId}}</div>
-              </h3>
+      <br />
+      <el-row :gutter="50">
+        <el-col :span="12">
+          <BasicCard header="订单基本信息">
+            <el-row>
+              <el-col :span="12" style="text-align: left">
+                <h3>
+                  <div class="text-label">订单编号:</div>
+                  <div class="text-value">{{orderInfo.order.orderId}}</div>
+                </h3>
+              </el-col>
+              <el-col :span="12" style="text-align: left">
+                <h3>
+                  <div class="text-label">客户ID:</div>
+                  <div class="text-value">{{orderInfo.order.customerId}}</div>
+                </h3>
+              </el-col>
+            </el-row>
+            <el-divider></el-divider>
+            <!-- 订单详情 -->
+            <el-row>
+              <el-col :span="12">
+                <div class="text-label">订单状态：</div>
+                <div class="text-value">
+                  <el-tag v-if="orderInfo.order.processStatus=='N'" type="danger">未处理</el-tag>
+                  <el-tag v-else-if="orderInfo.order.processStatus=='P'" type="warning">正在处理</el-tag>
+                  <el-tag v-else-if="orderInfo.order.processStatus=='D'" type="success">交易成功</el-tag>
+                  <el-tag v-else-if="orderInfo.order.processStatus=='C'" type="info">交易关闭</el-tag>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">下单日期：</div>
+                <div class="text-value">{{orderInfo.order.createDateTime}}</div>
+              </el-col>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">付款日期：</div>
+                <div class="text-value">{{orderInfo.order.payDateTime}}</div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">订单金额：</div>
+                <div class="text-value">{{orderInfo.order.totalPrice}}</div>
+              </el-col>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">运费：</div>
+                <div class="text-value">{{orderInfo.order.shippingCost}}</div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">付款状态：</div>
+                <div class="text-value">
+                  <el-tag v-if="orderInfo.order.payStatus=='P'" type="success">已付款</el-tag>
+                  <el-tag v-else-if="orderInfo.order.payStatus=='W'" type="danger">未付款</el-tag>
+                </div>
+              </el-col>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">支付方式：</div>
+                <div class="text-value">{{orderInfo.order.payMethod}}</div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12" style="text-align: left">
+                <div class="text-label">收货人：</div>
+                <div class="text-value">{{orderInfo.order.billName}}</div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col style="text-align: left">
+                <div class="text-label">收货地址：</div>
+                <div
+                  class="text-value"
+                >{{orderInfo.order.billPro+orderInfo.order.billCity+orderInfo.order.billDistrict+orderInfo.order.billAddr}}</div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col style="text-align: left">
+                <div class="text-label">备注：</div>
+                <div class="text-value">{{orderInfo.order.note}}</div>
+              </el-col>
+            </el-row>
+          </BasicCard>
+        </el-col>
+        <el-col :span="12">
+          <BasicCard header="预分拣信息">
+            <el-col>
+              <PrimaryCard
+                :title="'主站ID：'+orderInfo.mainsite.mainsiteId"
+                :content="'主站地址：'+orderInfo.mainsite.province+orderInfo.mainsite.city+orderInfo.mainsite.district"
+              ></PrimaryCard>
             </el-col>
-            <el-col :span="12" style="text-align: left">
-              <h3>
-                <div class="text-label">客户ID:</div>
-                <div class="text-value">{{orderInfo.order.customerId}}</div>
-              </h3>
+            <el-col style="padding-top: 20px;">
+              <PrimaryCard
+                :title="'配送站ID：'+orderInfo.subsite.subsiteId"
+                :content="'配送站：'+orderInfo.subsite.district"
+              ></PrimaryCard>
             </el-col>
-          </el-row>
-          <el-divider></el-divider>
-          <!-- 订单详情 -->
-          <el-row>
-            <el-col :span="12">
-              <div class="text-label">订单状态：</div>
-              <div class="text-value">
-                <el-tag v-if="orderInfo.order.processStatus=='N'" type="danger">未处理</el-tag>
-                <el-tag v-else-if="orderInfo.order.processStatus=='P'" type="warning">正在处理</el-tag>
-                <el-tag v-else-if="orderInfo.order.processStatus=='D'" type="success">交易成功</el-tag>
-                <el-tag v-else-if="orderInfo.order.processStatus=='C'" type="info">交易关闭</el-tag>
-              </div>
+            <el-col style="padding-top: 20px;">
+              <PrimaryCard title="预分拣结果信息" :content="orderInfo.msg"></PrimaryCard>
             </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">下单日期：</div>
-              <div class="text-value">{{orderInfo.order.createDateTime}}</div>
-            </el-col>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">付款日期：</div>
-              <div class="text-value">{{orderInfo.order.payDateTime}}</div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">订单金额：</div>
-              <div class="text-value">{{orderInfo.order.totalPrice}}</div>
-            </el-col>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">运费：</div>
-              <div class="text-value">{{orderInfo.order.shippingCost}}</div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">付款状态：</div>
-              <div class="text-value">
-                <el-tag v-if="orderInfo.order.payStatus=='P'" type="success">已付款</el-tag>
-                <el-tag v-else-if="orderInfo.order.payStatus=='W'" type="danger">未付款</el-tag>
-              </div>
-            </el-col>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">支付方式：</div>
-              <div class="text-value">{{orderInfo.order.payMethod}}</div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12" style="text-align: left">
-              <div class="text-label">收货人：</div>
-              <div class="text-value">{{orderInfo.order.billName}}</div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col style="text-align: left">
-              <div class="text-label">收货地址：</div>
-              <div
-                class="text-value"
-              >{{orderInfo.order.billPro+orderInfo.order.billCity+orderInfo.order.billDistrict+orderInfo.order.billAddr}}</div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col style="text-align: left">
-              <div class="text-label">备注：</div>
-              <div class="text-value">{{orderInfo.order.note}}</div>
-            </el-col>
-          </el-row>
-        </BasicCard>
-      </el-col>
-      <el-col :span="12">
-        <BasicCard header="预分拣信息">
-          <el-col>
-            <PrimaryCard
-              :title="'主站ID：'+orderInfo.mainsite.mainsiteId"
-              :content="'主站地址：'+orderInfo.mainsite.province+orderInfo.mainsite.city+orderInfo.mainsite.district"
-            ></PrimaryCard>
-          </el-col>
-          <el-col style="padding-top: 20px;">
-            <PrimaryCard
-              :title="'配送站ID：'+orderInfo.subsite.subsiteId"
-              :content="'配送站：'+orderInfo.subsite.district"
-            ></PrimaryCard>
-          </el-col>
-          <el-col style="padding-top: 20px;">
-            <PrimaryCard title="预分拣结果信息" :content="orderInfo.msg"></PrimaryCard>
-          </el-col>
-        </BasicCard>
-      </el-col>
-    </el-row>
-    <el-row style="padding-top: 20px;">
-      <BasicCard header="商品信息">
-        <el-table :data="orderInfo.orderItemList">
-          <el-table-column type="expand">
-            <template slot-scope="items">
-              <el-row style="text-align: left">
-                <el-col :span="2">
-                  <el-image
-                    style="width: 100px; height: 100px"
-                    :src="items.row.item.imgUrl"
-                    fit="fit"
-                  ></el-image>
-                </el-col>
-                <el-col :span="22">
-                  <el-row>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">商品ID：</div>
-                      <div class="text-value">{{items.row.item.itemId}}</div>
-                    </el-col>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">大类ID：</div>
-                      <div class="text-value">{{items.row.item.categoryId}}</div>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">商品名称：</div>
-                      <div class="text-value">{{items.row.item.name}}</div>
-                    </el-col>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">文字描述：</div>
-                      <div class="text-value">{{items.row.item.descn}}</div>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">原价：</div>
-                      <div class="text-value">{{items.row.item.unitCost}}</div>
-                    </el-col>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">售价：</div>
-                      <div class="text-value">{{items.row.item.listPrice}}</div>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12" style="text-align: left">
-                      <div class="text-label">状态：</div>
-                      <div class="text-value">{{items.row.item.status}}</div>
-                    </el-col>
-                  </el-row>
-                </el-col>
-              </el-row>
-            </template>
-          </el-table-column>
-          <el-table-column label="订单ID" prop="orderId"></el-table-column>
-          <el-table-column label="任务单ID" prop="taskId"></el-table-column>
-          <el-table-column label="商品数量" prop="quantity"></el-table-column>
-          <el-table-column label="处理状态">
+          </BasicCard>
+        </el-col>
+      </el-row>
+      <el-row style="padding-top: 20px;">
+        <BasicCard header="商品信息">
+          <el-table :data="orderInfo.orderItemList">
+            <el-table-column type="expand">
               <template slot-scope="items">
-                  <el-tag v-if="items.row.status=='O'" type="warning">缺货</el-tag>
-                  <el-tag v-else type="success">已分配</el-tag>
+                <el-row style="text-align: left">
+                  <el-col :span="2">
+                    <el-image
+                      style="width: 100px; height: 100px"
+                      :src="items.row.item.imgUrl"
+                      fit="fit"
+                    ></el-image>
+                  </el-col>
+                  <el-col :span="22">
+                    <el-row>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">商品ID：</div>
+                        <div class="text-value">{{items.row.item.itemId}}</div>
+                      </el-col>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">大类ID：</div>
+                        <div class="text-value">{{items.row.item.categoryId}}</div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">商品名称：</div>
+                        <div class="text-value">{{items.row.item.name}}</div>
+                      </el-col>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">文字描述：</div>
+                        <div class="text-value">{{items.row.item.descn}}</div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">原价：</div>
+                        <div class="text-value">{{items.row.item.unitCost}}</div>
+                      </el-col>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">售价：</div>
+                        <div class="text-value">{{items.row.item.listPrice}}</div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="12" style="text-align: left">
+                        <div class="text-label">状态：</div>
+                        <div class="text-value">{{items.row.item.status}}</div>
+                      </el-col>
+                    </el-row>
+                  </el-col>
+                </el-row>
               </template>
-          </el-table-column>
-          <el-table-column label="订单总额" prop="totalPrice"></el-table-column>
-        </el-table>
-      </BasicCard>
-    </el-row>
+            </el-table-column>
+            <el-table-column label="订单ID" prop="orderId"></el-table-column>
+            <el-table-column label="任务单ID" prop="taskId"></el-table-column>
+            <el-table-column label="商品数量" prop="quantity"></el-table-column>
+            <el-table-column label="处理状态">
+              <template slot-scope="items">
+                <el-tag v-if="items.row.status=='O'" type="warning">缺货</el-tag>
+                <el-tag v-else type="success">已分配</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="订单总额" prop="totalPrice"></el-table-column>
+          </el-table>
+        </BasicCard>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -275,8 +300,22 @@ export default {
           district: "华南"
         },
         msg: "订单主站从西南发货, 配送站为华南站, 预计总配送时长3天"
+      },
+      dialogVisible: false,
+      formData: {
+        mainsiteId: "",
+        shippingCost: null
       }
     };
+  },
+  mounted() {
+    this.formData.mainsiteId = this.orderInfo.mainsite.mainsiteId;
+    this.formData.shippingCost = this.orderInfo.order.shippingCost;
+  },
+  methods: {
+    updateOnClick() { 
+      this.dialogVisible=false
+    }
   }
 };
 </script>
