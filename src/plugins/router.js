@@ -11,6 +11,7 @@ import OrderFormDetails from '../components/OrderFormMgmt/OrderFormDetails'
 import ReturnFormInfo from "../components/OrderFormMgmt/ReturnFormInfo"
 import PreSortRes from "../components/OrderFormMgmt/PreSortRes"
 import OrderExamine from "../components/OrderFormMgmt/OrderExamine"
+import ExamineDetail from "../components/OrderFormMgmt/ExamineDetail"
 
 // ClienteleMgmt
 import CustomerInfo from '../components/ClienteleMgmt/CustomerInfo'
@@ -40,7 +41,8 @@ const routes = [
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
             { path: 'mainSiteIO', component: MainSiteIOInfo },
-            { path: 'orderExamine', component: OrderExamine }
+            { path: 'orderExamine', component: OrderExamine },
+            { path: 'examineDetail/:id', component: ExamineDetail}
         ]
     }
 ]

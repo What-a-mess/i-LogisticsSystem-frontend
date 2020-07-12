@@ -62,4 +62,5 @@ export default {
     .el-col {
         padding: 20px;
     }
+    
 </style>
