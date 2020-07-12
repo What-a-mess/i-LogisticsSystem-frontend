@@ -18,7 +18,8 @@ import CustomerInfo from '../components/ClienteleMgmt/CustomerInfo'
 import SupplierInfo from '../components/ClienteleMgmt/SupplierInfo'
 
 // StorageMgmt
-import MainSiteIOInfo from '../components/SotrageMgmt/MainSiteIOInfo'
+import MainSiteInInfo from '../components/SotrageMgmt/MainSiteInInfo'
+import MainSiteOutInfo from '../components/SotrageMgmt/MainSiteOutInfo'
 import MainSiteInDetail from '../components/SotrageMgmt/MainSiteInDetail'
 
 import Charts from "../components/Charts";
@@ -41,10 +42,11 @@ const routes = [
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
-            { path: 'mainsites/:mainsiteId/inventory/siteios', component: MainSiteIOInfo },
+            { path: 'mainsites/:mainsiteId/inventory/sitein', component: MainSiteInInfo },
+            { path: 'mainsites/:mainsiteId/inventory/siteout', component: MainSiteOutInfo },
             { path: 'mainsites/:mainsiteId/inventory/siteios/:recordId', component: MainSiteInDetail },
             { path: 'orderExamine', component: OrderExamine },
-            { path: 'examineDetail/:id', component: ExamineDetail}
+            { path: 'examineDetail/:id', component: ExamineDetail }
         ]
     }
 ]
