@@ -38,6 +38,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 + <http://jmesnil.net/stomp-websocket/doc/>
 + 是基于STOMP协议的web socket实现, rabbitmq服务端带有stomp插件
 + 进行了封装，使用时请引入`src/plugins/rabbitmq`
++ 类解析：`JSON.parse()`
 + 示例：
 
 函数中ack:
