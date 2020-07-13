@@ -39,11 +39,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 + 是基于STOMP协议的web socket实现, rabbitmq服务端带有stomp插件
 + 进行了封装，使用时请引入`src/plugins/rabbitmq`
 + 示例：
-```js
-mq.connect('test',frame=>{console.log("msg: "+frame.body),frame=>{console.log("err: "+frame)}})
 
-```
-
+函数中ack:
 ```js
 //可关闭的心跳检测
 mq.client.heartbeat.outgoing=0;
@@ -52,10 +49,38 @@ mq.connect('test',frame=>{
   //处理消息
   
   //...
+  console.log("msg: "+frame.body)
 
   //处理完成后返回ack（没完成则不返回）
   frame.ack();
-},err=>{
-    console.log("err:"+err);
+},frame=>{
+    console.log("err:"+frame);
 });
+```
+
+异步调用ack（保存frame）:
+```js
+data() {
+  return{
+    frame: {
+      ack:function(){} //预定义的空函数防止报错
+    },
+    accept() { //调用方法返回ack
+      this.frame.ack(); 
+    }
+  }
+},
+created() { //或者其他方法（组件重新打开重新执行的）
+  var vm = this;
+  mq.connect(
+    "test",frame => {
+      vm.frame = frame;
+
+      //...
+    },
+    err => {
+      console.log("err:" + err);
+    }
+  );
+}
 ```
