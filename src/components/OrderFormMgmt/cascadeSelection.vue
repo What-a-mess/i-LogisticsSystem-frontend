@@ -16,198 +16,165 @@
             return {
                 value: [],
                 options: [{
-                    value: 'zhinan',
-                    label: '指南',
+                    value: '河北',
+                    label: '河北',
                     children: [{
-                        value: 'shejiyuanze',
-                        label: '设计原则',
+                        value: '石家庄',
+                        label: '石家庄',
                         children: [{
-                            value: 'yizhi',
-                            label: '一致'
+                            value: '正定县',
+                            label: '正定县'
                         }, {
-                            value: 'fankui',
-                            label: '反馈'
+                            value: '灵寿县',
+                            label: '灵寿县'
                         }, {
-                            value: 'xiaolv',
-                            label: '效率'
+                            value: '高邑县',
+                            label: '高邑县'
                         }, {
-                            value: 'kekong',
-                            label: '可控'
+                            value: '无极县',
+                            label: '无极县'
                         }]
                     }, {
-                        value: 'daohang',
-                        label: '导航',
+                        value: '唐山',
+                        label: '唐山',
                         children: [{
-                            value: 'cexiangdaohang',
-                            label: '侧向导航'
+                            value: '乐亭县',
+                            label: '乐亭县'
                         }, {
-                            value: 'dingbudaohang',
-                            label: '顶部导航'
+                            value: '玉田县',
+                            label: '玉田县'
+                        }, {
+                            value: '迁西县',
+                            label: '迁西县'
                         }]
                     }]
                 }, {
-                    value: 'zujian',
-                    label: '组件',
+                    value: '山西省',
+                    label: '山西省',
                     children: [{
-                        value: 'basic',
-                        label: 'Basic',
+                        value: '太原市',
+                        label: '太原市',
                         children: [{
-                            value: 'layout',
-                            label: 'Layout 布局'
+                            value: '清徐县',
+                            label: '清徐县'
                         }, {
-                            value: 'color',
-                            label: 'Color 色彩'
+                            value: '阳曲县',
+                            label: '阳曲县'
                         }, {
-                            value: 'typography',
-                            label: 'Typography 字体'
-                        }, {
-                            value: 'icon',
-                            label: 'Icon 图标'
-                        }, {
-                            value: 'button',
-                            label: 'Button 按钮'
+                            value: '娄烦县',
+                            label: '娄烦县'
                         }]
                     }, {
-                        value: 'form',
-                        label: 'Form',
+                        value: '大同市',
+                        label: '大同市',
                         children: [{
-                            value: 'radio',
-                            label: 'Radio 单选框'
+                            value: '阳高县',
+                            label: '阳高县'
                         }, {
-                            value: 'checkbox',
-                            label: 'Checkbox 多选框'
+                            value: '天镇县',
+                            label: '天镇县'
                         }, {
-                            value: 'input',
-                            label: 'Input 输入框'
+                            value: '广灵县',
+                            label: '广灵县'
                         }, {
-                            value: 'input-number',
-                            label: 'InputNumber 计数器'
+                            value: '灵丘县',
+                            label: '灵丘县'
                         }, {
-                            value: 'select',
-                            label: 'Select 选择器'
+                            value: '浑源县',
+                            label: '浑源县'
                         }, {
-                            value: 'cascader',
-                            label: 'Cascader 级联选择器'
-                        }, {
-                            value: 'switch',
-                            label: 'Switch 开关'
-                        }, {
-                            value: 'slider',
-                            label: 'Slider 滑块'
-                        }, {
-                            value: 'time-picker',
-                            label: 'TimePicker 时间选择器'
-                        }, {
-                            value: 'date-picker',
-                            label: 'DatePicker 日期选择器'
-                        }, {
-                            value: 'datetime-picker',
-                            label: 'DateTimePicker 日期时间选择器'
-                        }, {
-                            value: 'upload',
-                            label: 'Upload 上传'
-                        }, {
-                            value: 'rate',
-                            label: 'Rate 评分'
-                        }, {
-                            value: 'form',
-                            label: 'Form 表单'
+                            value: '左云县',
+                            label: '左云县'
                         }]
                     }, {
-                        value: 'data',
-                        label: 'Data',
+                        value: '吕梁市',
+                        label: '吕梁市',
                         children: [{
-                            value: 'table',
-                            label: 'Table 表格'
+                            value: '文水县',
+                            label: '文水县'
                         }, {
-                            value: 'tag',
-                            label: 'Tag 标签'
+                            value: '交城县',
+                            label: '交城县'
                         }, {
-                            value: 'progress',
-                            label: 'Progress 进度条'
+                            value: '兴县',
+                            label: '兴县'
                         }, {
-                            value: 'tree',
-                            label: 'Tree 树形控件'
+                            value: '临县',
+                            label: '临县'
                         }, {
-                            value: 'pagination',
-                            label: 'Pagination 分页'
+                            value: '柳林县',
+                            label: '柳林县'
                         }, {
-                            value: 'badge',
-                            label: 'Badge 标记'
+                            value: '石楼县',
+                            label: '石楼县'
                         }]
                     }, {
-                        value: 'notice',
-                        label: 'Notice',
+                        value: '阳泉市',
+                        label: '阳泉市',
                         children: [{
-                            value: 'alert',
-                            label: 'Alert 警告'
+                            value: '平定县',
+                            label: '平定县'
                         }, {
-                            value: 'loading',
-                            label: 'Loading 加载'
-                        }, {
-                            value: 'message',
-                            label: 'Message 消息提示'
-                        }, {
-                            value: 'message-box',
-                            label: 'MessageBox 弹框'
-                        }, {
-                            value: 'notification',
-                            label: 'Notification 通知'
+                            value: '盂县',
+                            label: '盂县'
                         }]
                     }, {
-                        value: 'navigation',
-                        label: 'Navigation',
+                        value: '晋城市',
+                        label: '晋城市',
                         children: [{
-                            value: 'menu',
-                            label: 'NavMenu 导航菜单'
+                            value: '沁水县',
+                            label: '沁水县'
                         }, {
-                            value: 'tabs',
-                            label: 'Tabs 标签页'
+                            value: '阳城县',
+                            label: '阳城县'
                         }, {
-                            value: 'breadcrumb',
-                            label: 'Breadcrumb 面包屑'
+                            value: '陵川县',
+                            label: '陵川县'
                         }, {
-                            value: 'dropdown',
-                            label: 'Dropdown 下拉菜单'
-                        }, {
-                            value: 'steps',
-                            label: 'Steps 步骤条'
+                            value: '泽州县',
+                            label: '泽州县'
                         }]
                     }, {
-                        value: 'others',
-                        label: 'Others',
+                        value: '朔州市',
+                        label: '朔州市',
                         children: [{
-                            value: 'dialog',
-                            label: 'Dialog 对话框'
+                            value: '山阴县',
+                            label: '山阴县'
                         }, {
-                            value: 'tooltip',
-                            label: 'Tooltip 文字提示'
+                            value: '应县',
+                            label: '应县'
                         }, {
-                            value: 'popover',
-                            label: 'Popover 弹出框'
-                        }, {
-                            value: 'card',
-                            label: 'Card 卡片'
-                        }, {
-                            value: 'carousel',
-                            label: 'Carousel 走马灯'
-                        }, {
-                            value: 'collapse',
-                            label: 'Collapse 折叠面板'
+                            value: '右玉县',
+                            label: '右玉县'
                         }]
                     }]
                 }, {
-                    value: 'ziyuan',
-                    label: '资源',
+                    value: '北京',
+                    label: '北京',
                     children: [{
-                        value: 'axure',
-                        label: 'Axure Components'
+                        value: '海淀区',
+                        label: '海淀区'
                     }, {
-                        value: 'sketch',
-                        label: 'Sketch Templates'
+                        value: '朝阳区',
+                        label: '朝阳区'
                     }, {
-                        value: 'jiaohu',
-                        label: '组件交互文档'
+                        value: '石景山区',
+                        label: '石景山区'
+                    }, {
+                        value: '西城区',
+                        label: '西城区'
+                    }, {
+                        value: '东城区',
+                        label: '东城区'
+                    }, {
+                        value: '宣武区',
+                        label: '宣武区'
+                    }, {
+                        value: '崇文区',
+                        label: '崇文区'
+                    }, {
+                        value: '丰台区',
+                        label: '丰台区'
                     }]
                 }],
             };
