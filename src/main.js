@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import './plugins/element.js'
 import router from './plugins/router'
+import './plugins/baiduMap'
 
 //引入font-awesome
 import { library } from '@fortawesome/fontawesome-svg-core'

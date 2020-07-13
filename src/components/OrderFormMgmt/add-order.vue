@@ -114,6 +114,7 @@
 <script>
     import cascadeSelection from "./cascadeSelection";
     import GoodsSelection from "./goodsSelection";
+    import myaxios from "../../plugins/myaxios";
    // import {Loading} from 'element-ui'
     export default {
         name: "add-order",
@@ -128,6 +129,11 @@
             },
             getGoods:function(){
                 //应该是向后端请求 货物数据
+                var result = [];
+                myaxios.get("/goods/catalog").then(res => {
+                    result = res.data;
+                });
+                console.log(result);
                 return [{
                     categoryId: 12312,
                     categoryName:"food",
