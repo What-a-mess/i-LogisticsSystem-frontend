@@ -25,6 +25,8 @@ import MainSiteOutDetail from '../components/SotrageMgmt/MainSiteOutDetail'
 import WarehouseMgmt from '../components/SotrageMgmt/WarehouseMgmt'
 
 import Charts from "../components/Charts";
+import SiteMap from "../components/Map/SiteMap";
+import DeliverMap from "../components/Map/DeliverMap";
 
 
 const routes = [
@@ -48,6 +50,8 @@ const routes = [
             { path: 'mainsites/:mainsiteId/inventory/siteout/:recordId', component: MainSiteOutDetail },
             { path: 'mainsites/:mainsiteId/inventory/warehouses', component: WarehouseMgmt },
             { path: 'orderExamine', component: OrderExamine },
+            { path: 'siteMap', component: SiteMap },
+            { path: 'deliverMap', component: DeliverMap },
             { path: 'examineDetail/:id', component: ExamineDetail }
         ]
     }

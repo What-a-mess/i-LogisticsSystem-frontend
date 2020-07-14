@@ -20,7 +20,7 @@
         </el-autocomplete>
       </el-col>
       <el-col :span="1" :offset="12">
-            <i class="el-icon-refresh" style="font-size: 20px"></i>
+            <button class="refreshBtn" @click="refresh"><i  class="el-icon-refresh" style="font-size: 20px"></i></button>
       </el-col>
       <el-col :span="1">
         <el-dropdown>
@@ -89,6 +89,9 @@ export default {
           })
         : modules;
       cb(results);
+    },
+    refresh:function () {
+      window.location.reload();
     }
   }
 };
@@ -127,6 +130,17 @@ export default {
 .el-icon-arrow-down {
   font-size: 12px;
 }
+
+  .refreshBtn{
+    background: transparent;
+    border-radius: 20px;
+    width: 90%;
+    height: 50%;
+  }
+  .refreshBtn:hover{
+    transform: scale(1.2);
+    background: #eff3f9;
+  }
 
 
 
