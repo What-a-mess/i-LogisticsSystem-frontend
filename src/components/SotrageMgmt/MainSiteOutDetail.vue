@@ -2,7 +2,7 @@
   <div class="display-box">
     <el-row :gutter="80">
       <el-col :span="1" :offset="19">
-        <el-button type="danger">拒绝</el-button>
+        <el-button type="danger" @click="onChangeStatus('F')">拒绝</el-button>
       </el-col>
       <el-col :span="1">
         <el-button
@@ -11,7 +11,7 @@
         >编辑</el-button>
       </el-col>
       <el-col :span="1">
-        <el-button type="success">通过</el-button>
+        <el-button type="success" @click="onChangeStatus('Y')">通过</el-button>
       </el-col>
     </el-row>
     <br />
@@ -126,6 +126,7 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import myaxious from "../../plugins/myaxios";
+import router from "../../plugins/router";
 
 export default {
   components: { BasicCard },
@@ -157,6 +158,15 @@ export default {
           console.log(res.status);
         });
       this.dialogVisible = false;
+      this.fetchData();
+    },
+    onChangeStatus(status) {
+      console.log(status);
+      myaxious.patch(
+        "/mainsites/" + this.mainsiteId + "/inventory/siteout/" + this.recordId,
+        { approvalStatus: status }
+      );
+      router.push("/main/mainsites/" + this.mainsiteId + "/inventory/sitein");
     }
   },
   data: () => {
