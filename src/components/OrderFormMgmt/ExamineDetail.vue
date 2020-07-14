@@ -213,7 +213,7 @@
 import PrimaryCard from "../DataCard/PrimaryCard";
 import BasicCard from "../PanelCard/BasicCard";
 // import axios from "axios";
-import myaxios from "../../plugins/myaxios"
+import myaxios from "../../plugins/myaxios";
 
 export default {
   components: { PrimaryCard, BasicCard },
@@ -314,17 +314,17 @@ export default {
   mounted() {
     this.formData.mainsiteId = this.orderInfo.mainsite.mainsiteId;
     this.formData.shippingCost = this.orderInfo.order.shippingCost;
-    this.orderId = this.$route.params.orderId
+    this.orderId = this.$route.params.orderId;
     this.fetchData();
   },
   methods: {
-    updateOnClick() { 
-      this.dialogVisible=false
+    updateOnClick() {
+      this.dialogVisible = false;
     },
     fetchData() {
-      myaxios.get("/orders/"+this.orderId+"/check").then(res => {
+      myaxios.get("/orders/" + this.orderId + "/check").then(res => {
         this.orderInfo = res.data;
-      })
+      });
     }
   }
 };
