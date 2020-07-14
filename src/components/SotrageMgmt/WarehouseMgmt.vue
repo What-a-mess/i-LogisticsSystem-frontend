@@ -80,7 +80,7 @@ export default {
   components: { BasicCard, ItemCard },
   methods: {
     fetchWarehouses() {
-      myaxios.get("/mainsites/1/warehouses").then(res => {
+      myaxios.get("/mainsites/" + this.mainsiteId + "/warehouses").then(res => {
         console.log(res);
         this.warehouseList = res.data.warehouseList;
         this.srcWarehouse = this.warehouseList[0].warehouseId;
@@ -88,9 +88,11 @@ export default {
       });
     },
     fetchWarehousDetail(warehouseId) {
-      myaxios.get("/mainsites/1/warehouse/" + warehouseId).then(res => {
-        this.curInventory = res.data;
-      });
+      myaxios
+        .get("/mainsites/" + this.mainsiteId + "/warehouse/" + warehouseId)
+        .then(res => {
+          this.curInventory = res.data;
+        });
     },
     allowDrop(ev) {
       ev.preventDefault();
@@ -122,6 +124,7 @@ export default {
           " to " +
           this.targetWarehouse
       );
+      // 此处需要进行转移数据的传输
       this.dialogVisible = false;
       this.transferNum = 0;
     },
@@ -196,6 +199,7 @@ export default {
           maxSize: 1700
         }
       ],
+      mainsiteId: "",
       srcWarehouse: "",
       targetWarehouse: "",
       targetItemId: "",
@@ -204,6 +208,7 @@ export default {
     };
   },
   mounted() {
+    this.mainsiteId = this.$route.params.mainsiteId;
     this.fetchWarehouses();
   }
 };
