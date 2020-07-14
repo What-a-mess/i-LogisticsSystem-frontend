@@ -27,6 +27,7 @@ import WarehouseMgmt from '../components/SotrageMgmt/WarehouseMgmt'
 import Charts from "../components/Charts";
 import SiteMap from "../components/Map/SiteMap";
 import DeliverMap from "../components/Map/DeliverMap";
+import CatalogInfo from "../components/SotrageMgmt/CatalogInfo"
 
 
 const routes = [
@@ -44,6 +45,7 @@ const routes = [
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
+            { path: 'catalogInfo', component: CatalogInfo },
             { path: 'mainsites/:mainsiteId/inventory/sitein', component: MainSiteInInfo },
             { path: 'mainsites/:mainsiteId/inventory/siteout', component: MainSiteOutInfo },
             { path: 'mainsites/:mainsiteId/inventory/sitein/:recordId', component: MainSiteInDetail },
