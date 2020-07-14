@@ -54,7 +54,7 @@ const routes = [
             { path: 'orderExamine', component: OrderExamine },
             { path: 'siteMap', component: SiteMap },
             { path: 'deliverMap', component: DeliverMap },
-            { path: 'examineDetail/:id', component: ExamineDetail }
+            { path: 'orderExamine/:orderId', component: ExamineDetail }
         ]
     }
 ]
