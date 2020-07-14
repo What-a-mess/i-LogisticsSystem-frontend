@@ -7,10 +7,8 @@
     </el-row>
     <br />
     <BasicCard header="订单总览" style="left: 1.5%;width: 98.5%">
-
-    <el-row>
-      <el-col style="padding-left: 20px">
-
+      <el-row>
+        <el-col style="padding-left: 20px">
           <!-- 筛选信息行 -->
           <el-row>
             <el-col>
@@ -104,9 +102,16 @@
               </template>
             </el-table-column>
           </el-table>
-
-      </el-col>
-    </el-row>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-pagination
+          :current-page.sync="curPage"
+          :page-count="totalPages"
+          layout="prev, pager, next"
+          @current-change="onPageChange"
+        ></el-pagination>
+      </el-row>
     </BasicCard>
   </div>
 </template>
@@ -117,8 +122,7 @@ import AddOrder from "./add-order";
 import BasicCard from "../PanelCard/BasicCard";
 
 export default {
-  components: { AddOrder,
-            BasicCard},
+  components: { AddOrder, BasicCard },
   data: function() {
     return {
       input: "",
@@ -133,7 +137,6 @@ export default {
         orderIdQuery: "",
         orderStatus: ""
       },
-
 
       orderForms: [
         {
@@ -206,7 +209,10 @@ export default {
           remarks: "Excepteur pariatur",
           taskForms: [36]
         }
-      ]
+      ],
+      pageSize: 10,
+      totalPages: 5,
+      curPage: 1
     };
   },
   watch: {
@@ -217,14 +223,17 @@ export default {
       this.eDay = endDate;
       console.log(startDate);
       console.log(endDate);
-    },
-
+    }
   },
   methods: {
     fetchData() {
       myaxios.get("/orders").then(res => {
         this.orderForms = res.data;
       });
+    },
+
+    onPageChange() {
+      this.fetchData();
     },
 
     // addOrder:function(e){
