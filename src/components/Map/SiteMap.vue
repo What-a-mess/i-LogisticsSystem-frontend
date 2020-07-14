@@ -3,6 +3,13 @@
     <baidu-map class="map" :center="{lng: 118.454, lat: 32.955}" :zoom="6" :scroll-wheel-zoom="false">
 <!--        <bm-label content="北京站点" :position="{lng: 116.404, lat: 39.915}" :labelStyle="{color: 'red', fontSize : '12px'}" title="Hover me"/>-->
         <bml-curve-line :points="points" :editing="true" @lineupdate="update"></bml-curve-line>
+        <div v-for="(point,index) in points" v-bind:key="point.assign">
+            <bm-marker :position="point" :dragging="false"  @click="infoWindowOpen(index)">
+            </bm-marker>
+        </div>
+
+
+
         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
     </baidu-map>
     </BasicCard>
@@ -26,6 +33,14 @@
                 myaxios.get("/goods/catalog").then(res => {
                     this.points = res.data;
                 });
+            },
+            infoWindowOpen (index) {
+
+                const h = this.$createElement;
+                this.$notify({
+                    title: '主站',
+                    message: h('i', { style: 'color: teal'}, this.siteCity[index]+"主站, 美丽富饶")
+                });
             }
         },
         data () {
@@ -35,13 +50,11 @@
                     {lng: 112.55, lat: 37.87},
                     {lng: 120.129721, lat: 30.314429},
                     {lng: 108.47, lat: 33.83},
-                    {lng: 112.55, lat: 37.87},
                     {lng:113.23, lat:23.16},
-                    {lng: 108.47, lat: 33.83},
                     {lng: 121.47, lat: 31.23},
-                    {lng: 116.432045, lat: 39.910683},
 
-                ]
+                ],
+                siteCity:['北京','太原','杭州','西安','广州','上海'],
             }
         },
     }

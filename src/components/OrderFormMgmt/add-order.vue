@@ -208,7 +208,6 @@
                 }
             },
             emitOrder:function () {
-
                 //let loadingInstance1 = Loading.service({ fullscreen: true });
                 //视觉关闭
                 this.dialogFormVisible = false;
@@ -217,13 +216,29 @@
                 for(var k=0;k<this.orderItemList.length;k++){
                     this.order.totalPrice += this.orderItemList[k].total;
                 }
+
+                for(var i in this.order){
+                    if(this.order[i]==""){
+                        this.$notify.error({
+                            title: '错误',
+                            message: '填写的信息不能为空'
+                        });
+                        return 0;
+                    }
+                }
+
                 //封装数据到OrderAddReq数组中
                 this.OrderAddReq.push(this.order);
                 this.OrderAddReq.push(this.orderItemList);
                  this.OrderAddReq.push(this.manual);
+                this.$notify({
+                    title: '成功',
+                    message: '新增订单成功',
+                    type: 'success'
+                });
                 /*
 
-                这一部分代码为发送数据给后端  注意传的是sendData
+                这一部分代码为发送数据给后端  注意传的是OrderAddReq
 
                 */
                  //setTimeout(loadingInstance1.close(),1000)
