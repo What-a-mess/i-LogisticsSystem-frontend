@@ -19,15 +19,25 @@
     <el-row>
       <el-col :span="16">
         <BasicCard header="库房商品" class="display-box">
-          <ItemCard
-            draggable="true"
-            v-for="item in curInventory.itemList"
-            :key="item.item.itemId"
-            :item="item.item"
-            :quantity="item.quantity"
-            class="item-box"
-            @dragstart.native="drag($event, item.item.itemId)"
-          ></ItemCard>
+          <el-row>
+            <ItemCard
+              draggable="true"
+              v-for="item in curInventory.itemList"
+              :key="item.item.itemId"
+              :item="item.item"
+              :quantity="item.quantity"
+              class="item-box"
+              @dragstart.native="drag($event, item.item.itemId)"
+            ></ItemCard>
+          </el-row>
+          <el-row>
+            <el-pagination
+              :current-page.sync="curPage"
+              :page-count="totalPages"
+              layout="prev, pager, next"
+              @current-change="onPageChange"
+            ></el-pagination>
+          </el-row>
         </BasicCard>
       </el-col>
       <el-col :span="7" style="margin: 50px 10px 100px;">
@@ -82,7 +92,7 @@ export default {
     fetchWarehouses() {
       myaxios.get("/mainsites/" + this.mainsiteId + "/warehouses").then(res => {
         console.log(res);
-        this.warehouseList = res.data.warehouseList;
+        this.warehouseList = res.data;
         this.srcWarehouse = this.warehouseList[0].warehouseId;
         this.fetchWarehousDetail(this.srcWarehouse);
       });
@@ -111,6 +121,7 @@ export default {
     changeWarehouse(warehouseId) {
       console.log(warehouseId);
       this.srcWarehouse = warehouseId;
+      this.fetchWarehousDetail();
     },
     comfirmTransfer() {
       if (this.transferNum == 0) return;
@@ -131,6 +142,9 @@ export default {
     cancelTransfer() {
       this.dialogVisible = false;
       this.transferNum = 0;
+    },
+    onPageChange() {
+      this.fetchWarehousDetail();
     }
   },
   data: () => {
@@ -204,7 +218,10 @@ export default {
       targetWarehouse: "",
       targetItemId: "",
       transferNum: 0,
-      dialogVisible: false
+      dialogVisible: false,
+      pageSize: 10,
+      totalPages: 5,
+      curPage: 1
     };
   },
   mounted() {
