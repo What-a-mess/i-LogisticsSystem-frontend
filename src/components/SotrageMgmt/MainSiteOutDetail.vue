@@ -1,8 +1,14 @@
 <template>
   <div class="display-box">
     <el-row :gutter="80">
-      <el-col :span="1" :offset="20">
+      <el-col :span="1" :offset="19">
         <el-button type="danger">拒绝</el-button>
+      </el-col>
+      <el-col :span="1">
+        <el-button
+          type="primary"
+          @click="dialogVisible=true;formData.warehouseId = record.warehouseId;"
+        >编辑</el-button>
       </el-col>
       <el-col :span="1">
         <el-button type="success">通过</el-button>
@@ -119,9 +125,40 @@
 
 <script>
 import BasicCard from "../PanelCard/BasicCard";
+import myaxious from "../../plugins/myaxios";
 
 export default {
   components: { BasicCard },
+  methods: {
+    fetchData() {
+      myaxious
+        .get(
+          "/mainsites/" +
+            this.mainsiteId +
+            "/inventory/siteout/" +
+            this.recordId
+        )
+        .then(res => {
+          this.record = res.data;
+        });
+    },
+    updateOnClick() {
+      myaxious
+        .patch(
+          "/mainsites/" +
+            this.mainsiteId +
+            "/inventory/siteout/" +
+            this.recordId,
+          {
+            warehouseId: this.formData.warehouseId
+          }
+        )
+        .then(res => {
+          console.log(res.status);
+        });
+      this.dialogVisible = false;
+    }
+  },
   data: () => {
     return {
       record: {
@@ -147,6 +184,13 @@ export default {
         approver: "Jack"
       }
     };
+  },
+  mounted() {
+    this.mainsiteId = this.$route.params.mainsiteId;
+    this.recordId = this.$route.params.recordId;
+    console.log(this.mainsiteId);
+    console.log(this.recordId);
+    this.fetchData();
   }
 };
 </script>

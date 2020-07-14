@@ -21,6 +21,7 @@ import SupplierInfo from '../components/ClienteleMgmt/SupplierInfo'
 import MainSiteInInfo from '../components/SotrageMgmt/MainSiteInInfo'
 import MainSiteOutInfo from '../components/SotrageMgmt/MainSiteOutInfo'
 import MainSiteInDetail from '../components/SotrageMgmt/MainSiteInDetail'
+import MainSiteOutDetail from '../components/SotrageMgmt/MainSiteOutDetail'
 import WarehouseMgmt from '../components/SotrageMgmt/WarehouseMgmt'
 
 import Charts from "../components/Charts";
@@ -43,7 +44,8 @@ const routes = [
             { path: 'suppliers', component: SupplierInfo },
             { path: 'mainsites/:mainsiteId/inventory/sitein', component: MainSiteInInfo },
             { path: 'mainsites/:mainsiteId/inventory/siteout', component: MainSiteOutInfo },
-            { path: 'mainsites/:mainsiteId/inventory/siteios/:recordId', component: MainSiteInDetail },
+            { path: 'mainsites/:mainsiteId/inventory/sitein/:recordId', component: MainSiteInDetail },
+            { path: 'mainsites/:mainsiteId/inventory/siteout/:recordId', component: MainSiteOutDetail },
             { path: 'mainsites/:mainsiteId/inventory/warehouses', component: WarehouseMgmt },
             { path: 'orderExamine', component: OrderExamine },
             { path: 'examineDetail/:id', component: ExamineDetail }
