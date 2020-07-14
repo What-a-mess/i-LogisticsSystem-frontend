@@ -212,7 +212,8 @@
 <script>
 import PrimaryCard from "../DataCard/PrimaryCard";
 import BasicCard from "../PanelCard/BasicCard";
-import axios from "axios";
+// import axios from "axios";
+import myaxios from "../../plugins/myaxios"
 
 export default {
   components: { PrimaryCard, BasicCard },
@@ -321,7 +322,7 @@ export default {
       this.dialogVisible=false
     },
     fetchData() {
-      axios.get("localhost:8233/orders/"+this.orderId+"/check").then(res => {
+      myaxios.get("/orders/"+this.orderId+"/check").then(res => {
         this.orderInfo = res.data;
       })
     }
