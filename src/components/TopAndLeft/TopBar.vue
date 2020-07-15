@@ -136,6 +136,7 @@ export default {
     border-radius: 20px;
     width: 90%;
     height: 50%;
+    transition: 0.15s;
   }
   .refreshBtn:hover{
     transform: scale(1.2);

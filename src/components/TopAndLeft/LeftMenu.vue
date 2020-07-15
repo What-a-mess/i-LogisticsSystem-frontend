@@ -101,6 +101,16 @@
         watch: {
             $route: {
                 handler: function(route) {
+                    var routerArr = route.path.split("/");
+                    var details = routerArr[routerArr.length-1];
+                     var order = routerArr[routerArr.length-3];
+                    if(details=="details" && order=="order"){
+                        document.getElementById("page").style.height = "1500px";
+                    }
+                    else{
+                        document.getElementById("page").style.height = "738px";
+                    }
+
                     if(route.path == "/main/charts"){
                         document.getElementById("page").style.background = "#706caa";
                         document.getElementById("page").style.transition = "1.5s";
