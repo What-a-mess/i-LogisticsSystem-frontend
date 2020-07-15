@@ -1,6 +1,5 @@
 <template>
   <div class="display-box">
-    <BasicCard header="审核出库申请">
       <!-- <el-table :data="checkOutItems">
         <el-table-column label="记录编号" prop="recordId"></el-table-column>
         <el-table-column>
@@ -45,24 +44,27 @@
               </el-row>
             </el-col>
             <el-col :span="6">
-              <el-button type="danger">拒绝</el-button>
+              <el-button type="danger" @click="refuseOnClick(item)">拒绝</el-button>
               <el-button type="success" @click="passOnClick(item)">通过</el-button>
-              <el-button type="primary">详细信息</el-button>
+              <el-button type="primary" @click="showDetails(item.recordId)">详细信息</el-button>
             </el-col>
           </el-row>
         </BasicCard>
       </el-row>
-    </BasicCard>
   </div>
 </template>
 
 <script>
 import BasicCard from "../PanelCard/BasicCard";
+import router from "../../plugins/router";
+import { patchMainsiteOutRecord } from "../../api/storage";
+
 
 export default {
   components: { BasicCard },
   data: () => {
     return {
+      mainsiteId: "",
       checkOutItems: [
         {
           recordId: "5",
@@ -100,13 +102,41 @@ export default {
     };
   },
   methods: {
+    methods: {
+    fetchData() {},
     passOnClick: function(item) {
       console.log(this);
-      this.checkOutItems = this.checkOutItems.filter(tempItem => {
-        return tempItem.recordId !== item.recordId;
+      patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
+        approvalStatus: "Y",
+        warehouseId: ""
+      }).then(res => {
+        console.log(res);
+        this.checkOutItems = this.checkOutItems.filter(tempItem => {
+          return tempItem.recordId !== item.recordId;
+        });
       });
       console.debug(item);
+    },
+    refuseOnClick: function(item) {
+      console.log(this);
+      patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
+        approvalStatus: "F",
+        warehouseId: ""
+      }).then(res => {
+        console.log(res);
+        this.checkOutItems = this.checkOutItems.filter(tempItem => {
+          return tempItem.recordId !== item.recordId;
+        });
+      });
+      console.debug(item);
+    },
+    showDetails(recordId) {
+      router.push(this.$route.path + "/" + recordId);
     }
+  },
+  mounted() {
+    this.mainsiteId = this.$route.params.mainsiteId
+  }
   }
 };
 </script>

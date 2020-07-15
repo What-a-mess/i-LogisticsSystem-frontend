@@ -23,55 +23,55 @@
     </BasicCard>
   </div>-->
   <div class="display-box">
-    <BasicCard header="审核出库申请">
-      <el-row v-for="item in checkInItems" :key="item.recordId">
-        <BasicCard :header="'入库请求 '+item.recordId">
-          <el-row type="flex" align="center">
-            <el-col :span="18">
-              <el-row class="form-line">
-                <el-col :span="12">
-                  <div class="text-label">商品ID：</div>
-                  <div class="text-value">{{item.itemId}}</div>
-                </el-col>
-                <el-col :span="12">
-                  <div class="text-label">商品数量：</div>
-                  <div class="text-value">{{item.itemNum}}</div>
-                </el-col>
-              </el-row>
-              <el-row class="form-line">
-                <el-col :span="12">
-                  <div class="text-label">退货类型：</div>
-                  <div class="text-value">
-                    <el-tag v-if="item.type==1" type="success">补货</el-tag>
-                    <el-tag v-if="item.type==2">调货</el-tag>
-                    <el-tag v-if="item.type==3" type="danger">退货</el-tag>
-                    <el-tag v-if="item.type==4" type="warning">换货</el-tag>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="6">
-              <el-button type="danger">拒绝</el-button>
-              <el-button type="success" @click="passOnClick(item)">通过</el-button>
-              <el-button type="primary">详细信息</el-button>
-            </el-col>
-          </el-row>
-        </BasicCard>
-      </el-row>
-    </BasicCard>
+    <el-row v-for="item in checkInItems" :key="item.recordId">
+      <BasicCard :header="'入库请求 '+item.recordId">
+        <el-row type="flex" align="center">
+          <el-col :span="18">
+            <el-row class="form-line">
+              <el-col :span="12">
+                <div class="text-label">商品ID：</div>
+                <div class="text-value">{{item.itemId}}</div>
+              </el-col>
+              <el-col :span="12">
+                <div class="text-label">商品数量：</div>
+                <div class="text-value">{{item.itemNum}}</div>
+              </el-col>
+            </el-row>
+            <el-row class="form-line">
+              <el-col :span="12">
+                <div class="text-label">退货类型：</div>
+                <div class="text-value">
+                  <el-tag v-if="item.type==1" type="success">补货</el-tag>
+                  <el-tag v-if="item.type==2">调货</el-tag>
+                  <el-tag v-if="item.type==3" type="danger">退货</el-tag>
+                  <el-tag v-if="item.type==4" type="warning">换货</el-tag>
+                </div>
+              </el-col>
+            </el-row>
+          </el-col>
+          <el-col :span="6">
+            <el-button type="danger" @click="refuseOnClick(item)">拒绝</el-button>
+            <el-button type="success" @click="passOnClick(item)">通过</el-button>
+            <el-button type="primary" @click="showDetails(item.recordId)">详细信息</el-button>
+          </el-col>
+        </el-row>
+      </BasicCard>
+    </el-row>
   </div>
 </template>
 
 <script>
 import BasicCard from "../PanelCard/BasicCard";
+import router from "../../plugins/router";
+import { patchMainsiteInRecord } from "../../api/storage";
 export default {
   components: { BasicCard },
   data: () => {
     return {
-      activeName: "MainSiteI",
+      mainsiteId: "",
       checkInItems: [
         {
-          recordId: "8",
+          recordId: "10000000",
           type: 1,
           typeDescn: "补货",
           formId: "89",
@@ -114,13 +114,39 @@ export default {
     };
   },
   methods: {
+    fetchData() {},
     passOnClick: function(item) {
       console.log(this);
-      this.checkInItems = this.checkInItems.filter(tempItem => {
-        return tempItem.recordId !== item.recordId;
+      patchMainsiteInRecord(this.mainsiteId, item.recordId, {
+        approvalStatus: "Y",
+        warehouseId: ""
+      }).then(res => {
+        console.log(res);
+        this.checkInItems = this.checkInItems.filter(tempItem => {
+          return tempItem.recordId !== item.recordId;
+        });
       });
       console.debug(item);
+    },
+    refuseOnClick: function(item) {
+      console.log(this);
+      patchMainsiteInRecord(this.mainsiteId, item.recordId, {
+        approvalStatus: "F",
+        warehouseId: ""
+      }).then(res => {
+        console.log(res);
+        this.checkInItems = this.checkInItems.filter(tempItem => {
+          return tempItem.recordId !== item.recordId;
+        });
+      });
+      console.debug(item);
+    },
+    showDetails(recordId) {
+      router.push(this.$route.path + "/" + recordId);
     }
+  },
+  mounted() {
+    this.mainsiteId = this.$route.params.mainsiteId
   }
 };
 </script>

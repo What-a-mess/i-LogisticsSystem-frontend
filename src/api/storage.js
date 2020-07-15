@@ -14,3 +14,18 @@ export function patchMainsiteInRecord(mainsiteId, recordId, data) {
         params: data,
     })
 }
+
+export function getMainsiteOutDetails(mainsiteId, recordId) {
+    return myaxios({
+        url: "/mainsites/"+mainsiteId+"/inventory/siteout/"+recordId,
+        method: "GET"
+    })
+}
+
+export function patchMainsiteOutRecord(mainsiteId, recordId, data) {
+    return myaxios({
+        url: "/mainsites/"+mainsiteId+"/inventory/siteout/"+recordId,
+        method: "PATCH",
+        params: data,
+    })
+}

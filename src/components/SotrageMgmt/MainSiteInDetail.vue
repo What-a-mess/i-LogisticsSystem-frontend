@@ -5,7 +5,14 @@
         <el-row>
           <el-col :span="14" :offset="4">
             <el-form-item label="库房ID">
-              <el-input v-model="formData.warehouseId"></el-input>
+              <el-select v-model="formData.warehouseId">
+                <el-option
+                  v-for="option in record.warehouseOptionalList"
+                  :key="option"
+                  :label="option"
+                  :value="option"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -16,7 +23,7 @@
     <div class="display-box">
       <el-row :gutter="80">
         <el-col :span="1" :offset="19">
-          <el-button type="danger">拒绝</el-button>
+          <el-button type="danger" @click="onRefuse">拒绝</el-button>
         </el-col>
         <el-col :span="1">
           <el-button
@@ -25,7 +32,7 @@
           >编辑</el-button>
         </el-col>
         <el-col :span="1">
-          <el-button type="success">通过</el-button>
+          <el-button type="success" @click="onPass">通过</el-button>
         </el-col>
       </el-row>
       <br />
@@ -156,17 +163,26 @@ export default {
         approvalStatus: this.record.approvalStatus,
         warehouseId: this.formData.warehouseId
       }).then(res => {
+        this.fetchData();
         console.log(res.status);
       });
       this.dialogVisible = false;
-      this.fetchData();
     },
     onPass() {
       patchMainsiteInRecord(this.mainsiteId, this.recordId, {
-        approvalStatus: this.record.approvalStatus,
-        warehouseId: this.formData.warehouseId
+        approvalStatus: "Y",
+        warehouseId: ""
       }).then(res => {
+        this.fetchData();
         console.log(res.status);
+      });
+    },
+    onRefuse() {
+      patchMainsiteInRecord(this.mainsiteId, this.recordId, {
+        approvalStatus: "F",
+        warehouseId: ""
+      }).then(() => {
+        this.fetchData();
       });
     }
   },
@@ -178,6 +194,7 @@ export default {
         recordId: 162877391,
         timeStamp: "1995-04-16 16:48:38",
         warehouseId: "WH-001",
+        warehouseOptionalList: [],
         item: {
           itemId: "EST-01",
           name: "牛奶",
