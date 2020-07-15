@@ -55,9 +55,9 @@
                 </el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <router-link :to="orderDetailRoute">
+
                       <el-button type="primary" @click="clickToOrderDetails(scope.row.orderId)">查看详情</el-button>
-                    </router-link>
+
                   </template>
                 </el-table-column>
               </el-table>
@@ -231,7 +231,7 @@ export default {
       });
     },
     clickToOrderDetails: function(e) {
-      this.orderDetailRoute = "/main/order/" + e + "/details";
+      this.$router.push("/main/order/" + e + "/details");
     },
 
     onPageChange() {

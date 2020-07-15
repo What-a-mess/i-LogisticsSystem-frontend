@@ -1,8 +1,4 @@
 <template>
-<<<<<<< HEAD
-=======
-
->>>>>>> 3318cd69512195c420f7e07b001b0355671f2936
   <el-row>
     <el-col :span="12">
         <BasicCard header="订单详情">

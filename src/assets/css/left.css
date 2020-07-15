@@ -44,11 +44,11 @@ span {
     display: none;
 }
 label #btn,label #cancel{
-    position: absolute;
+    position: fixed;
     cursor: pointer;
     background: #fefeff;
     border-radius: 20px;
-
+    transition: .4s;
 }
 
 label #btn{
