@@ -13,15 +13,15 @@
 
             </h3>
 
-            <el-menu style="background: #f7f7f7;">
+            <el-menu style="background: #f7f7f7;" router="true" unique-opened="true">
                 <el-submenu index="1" class="center">
                     <template slot="title" style="background: #fefffe;">
                         <i class="el-icon-user-solid"></i>
                         <span> 客户管理</span>
                     </template>
                     <el-menu-item-group>
-                        <router-link to="/main/customers"><el-menu-item index="1-1"><span class="cursorHover"><a>买家管理</a></span></el-menu-item></router-link>
-                        <router-link to="/main/suppliers"><el-menu-item index="1-2" style="padding-left: 52px"><span class="cursorHover"><a>供应商管理</a></span></el-menu-item></router-link>
+                        <el-menu-item index="/main/customers"><span class="cursorHover"><a>买家管理</a></span></el-menu-item>
+                        <el-menu-item index="/main/suppliers" style="padding-left: 52px"><span class="cursorHover"><a>供应商管理</a></span></el-menu-item>
                     </el-menu-item-group>
 <!--                    <el-submenu index="1-3">-->
 <!--                        <template slot="title">三级菜单案例</template>-->
@@ -48,12 +48,12 @@
                         <span>订单管理</span>
                     </template>
                     <el-menu-item-group>
-                        <router-link to="/main/orderForm"><el-menu-item index="3-1"><span class="cursorHover"><a>订单查询</a></span></el-menu-item></router-link>
-                        <router-link to="/main/charts"><el-menu-item index="3-2"><span class="cursorHover" ><a>统计报表</a></span></el-menu-item></router-link>
+                        <el-menu-item index="/main/orderForm"><span class="cursorHover"><a>订单查询</a></span></el-menu-item>
+                        <el-menu-item index="/main/charts"><span class="cursorHover" ><a>统计报表</a></span></el-menu-item>
                         <!--                        <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>-->
                     </el-menu-item-group>
                     <el-menu-item index="3-3"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
-                    <router-link to="/main/returnForm"><el-menu-item index="3-4"><span class="cursorHover"><a>退货换单</a></span></el-menu-item></router-link>
+                    <el-menu-item index="/main/returnForm"><span class="cursorHover"><a>退货换单</a></span></el-menu-item>
                 </el-submenu>
 
                 <el-submenu index="4" class="center">

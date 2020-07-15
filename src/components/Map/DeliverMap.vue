@@ -47,13 +47,13 @@
         },
         data(){
            return{
+               deliverStauts:1,
                startPosition:"南宁东站",
                endPosition:"武昌站",
                nowPosition:['长沙南站'],
                startDescrip:"",
                nowDescrip:"",
                endDescrip:"",
-               deliverStauts:1,
                processStatus:"",
                startStep:"",
                nowStep:"",
