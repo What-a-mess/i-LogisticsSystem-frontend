@@ -4,13 +4,6 @@
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-row>
           <el-col :span="14" :offset="4">
-            <el-form-item label="主站ID">
-              <el-input v-model="formData.mainsiteId"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="14" :offset="4">
             <el-form-item label="运费">
               <el-input v-model="formData.shippingCost" type="number"></el-input>
             </el-form-item>
@@ -346,15 +339,17 @@ export default {
     },
     editOrderInfo(status) {
       var reqData = {};
-      reqData.status = status;
-      if (this.formData.mainsiteId && this.formData.mainsiteId.trim() != "") {
-        reqData.mainsiteId = this.formData.mainsiteId;
-      }
+      reqData.processStatus = status;
+      reqData.mainsiteId = this.orderInfo.mainsite
+        ? this.orderInfo.mainsite.mainsiteId
+        : "";
       if (this.formData.shippingCost) {
         reqData.shippingCost = this.formData.shippingCost;
       }
       console.log(reqData);
-      patchOrderInfo(this.orderId, reqData);
+      patchOrderInfo(this.orderId, reqData).then(() => {
+        this.fetchData();
+      });
     }
   }
 };

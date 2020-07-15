@@ -4,12 +4,12 @@
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-row>
           <el-col :span="14" :offset="4">
-            <el-form-item label="主站ID">
+            <el-form-item label="库房ID">
               <el-input v-model="formData.warehouseId"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-button @click="dialogVisible=false">取消</el-button>
+        <el-button @click="dialogVisible=false;formData.warehouseId = record.warehouseId;">取消</el-button>
         <el-button type="primary" @click="updateOnClick">确定</el-button>
       </el-form>
     </el-dialog>
@@ -140,38 +140,34 @@
 
 <script>
 import BasicCard from "../PanelCard/BasicCard";
-import myaxious from "../../plugins/myaxios";
+// import myaxious from "../../plugins/myaxios";
+import { getMainsiteInDetails, patchMainsiteInRecord } from "../../api/storage";
 
 export default {
   components: { BasicCard },
   methods: {
     fetchData() {
-      myaxious
-        .get(
-          "/mainsites/" +
-            this.mainsiteId +
-            "/inventory/sitein/" +
-            this.recordId
-        )
-        .then(res => {
-          this.record = res.data;
-        });
+      getMainsiteInDetails(this.mainsiteId, this.recordId).then(res => {
+        this.record = res.data;
+      });
     },
     updateOnClick() {
-      myaxious
-        .patch(
-          "/mainsites/" +
-            this.mainsiteId +
-            "/inventory/sitein/" +
-            this.recordId,
-          {
-            warehouseId: this.formData.warehouseId
-          }
-        )
-        .then(res => {
-          console.log(res.status);
-        });
+      patchMainsiteInRecord(this.mainsiteId, this.recordId, {
+        approvalStatus: this.record.approvalStatus,
+        warehouseId: this.formData.warehouseId
+      }).then(res => {
+        console.log(res.status);
+      });
       this.dialogVisible = false;
+      this.fetchData();
+    },
+    onPass() {
+      patchMainsiteInRecord(this.mainsiteId, this.recordId, {
+        approvalStatus: this.record.approvalStatus,
+        warehouseId: this.formData.warehouseId
+      }).then(res => {
+        console.log(res.status);
+      });
     }
   },
   data: () => {
