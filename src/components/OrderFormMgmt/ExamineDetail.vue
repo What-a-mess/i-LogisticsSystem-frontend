@@ -16,20 +16,20 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-button @click="dialogVisible=false">取消</el-button>
+        <el-button @click="canceled">取消</el-button>
         <el-button type="primary" @click="updateOnClick">确定</el-button>
       </el-form>
     </el-dialog>
     <div class="display-box">
       <el-row :gutter="80">
         <el-col :span="1" :offset="19">
-          <el-button type="danger">拒绝</el-button>
+          <el-button type="danger" @click="editOrderInfo('C')">拒绝</el-button>
         </el-col>
         <el-col :span="1">
           <el-button type="primary" @click="onEdit">编辑</el-button>
         </el-col>
         <el-col :span="1">
-          <el-button type="success">通过</el-button>
+          <el-button type="success" @click="editOrderInfo('P')">通过</el-button>
         </el-col>
       </el-row>
       <br />
@@ -138,7 +138,7 @@
             </el-col>
             <el-col style="padding-top: 20px;">
               <PrimaryCard v-if="orderInfo.msg" title="预分拣结果信息" :content="orderInfo.msg"></PrimaryCard>
-              <PrimaryCard v-else title="预分拣结果信息" content="未进行预分拣"></PrimaryCard>
+              <PrimaryCard v-else title="预分拣结果信息" content="无"></PrimaryCard>
             </el-col>
           </BasicCard>
         </el-col>
@@ -199,14 +199,14 @@
             </el-table-column>
             <el-table-column label="订单ID" prop="orderId"></el-table-column>
             <el-table-column label="任务单ID" prop="taskId"></el-table-column>
-            <el-table-column label="商品数量" prop="quantity"></el-table-column>
+            <el-table-column label="商品数量" prop="itemNum"></el-table-column>
             <el-table-column label="处理状态">
               <template slot-scope="items">
                 <el-tag v-if="items.row.status=='O'" type="warning">缺货</el-tag>
                 <el-tag v-else type="success">已分配</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="订单总额" prop="totalPrice"></el-table-column>
+            <el-table-column label="总额" prop="total"></el-table-column>
           </el-table>
         </BasicCard>
       </el-row>
@@ -217,8 +217,7 @@
 <script>
 import PrimaryCard from "../DataCard/PrimaryCard";
 import BasicCard from "../PanelCard/BasicCard";
-// import axios from "axios";
-import myaxios from "../../plugins/myaxios";
+import { patchOrderInfo, getExamineDetails } from "../../api/orders";
 
 export default {
   components: { PrimaryCard, BasicCard },
@@ -323,9 +322,11 @@ export default {
   methods: {
     updateOnClick() {
       this.dialogVisible = false;
+      console.log(this.formData);
+      this.editOrderInfo(this.orderInfo.order.processStatus);
     },
     fetchData() {
-      myaxios.get("/orders/" + this.orderId + "/check").then(res => {
+      getExamineDetails(this.orderId).then(res => {
         this.orderInfo = res.data;
       });
     },
@@ -335,6 +336,25 @@ export default {
         ? this.orderInfo.mainsite.mainsiteId
         : "";
       this.formData.shippingCost = this.orderInfo.order.shippingCost;
+    },
+    canceled() {
+      this.dialogVisible = false;
+      this.formData = {
+        mainsiteId: "",
+        shippingCost: null
+      };
+    },
+    editOrderInfo(status) {
+      var reqData = {};
+      reqData.status = status;
+      if (this.formData.mainsiteId && this.formData.mainsiteId.trim() != "") {
+        reqData.mainsiteId = this.formData.mainsiteId;
+      }
+      if (this.formData.shippingCost) {
+        reqData.shippingCost = this.formData.shippingCost;
+      }
+      console.log(reqData);
+      patchOrderInfo(this.orderId, reqData);
     }
   }
 };
