@@ -13,7 +13,7 @@
 
             </h3>
 
-            <el-menu style="background: #f8f8f8;" router="true" unique-opened="true">
+            <el-menu style="background: #f8f8f8;" :router="true" :unique-opened="true">
                 <el-submenu index="1" class="center">
                     <template slot="title" style="background: #fefffe;">
                         <i class="el-icon-user-solid"></i>
