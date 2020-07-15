@@ -26,7 +26,7 @@
           <el-button type="danger">拒绝</el-button>
         </el-col>
         <el-col :span="1">
-          <el-button type="primary" @click="dialogVisible=true">编辑</el-button>
+          <el-button type="primary" @click="onEdit">编辑</el-button>
         </el-col>
         <el-col :span="1">
           <el-button type="success">通过</el-button>
@@ -122,18 +122,23 @@
           <BasicCard header="预分拣信息">
             <el-col>
               <PrimaryCard
+                v-if="orderInfo.mainsite"
                 :title="'主站ID：'+orderInfo.mainsite.mainsiteId"
                 :content="'主站地址：'+orderInfo.mainsite.province+orderInfo.mainsite.city+orderInfo.mainsite.district"
               ></PrimaryCard>
+              <PrimaryCard v-else title="主站信息" content="未分配主站"></PrimaryCard>
             </el-col>
             <el-col style="padding-top: 20px;">
               <PrimaryCard
+                v-if="orderInfo.subSite"
                 :title="'配送站ID：'+orderInfo.subsite.subsiteId"
                 :content="'配送站：'+orderInfo.subsite.district"
               ></PrimaryCard>
+              <PrimaryCard v-else title="配送站信息" content="未分配配送站"></PrimaryCard>
             </el-col>
             <el-col style="padding-top: 20px;">
-              <PrimaryCard title="预分拣结果信息" :content="orderInfo.msg"></PrimaryCard>
+              <PrimaryCard v-if="orderInfo.msg" title="预分拣结果信息" :content="orderInfo.msg"></PrimaryCard>
+              <PrimaryCard v-else title="预分拣结果信息" content="未进行预分拣"></PrimaryCard>
             </el-col>
           </BasicCard>
         </el-col>
@@ -312,8 +317,6 @@ export default {
     };
   },
   mounted() {
-    this.formData.mainsiteId = this.orderInfo.mainsite.mainsiteId;
-    this.formData.shippingCost = this.orderInfo.order.shippingCost;
     this.orderId = this.$route.params.orderId;
     this.fetchData();
   },
@@ -325,6 +328,13 @@ export default {
       myaxios.get("/orders/" + this.orderId + "/check").then(res => {
         this.orderInfo = res.data;
       });
+    },
+    onEdit() {
+      this.dialogVisible = true;
+      this.formData.mainsiteId = this.orderInfo.mainsite
+        ? this.orderInfo.mainsite.mainsiteId
+        : "";
+      this.formData.shippingCost = this.orderInfo.order.shippingCost;
     }
   }
 };

@@ -58,6 +58,7 @@
             type="date"
             placeholder="选择日期"
             style="left: -22%"
+            value-format="yyyy-MM-dd HH:mm:ss"
           ></el-date-picker>
         </el-form-item>
 
@@ -67,6 +68,7 @@
             type="date"
             placeholder="选择日期"
             style="left: -22%"
+            value-format="yyyy-MM-dd HH:mm:ss"
           ></el-date-picker>
         </el-form-item>
 
