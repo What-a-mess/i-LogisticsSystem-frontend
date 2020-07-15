@@ -53,7 +53,7 @@ const routes = [
             { path: 'mainsites/:mainsiteId/inventory/warehouses', component: WarehouseMgmt },
             { path: 'orderExamine', component: OrderExamine },
             { path: 'siteMap', component: SiteMap },
-            { path: 'deliverMap', component: DeliverMap },
+            { path: ':taskId/deliverMap', component: DeliverMap },
             { path: 'orderExamine/:orderId', component: ExamineDetail }
         ]
     }

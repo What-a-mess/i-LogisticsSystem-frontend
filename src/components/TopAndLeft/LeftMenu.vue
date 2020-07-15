@@ -62,9 +62,15 @@
                         <span>仓储管理</span>
                     </template>
                     <el-menu-item-group>
-                        <el-menu-item index="4-1"><span class="cursorHover"><a>站点地图</a></span></el-menu-item>
-                        <el-menu-item index="4-2"><span class="cursorHover"><a>主站管理</a></span></el-menu-item>
+                        <el-menu-item index="/main/siteMap"><span class="cursorHover"><a>站点地图</a></span></el-menu-item>
                     </el-menu-item-group>
+
+                    <el-submenu index="4-3">
+                        <span slot="title" class="cursorHover"><a>主站管理</a></span>
+                        <router-link to="/main/mainsites/:mainsiteId/inventory/sitein"><el-menu-item index="1-4-1">出库审核</el-menu-item></router-link>
+                        <router-link to="/main/mainsites/:mainsiteId/inventory/siteout"><el-menu-item index="1-4-1">入库审核</el-menu-item></router-link>
+                    </el-submenu>
+
                     <el-menu-item index="4-3" style="padding-left: 68px"><span class="cursorHover"><a>整体商品信息</a></span></el-menu-item>
                 </el-submenu>
 
