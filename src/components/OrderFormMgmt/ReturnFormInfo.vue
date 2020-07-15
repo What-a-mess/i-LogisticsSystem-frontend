@@ -90,7 +90,7 @@ export default {
         /*
         这里是  patch  修改订单状态
         */
-        this.orderForms.splice(this.orderForms.indexOf(returnOrder),1)
+        this.orderForms.splice(this.orderForms.indexOf(returnOrder),1);
         this.$message({
           type: 'success',
           message: '已成功接受该退货单!'
@@ -113,7 +113,7 @@ export default {
         /*
         这里是  patch  修改订单状态
         */
-        this.orderForms.splice(this.orderForms.indexOf(returnOrder),1)
+        this.orderForms.splice(this.orderForms.indexOf(returnOrder),1);
         this.$message({
           type: 'success',
           message: '成功拒绝该退货单！'

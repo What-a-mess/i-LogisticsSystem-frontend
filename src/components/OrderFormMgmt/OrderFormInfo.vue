@@ -1,10 +1,6 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="1" :offset="22">
-        <AddOrder />
-      </el-col>
-    </el-row>
+
     <br />
     <BasicCard header="订单总览" style="left: 1.5%;width: 98.5%">
       <el-row>
@@ -121,11 +117,10 @@
 
 <script>
 import myaxios from "../../plugins/myaxios";
-import AddOrder from "./add-order";
 import BasicCard from "../PanelCard/BasicCard";
 
 export default {
-  components: { AddOrder, BasicCard },
+  components: {  BasicCard },
   data: function() {
     return {
       input: "",
