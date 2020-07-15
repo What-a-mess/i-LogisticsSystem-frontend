@@ -128,7 +128,8 @@ export default {
         warehouseId: this.selectedWarehouse,
         categoryId: this.categoryId,
         keyword: this.keyword,
-        pageNum: this.curPage
+        pageNum: this.curPage,
+        pageSize: 3
       }).then(res => {
         this.curInventory = res.data;
       });
