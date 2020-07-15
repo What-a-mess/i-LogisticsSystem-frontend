@@ -52,7 +52,7 @@
                         <el-menu-item index="/main/charts"><span class="cursorHover" ><a>统计报表</a></span></el-menu-item>
                         <!--                        <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>-->
                     </el-menu-item-group>
-                    <el-menu-item index="3-3"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
+                    <el-menu-item index="/main/orderExamine"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
                     <el-menu-item index="/main/returnForm"><span class="cursorHover"><a>退货换单</a></span></el-menu-item>
                 </el-submenu>
 

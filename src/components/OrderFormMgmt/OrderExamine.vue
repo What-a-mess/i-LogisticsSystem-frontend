@@ -3,9 +3,9 @@
     <BasicCard class="display-box" header="待审核订单">
       <el-table :data="orderMsgs">
           <el-table-column label="订单ID" prop="orderId"></el-table-column>
-          <el-table-column label="收件人姓名" prop="billName"></el-table-column>
+          <el-table-column :width="240" label="收件人姓名" prop="billName"></el-table-column>
           <el-table-column label="订单创建时间" prop="createDateTime"></el-table-column>
-          <el-table-column label="订单总价" prop="totalPrice"></el-table-column>
+          <el-table-column :width="240" label="订单总价" prop="totalPrice"></el-table-column>
           <el-table-column label="操作">
               <template>
                   <el-button type="danger">拒绝</el-button>
@@ -52,7 +52,8 @@ export default {
 
 <style scoped>
 .display-box {
-  margin: 50px 50px 100px;
+  margin: 1.5% 1.5%;
+    width: 97.5%;
 }
 .el-row {
   padding-top: 20px;

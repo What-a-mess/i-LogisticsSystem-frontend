@@ -45,7 +45,8 @@
               </el-form>
             </el-col>
           </el-row>
-
+<el-row>
+    <el-col>
           <el-table :data="orderForms">
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -96,12 +97,14 @@
                 <el-tag v-else-if="scope.row.status=='C'" type="info">交易关闭</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
-              <template>
-                <el-button type="primary">任务单</el-button>
+            <el-table-column label="状态">
+              <template slot-scope="scope">
+              <router-link :to="orderDetailRoute"><el-button type="primary" @click="clickToOrderDetails(scope.row.orderId)">详情</el-button></router-link>
               </template>
             </el-table-column>
           </el-table>
+    </el-col>
+</el-row>
         </el-col>
       </el-row>
       <el-row>
@@ -212,7 +215,9 @@ export default {
       ],
       pageSize: 10,
       totalPages: 5,
-      curPage: 1
+      curPage: 1,
+
+      orderDetailRoute:"",
     };
   },
   watch: {
@@ -230,6 +235,9 @@ export default {
       myaxios.get("/orders").then(res => {
         this.orderForms = res.data;
       });
+    },
+    clickToOrderDetails:function(e){
+      this.orderDetailRoute = "/main/order/"+e+"/details";
     },
 
     onPageChange() {
