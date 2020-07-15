@@ -7,16 +7,6 @@
             <el-step :title=nowStep :description=nowDescrip></el-step>
             <el-step :title=endStep :description=endDescrip></el-step>
         </el-steps>
-<!--        <el-steps direction="vertical" :active="1">-->
-<!--            <el-step title="步骤 1"></el-step>-->
-<!--            <el-step title="步骤 2"></el-step>-->
-<!--            <el-step title="步骤 3" description="这是一段很长很长很长的描述性文字"></el-step>-->
-<!--        </el-steps>-->
-<!--        <el-steps direction="vertical" :active="1">-->
-<!--            <el-step title="步骤 1"></el-step>-->
-<!--            <el-step title="步骤 2"></el-step>-->
-<!--            <el-step title="步骤 3" description="这是一段很长很长很长的描述性文字"></el-step>-->
-<!--        </el-steps>-->
     </BasicCard>
         </el-col>
         <el-col :span="13">

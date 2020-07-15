@@ -1,7 +1,6 @@
 <template>
     <BasicCard header="站点地图" style="left: 1.5%;top: 1.5%;width: 98.5%">
     <baidu-map class="map" :center="{lng: 118.454, lat: 32.955}" :zoom="6" :scroll-wheel-zoom="false">
-<!--        <bm-label content="北京站点" :position="{lng: 116.404, lat: 39.915}" :labelStyle="{color: 'red', fontSize : '12px'}" title="Hover me"/>-->
         <bml-curve-line :points="points" :editing="true" @lineupdate="update"></bml-curve-line>
         <div v-for="(point,index) in points" v-bind:key="point.assign">
             <bm-marker :position="point" :dragging="false"  @click="infoWindowOpen(index)">

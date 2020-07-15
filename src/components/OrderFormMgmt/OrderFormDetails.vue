@@ -5,29 +5,37 @@
 
   <el-row>
     <el-col :span="12">
-      <el-card>
-        <span slot="header">任务单信息</span>
-        <el-table :data="taskForms">
-          <el-table-column label="任务单ID" prop="taskId"></el-table-column>
-          <el-table-column label="配送站ID" prop="subsiteId"></el-table-column>
-          <el-table-column label="任务单状态" prop="status"></el-table-column>
-        </el-table>
-      </el-card>
+        <BasicCard header="订单详情">
+        </BasicCard>
     </el-col>
     <el-col :span="12">
-      <el-card>
-          <span slot="header">退货单信息</span>
+        <el-row>
+            <BasicCard header="任务单信息">
+                <el-table :data="taskForms">
+                    <el-table-column label="任务单ID" prop="taskId"></el-table-column>
+                    <el-table-column label="配送站ID" prop="subsiteId"></el-table-column>
+                    <el-table-column label="任务单状态" prop="status"></el-table-column>
+                </el-table>
+            </BasicCard>
+        </el-row>
+        <el-row>
+      <BasicCard header="退货单信息">
           <el-table :data="returnForm">
               <el-table-column label="退货单ID" prop="rfid"></el-table-column>
           </el-table>
-      </el-card>
+      </BasicCard>
+        </el-row>
     </el-col>
   </el-row>
 
 </template>
 
 <script>
+    import BasicCard from "../PanelCard/BasicCard";
 export default {
+    components:{
+      BasicCard,
+    },
   data: () => {
     return {
 
