@@ -43,10 +43,6 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col>
-          <div class="text-label">描述:</div>
-          <div class="text-value">{{item.descn}}</div>
-        </el-col>
       </el-row>
     </div>
   </div>

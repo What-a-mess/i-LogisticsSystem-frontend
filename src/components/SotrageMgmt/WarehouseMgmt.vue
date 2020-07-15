@@ -17,31 +17,56 @@
       </el-row>
     </el-dialog>
     <el-row>
-      <el-col :span="16">
-        <BasicCard header="库房商品" class="display-box">
-          <el-row>
-            <ItemCard
-              draggable="true"
-              v-for="item in curInventory.itemList"
-              :key="item.item.itemId"
-              :item="item.item"
-              :quantity="item.quantity"
-              class="item-box"
-              @dragstart.native="drag($event, item.item.itemId)"
-            ></ItemCard>
-          </el-row>
-          <el-row>
-            <el-pagination
-              :current-page.sync="curPage"
-              :page-count="totalPages"
-              layout="prev, pager, next"
-              @current-change="onPageChange"
-            ></el-pagination>
-          </el-row>
-        </BasicCard>
+      <el-col :span="14" class="display-box">
+        <!-- <BasicCard header="库房商品" class="display-box"> -->
+        <el-row>
+          <el-form :inline="true">
+            <el-form-item label="大类ID">
+              <el-input v-model="categoryId" @blur="fetchItems"></el-input>
+            </el-form-item>
+            <el-form-item label="关键词">
+              <el-input v-model="keyword" @blur="fetchItems"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <el-row>
+          <ItemCard
+            draggable="true"
+            v-for="item in curInventory"
+            :key="item.item.itemId"
+            :item="item.item"
+            :quantity="item.quantity"
+            class="item-box"
+            @dragstart.native="drag($event, item)"
+          ></ItemCard>
+        </el-row>
+        <el-row>
+          <el-pagination
+            :current-page.sync="curPage"
+            :page-count="totalPages"
+            layout="prev, pager, next"
+            @current-change="onPageChange"
+          ></el-pagination>
+        </el-row>
+        <!-- </BasicCard> -->
       </el-col>
       <el-col :span="7" style="margin: 50px 10px 100px;">
-        <BasicCard
+        <el-checkbox-group v-model="selectedWarehouse" @change="fetchItems">
+          <el-row
+            v-for="warehouse in warehouseList"
+            :key="warehouse.warehouseId"
+            style="padding-bottom: 30px"
+          >
+            <el-checkbox
+              :label="warehouse.warehouseId"
+              border
+              class="warehouse-container"
+              @drop.native="drop($event, warehouse.warehouseId)"
+              @dragover.native="allowDrop($event)"
+            >库房{{warehouse.warehouseId}}</el-checkbox>
+          </el-row>
+        </el-checkbox-group>
+        <!-- <BasicCard
           v-for="warehouse in warehouseList"
           :key="warehouse.warehouseId"
           :header="'库房'+warehouse.warehouseId"
@@ -75,41 +100,45 @@
               <div class="text-value">{{warehouse.maxSize}}</div>
             </el-col>
           </el-row>
-        </BasicCard>
+        </BasicCard>-->
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import BasicCard from "../PanelCard/BasicCard";
+// import BasicCard from "../PanelCard/BasicCard";
 import ItemCard from "../DataCard/ItemCard";
-import myaxios from "../../plugins/myaxios";
+// import myaxios from "../../plugins/mockaxios";
+import { getWarehousesList, getItems } from "../../api/storage";
 
 export default {
-  components: { BasicCard, ItemCard },
+  components: { ItemCard },
   methods: {
     fetchWarehouses() {
-      myaxios.get("/mainsites/" + this.mainsiteId + "/warehouses").then(res => {
+      getWarehousesList(this.mainsiteId).then(res => {
         console.log(res);
         this.warehouseList = res.data;
-        this.srcWarehouse = this.warehouseList[0].warehouseId;
-        this.fetchWarehousDetail(this.srcWarehouse);
+        this.fetchItems();
       });
     },
-    fetchWarehousDetail(warehouseId) {
-      myaxios
-        .get("/mainsites/" + this.mainsiteId + "/warehouse/" + warehouseId)
-        .then(res => {
-          this.curInventory = res.data;
-        });
+    fetchItems() {
+      getItems(this.mainsiteId, {
+        warehouseId: this.selectedWarehouse,
+        categoryId: this.categoryId,
+        keyword: this.keyword,
+        pageNum: this.curPage
+      }).then(res => {
+        this.curInventory = res.data;
+      });
     },
     allowDrop(ev) {
       ev.preventDefault();
     },
-    drag(ev, itemId) {
-      console.log(itemId);
-      ev.dataTransfer.setData("itemId", itemId);
+    drag(ev, item) {
+      console.log(item);
+      ev.dataTransfer.setData("itemId", item.item.itemId);
+      this.srcWarehouse = item.warehouseId;
     },
     drop(ev, targetWarehouse) {
       ev.preventDefault();
@@ -118,11 +147,12 @@ export default {
       this.targetWarehouse = targetWarehouse;
       this.dialogVisible = true;
     },
-    changeWarehouse(warehouseId) {
-      console.log(warehouseId);
-      this.srcWarehouse = warehouseId;
-      this.fetchWarehousDetail();
-    },
+    // changeWarehouse(warehouseId) {
+    //   console.log(warehouseId);
+    //   this.srcWarehouse = warehouseId;
+    //   this.fetchWarehousDetail();
+    // },
+    // TODO: 把选择库房的触发事件改为直接拉取items
     comfirmTransfer() {
       if (this.transferNum == 0) return;
       console.log(
@@ -144,81 +174,150 @@ export default {
       this.transferNum = 0;
     },
     onPageChange() {
-      this.fetchWarehousDetail();
+      this.fetchItems();
     }
   },
   data: () => {
     return {
-      curInventory: {
-        itemList: [
-          {
-            item: {
-              itemId: "460000197801198481",
-              name: "vcgu",
-              unitCost: 41807478.715475254,
-              listPrice: 37100326.35807219,
-              status: "Duis ullamco irure",
-              categoryId: "520000198912252170",
-              descn: "元她从数效众出把时治阶问必设。",
-              imgUrl: "http://dummyimage.com/240x400"
-            },
-            inventory: 64
+      curInventory: [
+        {
+          warehouseId: "94",
+          item: {
+            itemId: "150000200403234864",
+            categoryId: "35000020100701014X",
+            name: "dtmsqcwd",
+            descn: "京号划图个认带由引运声采层天龙联意。",
+            unitCost: 21985411.368915252,
+            listPrice: 25068823.904894244,
+            imgUrl: "http://dummyimage.com/180x150",
+            status: "ea veniam"
           },
-          {
-            item: {
-              itemId: "710000201704039236",
-              name: "tgrt",
-              unitCost: 23628441.259774346,
-              listPrice: 20108817.269916233,
-              status: "consectetur sed mollit commodo consequat",
-              categoryId: "370000201305125483",
-              descn: "精和所增路己展须如府型反电再。",
-              imgUrl: "http://dummyimage.com/336x280"
-            },
-            inventory: 59
-          }
-        ],
-        warehouseId: "76",
-        mainSiteId: "92",
-        mainSiteName: "口思打委道",
-        category: {
-          categoryId: "710000199402276981",
-          descn: "美",
-          name: "qbyb"
+          inventory: 4
+        },
+        {
+          warehouseId: "77",
+          item: {
+            itemId: "630000197203073357",
+            categoryId: "150000201805043651",
+            name: "jiljum",
+            descn: "候华主段再引始都资色图品号白。",
+            unitCost: 9554652.617325332,
+            listPrice: 2479658.4495110977,
+            imgUrl: "http://dummyimage.com/720x300",
+            status: "labore Duis qui anim"
+          },
+          inventory: 6
+        },
+        {
+          warehouseId: "86",
+          item: {
+            itemId: "520000197804137365",
+            categoryId: "460000198607217815",
+            name: "fzkhwnx",
+            descn: "各厂已级价规话解省进式所道它非度四。",
+            unitCost: 22343684.804108933,
+            listPrice: 8774210.858108198,
+            imgUrl: "http://dummyimage.com/234x60",
+            status: "aute officia sunt in consectetur"
+          },
+          inventory: 77
+        },
+        {
+          warehouseId: "42",
+          item: {
+            itemId: "460000200707097240",
+            categoryId: "710000199807182932",
+            name: "gwgqkm",
+            descn: "走表分情石总切系写利它高导被持什。",
+            unitCost: 98919673.98554613,
+            listPrice: 30799510.484512243,
+            imgUrl: "http://dummyimage.com/336x280",
+            status: "ad minim"
+          },
+          inventory: 76
         }
-      },
+      ],
       warehouseList: [
         {
-          siteId: "CN-HN",
-          warehouseId: "WH-001",
+          siteId: "MAIN-002",
+          warehouseId: "WH-006",
+          categoryId: "SHOES",
           category: {
-            categoryId: "YL",
-            name: "饮料",
-            descn: "需冷藏"
+            categoryId: "SHOES",
+            name: "shoes",
+            descn:
+              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/shoes.jpg"
           },
-          kindNumOfItem: 30,
-          totalSize: 125,
+          kindNumOfItem: 3,
+          totalSize: 1600,
+          maxSize: 20000
+        },
+        {
+          siteId: "MAIN-002",
+          warehouseId: "WH-007",
+          categoryId: "APPLIANCES",
+          category: {
+            categoryId: "APPLIANCES",
+            name: "appliances",
+            descn:
+              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/appliances.jpg"
+          },
+          kindNumOfItem: 3,
+          totalSize: 301,
+          maxSize: 800
+        },
+        {
+          siteId: "MAIN-002",
+          warehouseId: "WH-008",
+          categoryId: "DRINK",
+          category: {
+            categoryId: "DRINK",
+            name: "drink",
+            descn:
+              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/drink.jpg"
+          },
+          kindNumOfItem: 3,
+          totalSize: 545,
+          maxSize: 6000
+        },
+        {
+          siteId: "MAIN-002",
+          warehouseId: "WH-009",
+          categoryId: "FRUITS",
+          category: {
+            categoryId: "FRUITS",
+            name: "fruits",
+            descn:
+              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/fruits.jpg"
+          },
+          kindNumOfItem: 3,
+          totalSize: 850,
           maxSize: 1000
         },
         {
-          siteId: "CN-HN",
-          warehouseId: "WH-002",
+          siteId: "MAIN-002",
+          warehouseId: "WH-010",
+          categoryId: "CLOTHES",
           category: {
-            categoryId: "NUT",
-            name: "坚果类",
-            descn: "袋装，需防潮"
+            categoryId: "CLOTHES",
+            name: "clothes",
+            descn:
+              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/clothes.jpg"
           },
-          kindNumOfItem: 50,
-          totalSize: 1200,
-          maxSize: 1700
+          kindNumOfItem: 8,
+          totalSize: 5513,
+          maxSize: 15000
         }
       ],
       mainsiteId: "",
       srcWarehouse: "",
       targetWarehouse: "",
       targetItemId: "",
+      categoryId: "",
       transferNum: 0,
+      selectedWarehouse: [],
       dialogVisible: false,
+      keyword: "",
       pageSize: 10,
       totalPages: 5,
       curPage: 1
@@ -250,5 +349,9 @@ export default {
   min-height: 30px;
   max-width: 80%;
   text-align: left;
+}
+.warehouse-container {
+  zoom: 1.7;
+  background-color: #ffffff;
 }
 </style>
