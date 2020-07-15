@@ -130,7 +130,7 @@
           this.orderMsgs.splice(index, 1)
         },
         clickToExamOrderDetails:function (e) {
-          this.orderDetailRoute = "/main/order/"+ e +"/details";
+          this.orderDetailRoute = "/orderExamine"+ e;
         },
     },
   };
