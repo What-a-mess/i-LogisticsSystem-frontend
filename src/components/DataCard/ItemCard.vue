@@ -24,33 +24,28 @@
       </el-row>
       <el-row>
         <el-col :span="12">
-          <div class="text-label">现价:</div>
-          <div class="text-value">{{item.unitCost}}</div>
-        </el-col>
-        <el-col :span="12">
-          <div class="text-label">原价:</div>
-          <div class="text-value">{{item.listPrice}}</div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <div class="text-label">状态:</div>
-          <div class="text-value">{{item.status}}</div>
-        </el-col>
-        <el-col :span="12">
           <div class="text-label">大类:</div>
           <div class="text-value">{{item.categoryId}}</div>
         </el-col>
+        <el-col :span="12">
+          <div class="text-label">库房:</div>
+          <div class="text-value">{{warehouseId}}</div>
+        </el-col>
       </el-row>
       <el-row>
+        <el-col :span="12">
+          <div class="text-label">库存:</div>
+          <div class="text-value">{{quantity}}</div>
+        </el-col>
       </el-row>
+      <el-row><el-button type="success" style="zoom: 0.8">详细信息</el-button></el-row>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["item", "quantity"],
+  props: ["item", "quantity", "warehouseId"],
   data: function() {
     return {};
   },
@@ -89,12 +84,14 @@ img {
   width: 40px;
   min-height: 30px;
   text-align: right;
+  zoom: .8;
 }
 .text-value {
   float: left;
   min-height: 30px;
   max-width: 80%;
   text-align: left;
+  zoom: .8;
 }
 .content-box {
   margin: 20px;

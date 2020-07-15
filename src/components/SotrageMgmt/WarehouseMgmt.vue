@@ -7,7 +7,7 @@
       <el-row>
         <el-col :span="12">
           <div class="text-label">移动数量：</div>
-          <el-input-number v-model="transferNum" class="text-value"></el-input-number>
+          <el-input-number v-model="transferNum" :min="0" :max="maxNum" class="text-value"></el-input-number>
         </el-col>
       </el-row>
       <br />
@@ -35,7 +35,8 @@
             v-for="item in curInventory"
             :key="item.item.itemId"
             :item="item.item"
-            :quantity="item.quantity"
+            :quantity="item.inventory"
+            :warehouseId="item.warehouseId"
             class="item-box"
             @dragstart.native="drag($event, item)"
           ></ItemCard>
@@ -138,6 +139,8 @@ export default {
     drag(ev, item) {
       console.log(item);
       ev.dataTransfer.setData("itemId", item.item.itemId);
+      this.maxNum = item.inventory
+      console.log(this.maxNum)
       this.srcWarehouse = item.warehouseId;
     },
     drop(ev, targetWarehouse) {
@@ -318,6 +321,7 @@ export default {
       selectedWarehouse: [],
       dialogVisible: false,
       keyword: "",
+      maxNum: 0,
       pageSize: 10,
       totalPages: 5,
       curPage: 1
