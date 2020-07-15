@@ -14,8 +14,8 @@
           <el-table-column :width="240" label="订单总价" prop="totalPrice"></el-table-column>
           <el-table-column label="操作">
               <template slot-scope="scope">
-                  <el-button type="danger" @click="clickToRejectOrder(scope.row)">拒绝</el-button>
-                  <el-button  type="success" @click="clickToPassOrder(scope.row)">通过</el-button>
+                  <el-button type="danger" @click="handleRefuse(scope.row)">拒绝</el-button>
+                  <el-button type="success" @click="handlePass(scope.row)">通过</el-button>
                   <router-link style="padding-left: 3%" :to="orderDetailRoute"><el-button type="primary" @click="clickToExamOrderDetails(scope.row.orderId)">查看详情</el-button>
                   </router-link>
               </template>
@@ -26,85 +26,114 @@
 </template>
 
 <script>
-import BasicCard from "../PanelCard/BasicCard";
-import AddOrder from "./add-order";
+    import BasicCard from "../PanelCard/BasicCard";
+    import mq from "@/plugins/rabbitmq"
+    import {patchOrderStatus} from "../../api/orders.js"
+    import AddOrder from "./add-order";
 
-export default {
-  components: { BasicCard,
-            AddOrder},
-    methods:{
-        clickToRejectOrder:function (e) {
-            this.$confirm('此操作将拒绝该订单, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
+    export default {
+      // inject: ['reload'],
+      components: { BasicCard, AddOrder},
+      data: () => {
+        return {
+          orderMsgs: [],
+          orderDetailRoute:"",
+        };
+      },
+      mounted() {
+        //连接待审核消息队列
+        mq.connect('unreviewed order',this.onMessage, this.onFailed);
+      },
+      methods: {
+          onMessage(frame){
+              // console.log("Whole Frame: " + frame)
+              console.log("msg: " + frame.body)
+
+              //处理消息
+              var obj = JSON.parse(frame.body)
+              obj.ack = frame.ack
+
+              //在组件中显示
+              this.orderMsgs.push(obj)
+          },
+          onFailed(frame){
+              console.log("err:"+frame);
+          },
+          handleRefuse(rowFrame){
+            var alertMsg = '是否确认拒绝 订单' + rowFrame.orderId + " ?"
+
+            this.$confirm(alertMsg, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
             }).then(() => {
-                /*
-                这里是  patch  修改订单状态
-                */
-                this.orderMsgs.splice(this.orderMsgs.indexOf(e),1);
-                this.$message({
-                    type: 'success',
-                    message: '成功拒绝该订单！'
-                });
+              console.log('拒绝接收 订单' + rowFrame.orderId)
+              this.confirmCheck(rowFrame, 'C') //拒绝接收
             }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '取消拒绝该订单'
-                });
+              this.$message({
+                type: 'info',
+                message: '已取消操作'
+              });
             });
-        },
-        clickToPassOrder:function (e) {
-            this.$confirm('此操作将接受该订单, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
+          },
+          handlePass(rowFrame){
+            var alertMsg = '是否确认接收 订单' + rowFrame.orderId + " ?"
+
+            this.$confirm(alertMsg, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'success',
             }).then(() => {
-                /*
-                这里是  patch  修改订单状态
-                */
-                this.orderMsgs.splice(this.orderMsgs.indexOf(e),1);
-                this.$message({
-                    type: 'success',
-                    message: '已成功接受该订单!'
-                });
+              console.log('确认接收 订单' + rowFrame.orderId)
+              this.confirmCheck(rowFrame, 'P') //确认接收
             }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消接受该订单'
-                });
+              this.$message({
+                type: 'info',
+                message: '已取消操作'
+              });
+
             });
+          },
+        confirmCheck(rowFrame, status){
+          var msg //提示消息
+          if(status == 'C'){
+            msg = '订单' + rowFrame.orderId + ' 已拒绝'
+          }
+          else if (status == 'P'){
+            msg = '订单' + rowFrame.orderId + ' 成功接收!'
+          }
+          else{
+            msg = "processStatus:'" + status + "' 不存在!"
+          }
+
+          //修改订单状态
+          patchOrderStatus(rowFrame.orderId, status).then(resp=>{
+            if (resp.status == 200){
+              console.log(resp.status)
+              this.$message({
+                type: 'success',
+                message: msg
+              });
+              //向消息队列确认接收消息, 不会再发送已消费成功的订单消息
+              rowFrame.ack();
+            }
+            else{
+              this.$message({
+                type: 'error',
+                message: '订单'+ rowFrame.orderId +'确认失败!'
+              });
+            }
+          })
+
+          //更新dom组件
+          var index = this.orderMsgs.indexOf(rowFrame)
+          this.orderMsgs.splice(index, 1)
         },
         clickToExamOrderDetails:function (e) {
-            this.orderDetailRoute = "/main/order/"+e+"/details";
+          this.orderDetailRoute = "/main/order/"+ e +"/details";
         },
     },
-  data: () => {
-    return {
-        orderDetailRoute:"",
-      orderMsgs: [
-        {
-          orderId: 58,
-          billName: "高静",
-          createDateTime: "2016-12-30 06:38:10",
-          totalPrice: 95
-        },
-        {
-          orderId: 99,
-          billName: "潘杰",
-          createDateTime: "1970-02-03 21:15:39",
-          totalPrice: 72
-        },
-        {
-          orderId: 32,
-          billName: "万磊",
-          createDateTime: "1986-08-12 23:09:19",
-          totalPrice: 55
-        }
-      ]
-    };
-  }
-};
+  };
 </script>
 
 <style scoped>

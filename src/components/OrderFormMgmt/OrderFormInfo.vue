@@ -93,9 +93,11 @@
                 <el-tag v-else-if="scope.row.status=='C'" type="info">交易关闭</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="状态">
+            <el-table-column label="操作">
               <template slot-scope="scope">
-              <router-link :to="orderDetailRoute"><el-button type="primary" @click="clickToOrderDetails(scope.row.orderId)">详情</el-button></router-link>
+              <router-link :to="orderDetailRoute">
+                <el-button type="primary" @click="clickToOrderDetails(scope.row.orderId)">查看详情</el-button>
+              </router-link>
               </template>
             </el-table-column>
           </el-table>
@@ -206,7 +208,35 @@ export default {
           receiverAddress: "澳门特别行政区晋中市通江县",
           remarks: "Excepteur pariatur",
           taskForms: [36]
-        }
+        },
+        {
+          orderId: 3582048,
+          createTime: "1996-01-28 11:20:17",
+          paymentTime: "1997-04-26 11:43:12",
+          paymentAmount: 56811112.815615684,
+          freight: -92966740.21913517,
+          status: "N",
+          paymentMethod: "nulla culpa sint non ipsum",
+          receiver: "dolore irure fugiat",
+          receiverPhone: "18146568340",
+          receiverAddress: "澳门特别行政区临汾市锡林浩特市",
+          remarks: "consectetur",
+          taskForms: [81, 43, 4, 64, 88]
+        },
+        {
+          orderId: -71028570,
+          createTime: "2013-09-08 05:18:16",
+          paymentTime: "2014-09-20 20:58:44",
+          paymentAmount: 70351359.7887876,
+          freight: 20829072.801536694,
+          status: "C",
+          paymentMethod: "aute ipsum velit",
+          receiver: "dolore",
+          receiverPhone: "18681796356",
+          receiverAddress: "台湾揭阳市田阳县",
+          remarks: "ex proident",
+          taskForms: [82, 24, 33]
+        },
       ],
       pageSize: 10,
       totalPages: 5,

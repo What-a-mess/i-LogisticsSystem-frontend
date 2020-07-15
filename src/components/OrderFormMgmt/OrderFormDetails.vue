@@ -1,8 +1,5 @@
 <template>
 
-
-
-
   <el-row>
     <el-col :span="12">
         <BasicCard header="订单详情">

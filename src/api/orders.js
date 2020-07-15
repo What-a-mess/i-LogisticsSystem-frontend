@@ -1,10 +1,12 @@
 import myaxios from "../plugins/myaxios"
 
 export function patchOrderStatus(orderId, status) {
+    console.log(orderId)
+    console.log(status)
     return myaxios({
         url: "/orders/" + orderId + "/check",
         method: "PATCH",
-        data: { processStatus:status }
+        params: { processStatus: status }
     })
 }
 
