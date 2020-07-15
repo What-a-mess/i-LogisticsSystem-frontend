@@ -127,7 +127,7 @@ export default {
       var result = [];
       myaxios.get("/goods/catalog").then(res => {
         this.catalogs = res.data;
-        console.log(this.catalogs.map);
+        // console.log(this.catalogs.map);
         this.theOptions = this.catalogs.map(category => {
           return {
             value: category.categoryId,

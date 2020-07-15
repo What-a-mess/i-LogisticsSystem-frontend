@@ -51,7 +51,7 @@ const routes = [
             { path: 'mainsites/:mainsiteId/inventory/sitein/:recordId', component: MainSiteInDetail },
             { path: 'mainsites/:mainsiteId/inventory/siteout/:recordId', component: MainSiteOutDetail },
             { path: 'mainsites/:mainsiteId/inventory/warehouses', component: WarehouseMgmt },
-            { path: 'orderExamine', component: OrderExamine },
+            { path: 'orderExamine', component: OrderExamine, name: 'OrderExamine', meta: {keepAlive: true} },
             { path: 'siteMap', component: SiteMap },
             { path: ':taskId/deliverMap', component: DeliverMap },
             { path: 'orderExamine/:orderId', component: ExamineDetail }

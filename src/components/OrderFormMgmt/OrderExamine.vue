@@ -33,6 +33,7 @@
 
     export default {
       // inject: ['reload'],
+      name: 'OrderExamine',
       components: { BasicCard, AddOrder},
       data: () => {
         return {
@@ -40,9 +41,26 @@
           orderDetailRoute:"",
         };
       },
+      // activated () {
+      //   mq.client.heartbeat.outgoing=0;
+      //   mq.client.heartbeat.incoming=0;
+      //   mq.connect('unreviewed order',this.onMessage, this.onFailed);
+      //   console.log('实例被激活时使用，用于重复激活一个实例的时候')
+      //
+      // },
       mounted() {
+        //每次进页面前刷新一次
+        if(location.href.indexOf("#")==-1) {
+          //在当前页面地址加入"#"，使下次不再进入此判断
+          location.href = location.href + "#";
+          location.reload();
+        }
+
         //连接待审核消息队列
+        mq.client.heartbeat.outgoing=0;
+        mq.client.heartbeat.incoming=0;
         mq.connect('unreviewed order',this.onMessage, this.onFailed);
+
       },
       methods: {
           onMessage(frame){
@@ -132,6 +150,9 @@
         clickToExamOrderDetails:function (e) {
           this.orderDetailRoute = "/orderExamine"+ e;
         },
+        refresh:function () {
+          window.location.reload();
+        }
     },
   };
 </script>

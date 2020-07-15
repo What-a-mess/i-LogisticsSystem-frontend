@@ -122,7 +122,10 @@
 
                 this[`useDataSet${this.dataSetNum}`]();
             }
-        }
+        },
+      activated() {
+          console.log('activated')
+      }
     }
 </script>
 
