@@ -216,6 +216,8 @@ import {
   patchOrderStatus
 } from "../../api/orders";
 
+import router from "../../plugins/router"
+
 export default {
   components: { PrimaryCard, BasicCard },
   data: () => {
@@ -368,7 +370,7 @@ export default {
         .then(() => {
           console.log("确认接收 订单" + this.orderId);
           this.confirmCheck(this.rowFrame, "P"); //确认接收
-          setTimeout(function() {this.$router.push("/main/orderExamine")}, 1500);
+          setTimeout(function() {router.push("/main/orderExamine")}, 1500);
         })
     },
     onCancel() {
@@ -381,7 +383,7 @@ export default {
         .then(() => {
           console.log("确认接收 订单" + this.orderId);
           this.confirmCheck(this.rowFrame, "C"); //确认接收
-          setTimeout(function() {this.$router.push("/main/orderExamine")}, 1500);
+          setTimeout(function() {router.push("/main/orderExamine")}, 1500);
         })
         .catch(() => {
           this.$message({
