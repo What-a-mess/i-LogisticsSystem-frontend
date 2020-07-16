@@ -16,13 +16,13 @@
     <div class="display-box">
       <el-row :gutter="80">
         <el-col :span="1" :offset="19">
-          <el-button type="danger" @click="editOrderInfo('C')">拒绝</el-button>
+          <el-button type="danger" @click="onCancel">拒绝</el-button>
         </el-col>
         <el-col :span="1">
           <el-button type="primary" @click="onEdit">编辑</el-button>
         </el-col>
         <el-col :span="1">
-          <el-button type="success" @click="editOrderInfo('P')">通过</el-button>
+          <el-button type="success" @click="onPass">通过</el-button>
         </el-col>
       </el-row>
       <br />
@@ -210,7 +210,11 @@
 <script>
 import PrimaryCard from "../DataCard/PrimaryCard";
 import BasicCard from "../PanelCard/BasicCard";
-import { patchOrderInfo, getExamineDetails } from "../../api/orders";
+import {
+  patchOrderInfo,
+  getExamineDetails,
+  patchOrderStatus
+} from "../../api/orders";
 
 export default {
   components: { PrimaryCard, BasicCard },
@@ -305,11 +309,14 @@ export default {
         mainsiteId: "",
         shippingCost: null
       },
-      orderId: ""
+      orderId: "",
+      rowFrame: null
     };
   },
   mounted() {
     this.orderId = this.$route.params.orderId;
+    this.rowFrame = this.$router.currentRoute.query.rowFrame;
+    console.log(this.$router.currentRoute.query);
     this.fetchData();
   },
   methods: {
@@ -349,6 +356,66 @@ export default {
       console.log(reqData);
       patchOrderInfo(this.orderId, reqData).then(() => {
         this.fetchData();
+      });
+    },
+    onPass() {
+      var alertMsg = "是否确认接收 订单" + this.orderId + " ?";
+      this.$confirm(alertMsg, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "success"
+      })
+        .then(() => {
+          console.log("确认接收 订单" + this.orderId);
+          this.confirmCheck(this.rowFrame, "P"); //确认接收
+          setTimeout(function() {this.$router.push("/main/orderExamine")}, 1500);
+        })
+    },
+    onCancel() {
+      var alertMsg = "是否确认接收 订单" + this.orderId + " ?";
+      this.$confirm(alertMsg, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "success"
+      })
+        .then(() => {
+          console.log("确认接收 订单" + this.orderId);
+          this.confirmCheck(this.rowFrame, "C"); //确认接收
+          setTimeout(function() {this.$router.push("/main/orderExamine")}, 1500);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作"
+          });
+        });
+    },
+    confirmCheck(rowFrame, status) {
+      var msg; //提示消息
+      if (status == "C") {
+        msg = "订单" + rowFrame.orderId + " 已拒绝";
+      } else if (status == "P") {
+        msg = "订单" + rowFrame.orderId + " 成功接收!";
+      } else {
+        msg = "processStatus:'" + status + "' 不存在!";
+      }
+
+      //修改订单状态
+      patchOrderStatus(rowFrame.orderId, status).then(resp => {
+        if (resp.status == 200) {
+          console.log(resp.status);
+          this.$message({
+            type: "success",
+            message: msg
+          });
+          //向消息队列确认接收消息, 不会再发送已消费成功的订单消息
+          rowFrame.ack();
+        } else {
+          this.$message({
+            type: "error",
+            message: "订单" + rowFrame.orderId + "确认失败!"
+          });
+        }
       });
     }
   }
