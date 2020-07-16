@@ -31,6 +31,7 @@ import CatalogInfo from "../components/SotrageMgmt/CatalogInfo"
 import GoodsItemDetails from "../components/SotrageMgmt/GoodsItemDetails";
 import TaskFormDetails from "../components/OrderFormMgmt/TaskFormDetails";
 import TaskFormInfo from "../components/TaskFormMgmt/TaskFormInfo";
+import TaskFormStatusChart from "../components/TaskFormMgmt/TaskFormStatusChart";
 
 const routes = [
     // 组件测试路由
@@ -43,6 +44,7 @@ const routes = [
             { path: 'returnForm', component: ReturnFormInfo },
             { path: 'orderForm', component: OrderFormInfo },
             { path: 'taskForm', component: TaskFormInfo },
+            { path: 'taskFormStatusChart', component: TaskFormStatusChart },
             { path: 'order/:orderId/details', component: OrderFormDetails },
             { path: 'PreSortRes', component: PreSortRes },
             { path: 'taskforms/:taskFormId/details', component: TaskFormDetails },

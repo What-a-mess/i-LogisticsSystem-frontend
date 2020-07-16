@@ -213,8 +213,8 @@ export default {
   methods: {
     clickToDeliverMap: function() {
       let path =
-        "/main/order/" +
-        this.$route.params.taskId +
+        "/main/taskforms/" +
+        this.$route.params.taskFormId +
         "/deliverMap";
       this.$router.push(path);
     },

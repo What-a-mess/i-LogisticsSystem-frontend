@@ -3,7 +3,14 @@
         <el-col :span="22" :offset="1">
 <BasicCard header="任务单列表">
     <el-row>
-        <el-col :span="4" :offset="18">
+        <el-col :span="2">
+            <router-link to="/main/taskFormStatusChart">
+            <el-button type="warning" plain>
+                任务单状态图
+            </el-button>
+            </router-link>
+        </el-col>
+        <el-col :span="4" :offset="16">
             <el-input
                     style="width: 100%"
                     placeholder="请输入关键字"
@@ -36,7 +43,7 @@
         </el-table-column>
     </el-table>
     </el-row>
-
+<br />
     <el-row>
         <el-pagination
                 :current-page.sync="pageNum"
