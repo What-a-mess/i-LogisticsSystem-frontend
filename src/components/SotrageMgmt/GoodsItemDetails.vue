@@ -21,7 +21,7 @@
                 <div class="descn">
                   <time>{{item.descn}}</time>
                 </div>
-                <el-button type="primary" @click="getUniqueItemId" round>操作按钮</el-button>
+                <!-- <el-button type="primary" @click="getUniqueItemId" round>操作按钮</el-button> -->
               </div>
             </el-col>
             <el-col :span="6" :offset="1" style="text-align: left">
