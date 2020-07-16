@@ -23,17 +23,19 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="12">
+        <el-col :span="24">
           <div class="text-label">大类:</div>
           <div class="text-value">{{item.categoryId}}</div>
         </el-col>
-        <el-col :span="12">
+      </el-row>
+      <el-row>
+        <el-col :span="24">
           <div class="text-label">库房:</div>
           <div class="text-value">{{warehouseId}}</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="12">
+        <el-col :span="24">
           <div class="text-label">库存:</div>
           <div class="text-value">{{quantity}}</div>
         </el-col>

@@ -111,7 +111,7 @@
 // import BasicCard from "../PanelCard/BasicCard";
 import ItemCard from "../DataCard/ItemCard";
 // import myaxios from "../../plugins/mockaxios";
-import { getWarehousesList, getItems } from "../../api/storage";
+import { getWarehousesList, getItems, transferItem } from "../../api/storage";
 
 export default {
   components: { ItemCard },
@@ -125,13 +125,14 @@ export default {
     },
     fetchItems() {
       getItems(this.mainsiteId, {
-        warehouseId: this.selectedWarehouse,
-        categoryId: this.categoryId,
+        warehouseIdList: this.selectedWarehouse,
+        categoryIdList: this.categoryId,
         keyword: this.keyword,
         pageNum: this.curPage,
         pageSize: 3
       }).then(res => {
-        this.curInventory = res.data;
+        this.curInventory = res.data.content;
+        this.totalPages = res.data.totalPages;
       });
     },
     allowDrop(ev) {
@@ -140,8 +141,8 @@ export default {
     drag(ev, item) {
       console.log(item);
       ev.dataTransfer.setData("itemId", item.item.itemId);
-      this.maxNum = item.inventory
-      console.log(this.maxNum)
+      this.maxNum = item.inventory;
+      console.log(this.maxNum);
       this.srcWarehouse = item.warehouseId;
     },
     drop(ev, targetWarehouse) {
@@ -170,8 +171,19 @@ export default {
           this.targetWarehouse
       );
       // 此处需要进行转移数据的传输
-      this.dialogVisible = false;
-      this.transferNum = 0;
+      transferItem(this.mainsiteId, this.targetItemId, {
+        sourceWarehouseId: this.srcWarehouse,
+        destWarehouseId: this.targetWarehouse,
+        itemNum: this.transferNum
+      })
+        .then(res => {
+          console.log(res.status);
+          this.dialogVisible = false;
+          this.transferNum = 0;
+        })
+        .catch(() => {
+          alert("目标库房无法存储该商品")
+        });
     },
     cancelTransfer() {
       this.dialogVisible = false;

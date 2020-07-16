@@ -1,5 +1,6 @@
 import myaxios from "../plugins/myaxios"
-import mockaxios from "../plugins/mockaxios"
+import qs from "qs"
+// import mockaxios from "../plugins/mockaxios"
 
 export function getMainsiteInDetails(mainsiteId, recordId) {
     return myaxios({
@@ -38,10 +39,22 @@ export function getWarehousesList(mainsiteId) { // TODO: 换为myaxios
     })
 }
 
-export function getItems(mainsiteId, props) { // TODO: 换为myaxios
-    console.log(props)
-    return mockaxios({
+export function getItems(mainsiteId, params) { // TODO: 换为myaxios
+    console.log(params)
+    return myaxios({
         url: "/mainsites/" + mainsiteId + "/items",
-        props
+        method: "GET",
+        params,
+        paramsSerializer: params => {
+            return qs.stringify(params, { indices: false })
+        }
+    })
+}
+
+export function transferItem(mainsiteId, itemId, params) {
+    return myaxios({
+        url: "/mainsites/" + mainsiteId + "/items/" + itemId,
+        method: "PATCH",
+        params
     })
 }
