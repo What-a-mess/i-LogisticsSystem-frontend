@@ -62,15 +62,15 @@
           ></el-date-picker>
         </el-form-item>
 
-        <el-form-item label="付款日期">
-          <el-date-picker
-            v-model="order.payDateTime"
-            type="date"
-            placeholder="选择日期"
-            style="left: -22%"
-            value-format="yyyy-MM-dd HH:mm:ss"
-          ></el-date-picker>
-        </el-form-item>
+<!--        <el-form-item label="付款日期">-->
+<!--          <el-date-picker-->
+<!--            v-model="order.payDateTime"-->
+<!--            type="date"-->
+<!--            placeholder="选择日期"-->
+<!--            style="left: -22%"-->
+<!--            value-format="yyyy-MM-dd HH:mm:ss"-->
+<!--          ></el-date-picker>-->
+<!--        </el-form-item>-->
 
         <!--            <el-form-item label="总付款">-->
         <!--                <el-input v-model="order.totalPrice" style="width:90%"></el-input>-->
@@ -90,9 +90,6 @@
           <el-input v-model="order.billAddr" style="width:90%"></el-input>
         </el-form-item>
 
-        <el-form-item label="是否为手动订单" label-width="20">
-          <el-switch v-model="manual" active-color="#13ce66" style="left: -35%"></el-switch>
-        </el-form-item>
 
         <el-form-item label="备注信息">
           <el-input type="textarea" v-model="order.note" style="width:90%"></el-input>
@@ -211,16 +208,18 @@ export default {
               this.orderItem.total +
               "元";
             if (inputValue) {
+              //选择了商品才能往里面加
               this.dynamicTags.push(inputValue);
+              var newItem = {};
+              newItem = this.orderItem;
+              this.orderItemList.push(newItem);
             }
             break;
           }
         }
       }
 
-      var newItem = {};
-      newItem = this.orderItem;
-      this.orderItemList.push(newItem);
+
 
       this.orderItem = {
         itemNum: 1,
@@ -264,18 +263,18 @@ export default {
           console.warn(err)
       });
 
-      /*
-
-                这一部分代码为发送数据给后端  注意传的是OrderAddReq
-
-                */
       //setTimeout(loadingInstance1.close(),1000)
       console.log(this.OrderAddReq);
       setTimeout(this.clear, 2000);
     },
     clear: function() {
       for (var k in this.order) {
-        this.order[k] = "";
+        if(k == "payDateTime"){
+          this.order[k] = null;
+        }
+        else {
+          this.order[k] = "";
+        }
       }
       this.orderItemList = [
         {
@@ -283,9 +282,8 @@ export default {
           total: "",
           itemId: ""
         }
-      ];
-      this.manual = false;
-      this.OrderAddReq = [];
+      ]
+      this.OrderAddReq = { order: null, orderItemList: null, manual: true };
     },
     handleClose(tag) {
       var index = tag.split("、")[0];
@@ -300,7 +298,7 @@ export default {
       dynamicTags: [],
       //inputValue: '',
 
-      OrderAddReq: { order: null, orderItemList: null, manual: null },
+      OrderAddReq: { order: null, orderItemList: null, manual: true },
       dialogFormVisible: false,
 
       payOptions: [
@@ -345,7 +343,7 @@ export default {
       order: {
         orderId: "",
         createDateTime: "",
-        payDateTime: "",
+        payDateTime: null,
         totalPrice: "",
         billName: "",
         shippingCost: "",
@@ -367,7 +365,7 @@ export default {
       },
       number_of_Items: 0,
 
-      manual: false,
+      manual: true,
       catalogs: [],
       theOptions: []
     };
