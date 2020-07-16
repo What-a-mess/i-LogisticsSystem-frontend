@@ -1,7 +1,22 @@
 <template>
-  <el-row>
-    <el-col>
-      <el-card>
+  <el-row style="padding-top: 3%">
+
+    <el-col :span="22" :offset="1">
+      <BasicCard header="买家管理">
+        <el-row>
+          <el-col :span="4" :offset="18">
+            <el-autocomplete
+                    placeholder="请输入客户ID"
+                    style="width: 100%"
+                    v-model="keyCustomerId"
+                    :fetch-suggestions="customerIdAutoCmpl"
+                    :trigger-on-focus="false"
+            ></el-autocomplete>
+          </el-col>
+          <el-col :span="2" >
+            <el-button @click="clickToSearchTaskForm" type="primary" round>搜索</el-button>
+          </el-col>
+        </el-row>
         <el-table :data="customers">
           <el-table-column label="ID" prop="customerId"></el-table-column>
           <el-table-column label="姓名" prop="customerName"></el-table-column>
@@ -9,15 +24,36 @@
           <el-table-column label="邮箱" prop="customerEmail"></el-table-column>
           <el-table-column label="地址" prop="customerAddress"></el-table-column>
         </el-table>
-      </el-card>
+
+        <br />
+        <el-row>
+          <el-pagination
+                  :current-page.sync="pageNum"
+                  :page-count="totalPages"
+                  layout="prev, pager, next"
+                  @current-change="onPageChange"
+          ></el-pagination>
+        </el-row>
+      </BasicCard>
     </el-col>
   </el-row>
 </template>
 
 <script>
+  import BasicCard from "../PanelCard/BasicCard";
 export default {
+  components:{
+    BasicCard,
+  },
   data: () => {
     return {
+      pageNum: 5,
+      pageSize: 59,
+      totalSize: 13,
+      totalPages: 18,
+
+      keyCustomerId:"",
+
       customers: [
         {
           customerId: 93633694,
@@ -42,6 +78,23 @@ export default {
         }
       ]
     };
+  },
+  methods:{
+    fetchData:function() {
+
+    },
+    onPageChange() {
+      this.fetchData();
+    },
+    customerIdAutoCmpl(queryString, cb){
+      //以queryString为依据获取cb提示  cb( Array )
+
+      cb([{value: "dengyepeng"},{value: "wuzhijing"},{value: "fanshixu"}]);
+      console.log(cb);
+    },
+  },
+  mounted() {
+    this.fetchData();
   }
 };
 </script>
