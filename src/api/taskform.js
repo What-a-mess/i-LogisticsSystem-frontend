@@ -14,3 +14,10 @@ export function getTaskFormDetail(taskFormId) {
         method: "GET"
     })
 }
+
+export function getTaskFormsStatus() {
+    return myaxios({
+        url: "/taskforms/status",
+        method: "GET"
+    })
+}

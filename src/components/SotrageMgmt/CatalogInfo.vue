@@ -34,6 +34,7 @@
             :auto-upload="false"
             :http-request="submitItem"
             ref="upload"
+            :multiple="false"
           >
             <el-button type="primary">点击上传</el-button>
           </el-upload>
@@ -119,6 +120,7 @@ export default {
       this.itemForm.descn = "";
       this.itemForm.unitCost = 0;
       this.itemForm.listPrice = 0;
+      this.$refs.upload.clearFiles()
     },
     submitItem(file) {
       console.log(file);
