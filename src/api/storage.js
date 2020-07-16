@@ -77,3 +77,10 @@ export function getItemList(params) {
         }
     })
 }
+
+export function getItemDetails(itemId) {
+    return myaxios({
+        url: "/goods/items/"+itemId,
+        method: "GET"
+    })
+}

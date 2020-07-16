@@ -40,14 +40,21 @@
           <div class="text-value">{{quantity}}</div>
         </el-col>
       </el-row>
-      <el-row><el-button type="success" style="zoom: 0.8">详细信息</el-button></el-row>
+      <el-row><el-button type="success" style="zoom: 0.8" @click="toDetails">详细信息</el-button></el-row>
     </div>
   </div>
 </template>
 
 <script>
+import router from "../../plugins/router"
+
 export default {
   props: ["item", "quantity", "warehouseId"],
+  methods: {
+    toDetails() {
+      router.push("/main/goods/items/"+this.item.itemId)
+    }
+  },
   data: function() {
     return {};
   },
