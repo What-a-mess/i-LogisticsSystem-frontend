@@ -14,7 +14,7 @@
                     <div class="descn">
                         <time>{{item.descn}}</time>
                     </div>
-                    <el-button type="primary" round>操作按钮</el-button>
+                    <el-button type="primary" @click="getUniqueItemId" round>操作按钮</el-button>
                 </div>
                     </el-col>
                     <el-col :span="6" :offset="1" style="text-align: left">
@@ -95,6 +95,14 @@
                 }
             ],}
 
+        },
+        methods:{
+            getUniqueItemId: function() {
+                // 获取了 主站号 和 商品ID  我觉得主站ID唯一的作用可能就是 获取 当前商品在该站 是否出于上架状态
+                console.log(this.$route.params.mainsiteId);
+                console.log(this.$route.params.goodsItemId);
+                //通过 $route.params.mainsiteId $route.params.goodsItemId 获取商品详情 分配到 this.item  this.totalInventory this.mainsiteInventoryList
+            },
         }
     }
 </script>
