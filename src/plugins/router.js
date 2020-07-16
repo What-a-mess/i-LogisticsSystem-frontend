@@ -43,7 +43,7 @@ const routes = [
             { path: 'orderForm', component: OrderFormInfo },
             { path: 'order/:orderId/details', component: OrderFormDetails },
             { path: 'PreSortRes', component: PreSortRes },
-            { path: 'order/:orderId/:taskId/details', component: TaskFormDetails },
+            { path: 'taskforms/:taskFormId/details', component: TaskFormDetails },
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
