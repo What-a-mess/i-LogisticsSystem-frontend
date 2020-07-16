@@ -80,7 +80,24 @@ export function getItemList(params) {
 
 export function getItemDetails(itemId) {
     return myaxios({
-        url: "/goods/items/"+itemId,
+        url: "/goods/items/" + itemId,
         method: "GET"
     })
+}
+
+export function addItem(item, file) {
+    let url = "/goods/items";
+
+    var formData = new FormData()
+    formData.append("categoryId", item.categoryId)
+    formData.append("name", item.name)
+    formData.append("descn", item.descn)
+    formData.append("unitCost", item.unitCost)
+    formData.append("listPrice", item.listPrice)
+    formData.append("imgFile", file)
+    var config = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+    console.log(formData)
+
+    return myaxios.post(url, formData, config)
 }

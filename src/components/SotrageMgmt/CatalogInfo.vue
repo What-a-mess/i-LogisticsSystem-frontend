@@ -1,10 +1,62 @@
 <template>
   <div>
+    <el-dialog :visible.sync="dialogVisible">
+      <el-form :inline="true">
+        <el-form-item label="商品名称">
+          <el-input v-model="itemForm.name"></el-input>
+        </el-form-item>
+        <br />
+        <el-form-item label="商品大类">
+          <el-select v-model="itemForm.categoryId">
+            <el-option
+              v-for="category in categoryOptions"
+              :key="category.categoryId"
+              :label="category.categoryName"
+              :value="category.categoryId"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <br />
+        <el-form-item label="单价">
+          <el-input-number v-model="itemForm.unitCost"></el-input-number>
+        </el-form-item>
+        <br />
+        <el-form-item label="售价">
+          <el-input-number v-model="itemForm.listPrice"></el-input-number>
+        </el-form-item>
+        <br />
+        <el-form-item label="商品图片">
+          <el-upload
+            class="avatar-uploader"
+            action="null"
+            :file-list="fileList"
+            list-type="picture"
+            :auto-upload="false"
+            :http-request="submitItem"
+            ref="upload"
+          >
+            <el-button type="primary">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+        <br />
+        <el-form-item label="描述">
+          <el-input type="textarea" v-model="itemForm.descn"></el-input>
+        </el-form-item>
+        <br />
+        <el-button @click="resetItemForm">重置</el-button>
+        <el-button type="primary" @click="onSubmit">确认</el-button>
+      </el-form>
+    </el-dialog>
     <div class="display-box">
+      <el-row>
+        <el-col :offset="7">
+          <el-button type="primary" @click="dialogVisible=true">新增商品</el-button>
+        </el-col>
+      </el-row>
       <el-row>
         <el-form :inline="true">
           <el-form-item label="大类ID">
-            <el-select v-model="selectedCategory" multiple placeholder="请选择" @change="getItems">
+            <el-select v-model="selectedCategory" multiple placeholder="请选择" :on-change="getItems">
               <el-option
                 v-for="category in categoryOptions"
                 :key="category.categoryId"
@@ -37,7 +89,7 @@
 
 <script>
 import ItemCard from "../DataCard/ItemCard";
-import { getCatergies, getItemList } from "../../api/storage";
+import { getCatergies, getItemList, addItem } from "../../api/storage";
 
 export default {
   components: { ItemCard },
@@ -60,6 +112,30 @@ export default {
     },
     onPageChange() {
       this.getItems();
+    },
+    resetItemForm() {
+      this.itemForm.name = "";
+      this.itemForm.categoryId = "";
+      this.itemForm.descn = "";
+      this.itemForm.unitCost = 0;
+      this.itemForm.listPrice = 0;
+    },
+    submitItem(file) {
+      console.log(file);
+      addItem(this.itemForm, file.file).then(() => {
+        this.$message({
+          message: "添加成功",
+          type: "success"
+        })
+      }).catch(()=> {
+        this.$message({
+          message: "添加失败",
+          type: "error"
+        })
+      })
+    },
+    onSubmit() {
+      this.$refs.upload.submit();
     }
   },
   data: function() {
@@ -81,7 +157,16 @@ export default {
           description: "reprehenderit enim dolore"
         }
       ],
-      items: []
+      items: [],
+      fileList: [],
+      dialogVisible: false,
+      itemForm: {
+        name: "",
+        categoryId: "",
+        descn: "",
+        unitCost: 0,
+        listPrice: 0
+      }
     };
   },
   mounted() {
