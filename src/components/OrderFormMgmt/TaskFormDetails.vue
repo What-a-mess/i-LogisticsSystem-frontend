@@ -165,6 +165,9 @@
                         </el-collapse-item>
                     </el-collapse>
                 </el-col>
+                <el-col :span="2" :offset="3" style="padding-top: 3.7%">
+                    <el-button type="primary" @click="clickToDeliverMap">查看配送情况</el-button>
+                </el-col>
 
             </BasicCard>
 
@@ -244,6 +247,10 @@
             }
         },
         methods:{
+            clickToDeliverMap:function(){
+                let path = "/main/order/"+this.$route.params.orderId +"/"+this.$route.params.taskId+"/deliverMap";
+                this.$router.push(path);
+            },
             fecthData:function () {
                 //写入import的js函数即可
             },
