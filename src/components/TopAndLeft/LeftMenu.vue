@@ -80,7 +80,7 @@
                         <span>配送管理</span>
                     </template>
                     <el-menu-item-group>
-                        <el-menu-item index="5-1" style="padding-left: 52px"><span class="cursorHover"><a>任务单管理</a></span></el-menu-item>
+                        <el-menu-item index="/main/taskForm" style="padding-left: 52px"><span class="cursorHover"><a>任务单管理</a></span></el-menu-item>
                         <el-menu-item index="5-2"><span class="cursorHover"><a>路径管理</a></span></el-menu-item>
                     </el-menu-item-group>
                     <el-menu-item index="5-3" style="padding-left: 52px"><span class="cursorHover"><a>配送站管理</a></span></el-menu-item>

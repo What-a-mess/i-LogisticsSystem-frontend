@@ -1,0 +1,120 @@
+<template>
+    <el-row>
+        <el-col :span="22" :offset="1">
+<BasicCard header="任务单列表">
+    <el-row>
+        <el-col :span="4" :offset="18">
+            <el-input
+                    style="width: 100%"
+                    placeholder="请输入关键字"
+                    prefix-icon="el-icon-search"
+                    v-model="keyWords_of_searchTaskForm">
+            </el-input>
+        </el-col>
+        <el-col :span="2" >
+            <el-button @click="clickToSearchTaskForm" type="primary" round>搜索</el-button>
+        </el-col>
+    </el-row>
+    <br />
+    <el-row>
+    <el-table :data="content">
+        <el-table-column label="任务单ID" prop="taskFormId"></el-table-column>
+        <el-table-column label="配送站ID" prop="subSiteId"></el-table-column>
+        <el-table-column label="状态">
+            <template slot-scope="scope">
+                <el-tag v-if="scope.row.status=='O'">运输中</el-tag>
+                <el-tag v-else-if="scope.row.status=='Y'" type="success">已签收</el-tag>
+                <el-tag v-else-if="scope.row.status=='W'" type="info">缺货待调货</el-tag>
+                <el-tag v-else-if="scope.row.status=='U'" type="warning">未发出</el-tag>
+                <el-tag v-else-if="scope.row.status=='N'" type="danger">未配送</el-tag>
+            </template>
+        </el-table-column>
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-button type="primary" @click="clickToTaskDetails(scope.row.taskFormId)">查看详情</el-button><br />
+            </template>
+        </el-table-column>
+    </el-table>
+    </el-row>
+
+    <el-row>
+        <el-pagination
+                :current-page.sync="pageNum"
+                :page-count="totalPages"
+                layout="prev, pager, next"
+                @current-change="onPageChange"
+        ></el-pagination>
+    </el-row>
+
+</BasicCard>
+        </el-col>
+    </el-row>
+</template>
+
+<script>
+    import BasicCard from "../PanelCard/BasicCard";
+    export default {
+        name: "TaskFormInfo",
+        components: {BasicCard},
+        data:function () {
+            return{
+                keyWords_of_searchTaskForm:"",
+
+                pageNum: 2,
+                content: [
+                    {
+                        taskFormId: 64,
+                        subSiteId: "21",
+                        status: "aliquip Excepteur quis",
+                        shipTime: "2006-03-02 05:22:09",
+                        receiverName: "成身快只",
+                        receiverAddress: "香港特别行政区昌吉回族自治州丘北县",
+                        receiverTel: "13146345441",
+                    },
+                    {
+                        taskFormId: 76,
+                        subSiteId: "41",
+                        status: "cillum",
+                        shipTime: "2006-03-20 08:11:34",
+                        receiverName: "生千特果加",
+                        receiverAddress: "辽宁省重庆市大渡口区",
+                        receiverTel: "18635042682"},
+                    {
+                        taskFormId: 73,
+                        subSiteId: "7",
+                        status: "minim et dolore",
+                        shipTime: "1971-07-14 18:04:27",
+                        receiverName: "二心集山两",
+                        receiverAddress: "湖北省徐州市其它区",
+                        receiverTel: "18614272768",
+                    }],
+                totalPages: 22,
+                totalSize: 79,
+                pageSize: 24    //我不是很清楚这是俩干啥的
+            }
+        },
+        methods:{
+            clickToTaskDetails:function (taskFormId) {
+                this.$router.push("/main/taskforms/"+taskFormId+"/details");
+            },
+            clickToSearchTaskForm:function(){
+                //把 this.keyWords_of_searchTaskForm传过去 作为搜索关键词
+                console.log(this.keyWords_of_searchTaskForm);
+                this.fetchData();
+            },
+            onPageChange() {
+                this.fetchData();
+            },
+            fetchData:function(){
+                //使用导入的 函数连接后端
+            },
+        },
+        mounted() {
+            this.fetchData();
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

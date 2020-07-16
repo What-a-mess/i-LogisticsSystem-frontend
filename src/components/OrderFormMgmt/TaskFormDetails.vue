@@ -100,7 +100,11 @@
                 </el-col>
                 <el-col :span="12">
                   <b>商品状态：</b>
-                  {{orderItem.item.status}}
+                  <el-tag v-if="orderItem.taskId=='O'">运输中</el-tag>
+                  <el-tag v-else-if="orderItem.taskId=='Y'" type="success">已签收</el-tag>
+                  <el-tag v-else-if="orderItem.taskId=='W'" type="info">缺货待调货</el-tag>
+                  <el-tag v-else-if="orderItem.taskId=='U'" type="warning">未发出</el-tag>
+                  <el-tag v-else-if="orderItem.taskId=='N'" type="danger">未配送</el-tag>
                 </el-col>
                 <el-col :span="12">
                   <b>商品成本：</b>
@@ -210,8 +214,6 @@ export default {
     clickToDeliverMap: function() {
       let path =
         "/main/order/" +
-        this.$route.params.orderId +
-        "/" +
         this.$route.params.taskId +
         "/deliverMap";
       this.$router.push(path);
