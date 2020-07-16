@@ -1,5 +1,13 @@
 import myaxios from "../plugins/myaxios"
 
+export function getTaskFormList(params) {
+    return myaxios({
+        url: "/taskforms",
+        method: "GET",
+        params
+    })
+}
+
 export function getTaskFormDetail(taskFormId) {
     return myaxios({
         url: "/taskforms/" + taskFormId,

@@ -1,5 +1,5 @@
 <template>
-    <el-row>
+    <el-row style="padding-top: 4%">
         <el-col :span="22" :offset="1">
 <BasicCard header="任务单列表">
     <el-row>
@@ -53,6 +53,8 @@
 
 <script>
     import BasicCard from "../PanelCard/BasicCard";
+    import { getTaskFormList } from "../../api/taskform"
+
     export default {
         name: "TaskFormInfo",
         components: {BasicCard},
@@ -65,7 +67,7 @@
                     {
                         taskFormId: 64,
                         subSiteId: "21",
-                        status: "aliquip Excepteur quis",
+                        status: "O",
                         shipTime: "2006-03-02 05:22:09",
                         receiverName: "成身快只",
                         receiverAddress: "香港特别行政区昌吉回族自治州丘北县",
@@ -74,7 +76,7 @@
                     {
                         taskFormId: 76,
                         subSiteId: "41",
-                        status: "cillum",
+                        status: "Y",
                         shipTime: "2006-03-20 08:11:34",
                         receiverName: "生千特果加",
                         receiverAddress: "辽宁省重庆市大渡口区",
@@ -82,7 +84,7 @@
                     {
                         taskFormId: 73,
                         subSiteId: "7",
-                        status: "minim et dolore",
+                        status: "W",
                         shipTime: "1971-07-14 18:04:27",
                         receiverName: "二心集山两",
                         receiverAddress: "湖北省徐州市其它区",
@@ -107,6 +109,14 @@
             },
             fetchData:function(){
                 //使用导入的 函数连接后端
+                getTaskFormList( {
+                    q: this.keyWords_of_searchTaskForm,
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize
+                } ).then(res => {
+                    this.totalPages = res.data.totalPages;
+                    this.content = res.data.content
+                })
             },
         },
         mounted() {
