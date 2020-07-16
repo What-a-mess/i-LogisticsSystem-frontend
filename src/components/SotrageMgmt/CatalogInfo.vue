@@ -19,7 +19,7 @@
         </el-form>
       </el-row>
       <el-row>
-        <el-col>
+        <el-col :span="20" :offset="2">
           <ItemCard v-for="item in items" :key="item.itemId" :item="item" class="item-box"></ItemCard>
         </el-col>
       </el-row>
@@ -49,7 +49,7 @@ export default {
         categoryIdList: this.selectedCategory,
         keyword: this.keyword
       }).then(res => {
-        this.items = res.data.itemList;
+        this.items = res.data.content;
         this.totalPages = res.data.totalPages;
       });
     },
@@ -97,7 +97,7 @@ export default {
   margin: 35px;
 }
 .display-box {
-  margin: 50px 180px 100px;
+  margin: 50px 50px 50px;
 }
 .text-label {
   float: left;
