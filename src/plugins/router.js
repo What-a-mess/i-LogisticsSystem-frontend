@@ -56,7 +56,7 @@ const routes = [
             { path: 'goods/items/:itemId', component: GoodsItemDetails },
             { path: 'orderExamine', component: OrderExamine, name: 'OrderExamine', meta: {keepAlive: true} },
             { path: 'siteMap', component: SiteMap },
-            { path: 'order/:orderId/:taskId/deliverMap', component: DeliverMap },
+            { path: 'taskforms/:taskId/deliverMap', component: DeliverMap },
             { path: 'orderExamine/:orderId', component: ExamineDetail }
         ]
     }
