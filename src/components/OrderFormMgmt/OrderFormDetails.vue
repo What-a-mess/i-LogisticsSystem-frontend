@@ -15,7 +15,7 @@
               {{order.customerId}}
             </el-col>
             <el-col :span="12">
-              <b>客户姓名：</b>
+              <b>发货人姓名：</b>
               {{order.billName}}
             </el-col>
           </el-row>
@@ -31,11 +31,11 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <b>客户地区：</b>
+              <b>卖家地区：</b>
               {{order.billPro}}-{{order.billCity}}-{{order.billDistrict}}
             </el-col>
             <el-col :span="12">
-              <b>客户详细地址：</b>
+              <b>卖家详细地址：</b>
               {{order.billAddr}}
             </el-col>
           </el-row>
@@ -93,8 +93,8 @@
                     {{orderItem.item.categoryId}}
                   </el-col>
                   <el-col :span="12">
-                    <b>商品大类ID：</b>
-                    {{orderItem.item.categoryId}}
+                    <b>商品ID：</b>
+                    {{orderItem.item.itemId}}
                   </el-col>
                   <el-col :span="12">
                     <b>任务单ID：</b>
@@ -152,7 +152,9 @@
               </template>
             </el-table-column>
             <el-table-column>
-              <el-button type="primary">查看详情</el-button>
+              <template slot-scope="scope">
+              <el-button type="primary" @click="clickToTaskDetails(scope.row.taskId)">查看详情</el-button>
+              </template>
             </el-table-column>
           </el-table>
         </BasicCard>
@@ -303,6 +305,9 @@ export default {
       getReturnForms(this.orderId).then(res => {
           this.returnForm = res.data
       })
+    },
+    clickToTaskDetails:function (taskId) {
+      this.$router.push("/main/order/"+this.$route.params.orderId+"/"+taskId+"/details");
     }
     // heightChange:function (e) {
     //   console.log(e);

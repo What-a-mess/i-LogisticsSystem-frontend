@@ -109,8 +109,7 @@
                 handler: function(route) {
                     var routerArr = route.path.split("/");
                     var details = routerArr[routerArr.length-1];
-                     var order = routerArr[routerArr.length-3];
-                    if(details=="details" && order=="order"){
+                    if(details=="details"){
                         document.getElementById("page").style.height = "1500px";
                     }
                     else{

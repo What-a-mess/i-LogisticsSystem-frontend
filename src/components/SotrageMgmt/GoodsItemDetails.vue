@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     getUniqueItemId: function() {
-      // 获取了 主站号 和 商品ID  我觉得主站ID唯一的作用可能就是 获取 当前商品在该站 是否出于上架状态
+      // 获取了 主站号 和 商品ID  我觉得主站ID唯一的作用可能就是 获取 当前商品在该站 是否处于上架状态
       console.log(this.$route.params.itemId);
       //通过 $route.params.mainsiteId $route.params.goodsItemId 获取商品详情 分配到 this.item  this.totalInventory this.mainsiteInventoryList
     },

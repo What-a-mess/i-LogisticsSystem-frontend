@@ -29,6 +29,7 @@ import SiteMap from "../components/Map/SiteMap";
 import DeliverMap from "../components/Map/DeliverMap";
 import CatalogInfo from "../components/SotrageMgmt/CatalogInfo"
 import GoodsItemDetails from "../components/SotrageMgmt/GoodsItemDetails";
+import TaskFormDetails from "../components/OrderFormMgmt/TaskFormDetails";
 
 const routes = [
     // 组件测试路由
@@ -42,6 +43,7 @@ const routes = [
             { path: 'orderForm', component: OrderFormInfo },
             { path: 'order/:orderId/details', component: OrderFormDetails },
             { path: 'PreSortRes', component: PreSortRes },
+            { path: 'order/:orderId/:taskId/details', component: TaskFormDetails },
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
