@@ -32,14 +32,14 @@ export function patchMainsiteOutRecord(mainsiteId, recordId, data) {
     })
 }
 
-export function getWarehousesList(mainsiteId) { // TODO: 换为myaxios
+export function getWarehousesList(mainsiteId) {
     return myaxios({
         url: "/mainsites/" + mainsiteId + "/warehouses",
         method: "GET"
     })
 }
 
-export function getItems(mainsiteId, params) { // TODO: 换为myaxios
+export function getItems(mainsiteId, params) {
     console.log(params)
     return myaxios({
         url: "/mainsites/" + mainsiteId + "/items",
@@ -57,4 +57,8 @@ export function transferItem(mainsiteId, itemId, params) {
         method: "PATCH",
         params
     })
+}
+
+export function getItemList() {
+
 }

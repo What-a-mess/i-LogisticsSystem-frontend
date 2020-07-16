@@ -9,6 +9,26 @@ export function getOrders(props) {
     })
 }
 
+export function getOrderDetail(orderId) {
+    return mockaxios({ // TODO: 改为myaxios
+        url: "/orders/" + orderId,
+        method: "GET"
+    })
+}
+
+export function getReturnForms(orderId) {
+    return mockaxios({
+        url: "/orders/" + orderId + "/returnforms",
+        method: "GET"
+    })
+}
+
+export function getTaskForms(orderId) {
+    return mockaxios({
+        url: "/orders/"+orderId+"/taskforms"
+    })
+}
+
 export function patchOrderStatus(orderId, status) {
     console.log(orderId)
     console.log(status)
