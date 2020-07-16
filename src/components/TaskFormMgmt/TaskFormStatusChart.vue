@@ -5,6 +5,9 @@
         <canvas id="myChart2" width="400px" height="400px"></canvas>
     </div>
         </el-col>
+        <el-col :offset="7">
+            <el-button @click="clickToBack" type="primary" plain round>返回任务单列表</el-button>
+        </el-col>
     </el-row>
 </template>
 <script>
@@ -89,6 +92,9 @@
         methods: {
             fetchData(){
 
+            },
+            clickToBack:function () {
+                this.$router.go(-1);
             }
         }
     }
