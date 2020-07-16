@@ -180,9 +180,12 @@ export default {
           console.log(res.status);
           this.dialogVisible = false;
           this.transferNum = 0;
+          this.fetchItems()
         })
         .catch(() => {
           alert("目标库房无法存储该商品")
+          this.dialogVisible = false;
+          this.transferNum = 0;
         });
     },
     cancelTransfer() {
