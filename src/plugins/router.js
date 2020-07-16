@@ -28,7 +28,7 @@ import Charts from "../components/Charts";
 import SiteMap from "../components/Map/SiteMap";
 import DeliverMap from "../components/Map/DeliverMap";
 import CatalogInfo from "../components/SotrageMgmt/CatalogInfo"
-
+import GoodsItemDetails from "../components/SotrageMgmt/GoodsItemDetails";
 
 const routes = [
     // 组件测试路由
@@ -51,6 +51,7 @@ const routes = [
             { path: 'mainsites/:mainsiteId/inventory/sitein/:recordId', component: MainSiteInDetail },
             { path: 'mainsites/:mainsiteId/inventory/siteout/:recordId', component: MainSiteOutDetail },
             { path: 'mainsites/:mainsiteId/inventory/warehouses', component: WarehouseMgmt },
+            { path: 'mainsites/:mainsiteId/inventory/warehouses/:goodsItemId', component: GoodsItemDetails },
             { path: 'orderExamine', component: OrderExamine, name: 'OrderExamine', meta: {keepAlive: true} },
             { path: 'siteMap', component: SiteMap },
             { path: ':taskId/deliverMap', component: DeliverMap },
