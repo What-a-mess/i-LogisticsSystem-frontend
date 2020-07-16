@@ -30,12 +30,12 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <div class="text-label">库房:</div>
+          <div class="text-label" v-if="warehouseId">库房:</div>
           <div class="text-value">{{warehouseId}}</div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24">
+        <el-col :span="24" v-if="quantity">
           <div class="text-label">库存:</div>
           <div class="text-value">{{quantity}}</div>
         </el-col>

@@ -146,9 +146,9 @@
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.status == 'W'" type="danger">缺货</el-tag>
                 <el-tag v-else-if="scope.row.status == 'U'" type="info">未发货</el-tag>
-                <el-tag v-else-if="scope.row.status == 'U'" type="primary">运输中</el-tag>
-                <el-tag v-else-if="scope.row.status == 'U'" type="warning">未配送</el-tag>
-                <el-tag v-else-if="scope.row.status == 'U'" type="success">已签收</el-tag>
+                <el-tag v-else-if="scope.row.status == 'O'" type="primary">运输中</el-tag>
+                <el-tag v-else-if="scope.row.status == 'N'" type="warning">未配送</el-tag>
+                <el-tag v-else-if="scope.row.status == 'Y'" type="success">已签收</el-tag>
               </template>
             </el-table-column>
             <el-table-column>

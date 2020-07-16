@@ -1,154 +1,114 @@
 <template>
-  <BasicCard>
-    <el-table :data="catalogs">
-        <el-table-column type="expand">
-            <template slot-scope="scope">
-                <el-table :data="scope.row.itemList">
-                    <el-table-column label="商品ID" prop="itemId"></el-table-column>
-                    <el-table-column label="商品名称" prop="itemName"></el-table-column>
-                    <el-table-column label="商品单价" prop="listPrice"></el-table-column>
-                </el-table>
-            </template>
-        </el-table-column>
-        <el-table-column label="大类ID" prop="categoryId"></el-table-column>
-        <el-table-column label="大类名称" prop="categoryName"></el-table-column>
-    </el-table>
-  </BasicCard>
+  <div>
+    <div class="display-box">
+      <el-row>
+        <el-form :inline="true">
+          <el-form-item label="大类ID">
+            <el-select v-model="selectedCategory" multiple placeholder="请选择" @change="getItems">
+              <el-option
+                v-for="category in categoryOptions"
+                :key="category.categoryId"
+                :label="category.categoryName"
+                :value="category.categoryId"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="关键词">
+            <el-input v-model="keyword" @blur="getItems"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-row>
+      <el-row>
+        <el-col>
+          <ItemCard v-for="item in items" :key="item.itemId" :item="item" class="item-box"></ItemCard>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-pagination
+          :current-page.sync="curPage"
+          :page-count="totalPages"
+          layout="prev, pager, next"
+          @current-change="onPageChange"
+        ></el-pagination>
+      </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
-import BasicCard from "../PanelCard/BasicCard";
-import myaxios from "../../plugins/myaxios";
+import ItemCard from "../DataCard/ItemCard";
+import { getCatergies, getItemList } from "../../api/storage";
 
 export default {
-  components: { BasicCard },
+  components: { ItemCard },
   methods: {
-    fetchData() {
-      myaxios.get("/goods/catalog").then(res => {
-        this.catalogs = res.data;
+    getItems() {
+      getItemList({
+        pageNum: this.curPage,
+        pageSize: this.pageSize,
+        categoryIdList: this.selectedCategory,
+        keyword: this.keyword
+      }).then(res => {
+        this.items = res.data.itemList;
+        this.totalPages = res.data.totalPages;
       });
+    },
+    getCatorgyOptions() {
+      getCatergies().then(res => {
+        this.categoryOptions = res.data;
+      });
+    },
+    onPageChange() {
+      this.getItems();
     }
   },
   data: function() {
     return {
-      catalogs: [
+      curPage: 1,
+      pageSize: 4,
+      totalPages: 0,
+      selectedCategory: [],
+      keyword: "",
+      categoryOptions: [
         {
-          itemList: [
-            {
-              itemId: "79",
-              itemName: "具常土为系",
-              listPrice: 45
-            },
-            {
-              itemId: "45",
-              itemName: "近道工我",
-              listPrice: 62
-            },
-            {
-              itemId: "71",
-              itemName: "说度片族",
-              listPrice: 58
-            },
-            {
-              itemId: "61",
-              itemName: "长动发",
-              listPrice: 62
-            },
-            {
-              itemId: "72",
-              itemName: "些原以音象院",
-              listPrice: 90
-            }
-          ],
-          categoryId: "97",
-          categoryName: "候习便亲受场"
+          categoryId: 4,
+          categoryName: "世片切效适或界",
+          description: "dolore"
         },
         {
-          itemList: [
-            {
-              itemId: "27",
-              itemName: "队难千院该",
-              listPrice: 25
-            },
-            {
-              itemId: "99",
-              itemName: "龙组报",
-              listPrice: 93
-            },
-            {
-              itemId: "45",
-              itemName: "权计形机取都",
-              listPrice: 78
-            },
-            {
-              itemId: "13",
-              itemName: "任必在且适",
-              listPrice: 61
-            },
-            {
-              itemId: "61",
-              itemName: "决有专农业克",
-              listPrice: 32
-            }
-          ],
-          categoryId: "26",
-          categoryName: "关队集个部"
-        },
-        {
-          itemList: [
-            {
-              itemId: "45",
-              itemName: "头义每她更文",
-              listPrice: 45
-            },
-            {
-              itemId: "33",
-              itemName: "特县命她质",
-              listPrice: 5
-            },
-            {
-              itemId: "21",
-              itemName: "家上阶和深",
-              listPrice: 26
-            },
-            {
-              itemId: "32",
-              itemName: "如值格",
-              listPrice: 5
-            },
-            {
-              itemId: "60",
-              itemName: "约六该先给书",
-              listPrice: 87
-            }
-          ],
-          categoryId: "39",
-          categoryName: "业门布阶院"
-        },
-        {
-          itemList: [
-            {
-              itemId: "52",
-              itemName: "花政力主",
-              listPrice: 3
-            },
-            {
-              itemId: "76",
-              itemName: "圆必到儿",
-              listPrice: 71
-            }
-          ],
-          categoryId: "11",
-          categoryName: "越做书上养会"
+          categoryId: 78,
+          categoryName: "气律年我",
+          description: "reprehenderit enim dolore"
         }
-      ]
+      ],
+      items: []
     };
   },
   mounted() {
-      this.fetchData();
+    this.getItems();
+    this.getCatorgyOptions();
   }
 };
 </script>
 
-<style>
+<style scoped>
+.item-box {
+  float: left;
+  margin: 35px;
+}
+.display-box {
+  margin: 50px 180px 100px;
+}
+.text-label {
+  float: left;
+  width: 100px;
+  min-height: 30px;
+  text-align: right;
+}
+.text-value {
+  float: left;
+  min-height: 30px;
+  max-width: 80%;
+  text-align: left;
+}
 </style>

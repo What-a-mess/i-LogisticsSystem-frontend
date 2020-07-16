@@ -1,6 +1,6 @@
 import myaxios from "../plugins/myaxios"
 import qs from "qs"
-// import mockaxios from "../plugins/mockaxios"
+import mockaxios from "../plugins/mockaxios"
 
 export function getMainsiteInDetails(mainsiteId, recordId) {
     return myaxios({
@@ -39,6 +39,13 @@ export function getWarehousesList(mainsiteId) {
     })
 }
 
+export function getCatergies() {
+    return mockaxios({
+        url: "/goods/categories",
+        method: "GET"
+    })
+}
+
 export function getItems(mainsiteId, params) {
     console.log(params)
     return myaxios({
@@ -59,6 +66,11 @@ export function transferItem(mainsiteId, itemId, params) {
     })
 }
 
-export function getItemList() {
-
+export function getItemList(params) {
+    console.log(params)
+    return mockaxios({
+        url: "/goods/items",
+        method: "GET",
+        params
+    })
 }
