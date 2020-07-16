@@ -124,7 +124,7 @@
               <el-row>
                 <el-col :span="12" style="text-align: left">
                   <div class="text-label">原价：</div>
-                  <div class="text-value">{{record.item.unitPrice}}</div>
+                  <div class="text-value">{{record.item.unitCost}}</div>
                 </el-col>
                 <el-col :span="12" style="text-align: left">
                   <div class="text-label">售价：</div>
@@ -134,7 +134,10 @@
               <el-row v-if="record.item.status">
                 <el-col :span="12" style="text-align: left">
                   <div class="text-label">状态：</div>
-                  <div class="text-value">{{record.item.status}}</div>
+                  <div class="text-value">
+                    <el-tag v-if="record.item.status=='F'" type="warning">下架</el-tag>
+                    <el-tag v-if="record.item.status=='P'" type="success">上架</el-tag>
+                  </div>
                 </el-col>
               </el-row>
             </el-col>
