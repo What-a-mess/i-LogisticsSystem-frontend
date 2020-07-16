@@ -23,6 +23,7 @@
     </BasicCard>
   </div>-->
   <div class="display-box">
+    <el-row v-show="checkInItems.length == 0">暂无待审核入库请求</el-row>
     <el-row v-for="item in checkInItems" :key="item.recordId">
       <BasicCard :header="'入库请求 '+item.recordId">
         <el-row type="flex" align="center">
@@ -52,7 +53,7 @@
           <el-col :span="6">
             <el-button type="danger" @click="refuseOnClick(item)">拒绝</el-button>
             <el-button type="success" @click="passOnClick(item)">通过</el-button>
-            <el-button type="primary" @click="showDetails(item.recordId)">详细信息</el-button>
+            <el-button type="primary" @click="showDetails(item)">详细信息</el-button>
           </el-col>
         </el-row>
       </BasicCard>
@@ -64,89 +65,89 @@
 import BasicCard from "../PanelCard/BasicCard";
 import router from "../../plugins/router";
 import { patchMainsiteInRecord } from "../../api/storage";
+import mq from "@/plugins/rabbitmq";
+
 export default {
   components: { BasicCard },
   data: () => {
     return {
       mainsiteId: "",
-      checkInItems: [
-        {
-          recordId: "10000000",
-          type: 1,
-          typeDescn: "补货",
-          formId: "89",
-          itemId: "54",
-          itemNum: 77
-        },
-        {
-          recordId: "93",
-          type: 2,
-          typeDescn: "调货",
-          formId: "14",
-          itemId: "61",
-          itemNum: 48
-        },
-        {
-          recordId: "27",
-          type: 3,
-          typeDescn: "退货",
-          formId: "43",
-          itemId: "77",
-          itemNum: 24
-        },
-        {
-          recordId: "75",
-          type: 4,
-          typeDescn: "换货",
-          formId: "98",
-          itemId: "25",
-          itemNum: 52
-        },
-        {
-          recordId: "52",
-          type: 1,
-          typeDescn: "补货",
-          formId: "85",
-          itemId: "41",
-          itemNum: 63
-        }
-      ]
+      checkInItems: []
     };
   },
   methods: {
-    fetchData() {},
     passOnClick: function(item) {
-      console.log(this);
-      patchMainsiteInRecord(this.mainsiteId, item.recordId, {
-        approvalStatus: "Y",
-        warehouseId: ""
-      }).then(res => {
-        console.log(res);
-        this.checkInItems = this.checkInItems.filter(tempItem => {
-          return tempItem.recordId !== item.recordId;
+      this.$confirm("确认通过入库请求" + item.recordId + "？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "success"
+      }).then(function() {
+        patchMainsiteInRecord(this.mainsiteId, item.recordId, {
+          approvalStatus: "Y",
+          warehouseId: ""
+        }).then(res => {
+          console.log(res);
+          item.ack();
+          this.checkInItems = this.checkInItems.filter(tempItem => {
+            return tempItem.recordId !== item.recordId;
+          });
+          this.$message({
+            type: "success",
+            message: "请求审核成功"
+          })
+        }).catch(() => {
+          this.$message({
+            type: "error",
+            message: "请求审核失败"
+          })
         });
       });
       console.debug(item);
     },
     refuseOnClick: function(item) {
-      console.log(this);
-      patchMainsiteInRecord(this.mainsiteId, item.recordId, {
-        approvalStatus: "F",
-        warehouseId: ""
-      }).then(res => {
-        console.log(res);
-        this.checkInItems = this.checkInItems.filter(tempItem => {
-          return tempItem.recordId !== item.recordId;
+      this.$confirm("确认拒绝入库请求" + item.recordId + "？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "success"
+      }).then(function() {
+        patchMainsiteInRecord(this.mainsiteId, item.recordId, {
+          approvalStatus: "F",
+          warehouseId: ""
+        }).then(res => {
+          console.log(res);
+          item.ack();
+          this.checkInItems = this.checkInItems.filter(tempItem => {
+            return tempItem.recordId !== item.recordId;
+          });
         });
       });
       console.debug(item);
     },
-    showDetails(recordId) {
-      router.push(this.$route.path + "/" + recordId);
+    showDetails(record) {
+      router.push({
+        path:
+          "mainsites/" +
+          this.mainsiteId +
+          "/inventory/sitein/" +
+          record.recordId,
+        query: { record }
+      });
+    },
+    onMessage(frame) {
+      console.log("msg" + frame.body);
+      var obj = JSON.parse(frame.body);
+      obj.ack = frame.ack;
+      this.checkInItems.push(obj);
+    },
+    onFailed(frame) {
+      console.log("err:" + frame);
     }
   },
   mounted() {
-    this.mainsiteId = this.$route.params.mainsiteId
+    this.mainsiteId = this.$route.params.mainsiteId;
+    mq.client.heartbeat.outgoing = 0;
+    mq.client.heartbeat.incoming = 0;
+    mq.connect("unreviewed item in", this.onMessage, this.onFailed);
   }
 };
 </script>

@@ -176,6 +176,11 @@ export default {
         approvalStatus: "Y",
         warehouseId: ""
       }).then(res => {
+        this.frame.ack();
+        this.$message({
+          type: "success",
+          message: "请求审核成功"
+        });
         this.fetchData();
         console.log(res.status);
       });
@@ -185,6 +190,11 @@ export default {
         approvalStatus: "F",
         warehouseId: ""
       }).then(() => {
+        this.frame.ack();
+        this.$message({
+          type: "success",
+          message: "请求拒绝成功"
+        });
         this.fetchData();
       });
     }
@@ -219,12 +229,14 @@ export default {
       dialogVisible: false,
       formData: {
         warehouseId: ""
-      }
+      },
+      frame: null
     };
   },
   mounted() {
     this.mainsiteId = this.$route.params.mainsiteId;
     this.recordId = this.$route.params.recordId;
+    this.frame = this.$router.currentRoute.query.record;
     console.log(this.mainsiteId);
     console.log(this.recordId);
     this.fetchData();

@@ -1,6 +1,6 @@
 <template>
   <div class="display-box">
-      <!-- <el-table :data="checkOutItems">
+    <!-- <el-table :data="checkOutItems">
         <el-table-column label="记录编号" prop="recordId"></el-table-column>
         <el-table-column>
           <template slot-scope="items">
@@ -17,40 +17,40 @@
             <el-button type="success">通过</el-button>
           </template>
         </el-table-column>
-      </el-table>-->
-      <el-row v-for="item in checkOutItems" :key="item.recordId">
-        <BasicCard :header="'入库请求 '+item.recordId">
-          <el-row type="flex" align="center">
-            <el-col :span="18">
-              <el-row class="form-line">
-                <el-col :span="12">
-                  <div class="text-label">商品ID：</div>
-                  <div class="text-value">{{item.itemId}}</div>
-                </el-col>
-                <el-col :span="12">
-                  <div class="text-label">商品数量：</div>
-                  <div class="text-value">{{item.itemNum}}</div>
-                </el-col>
-              </el-row>
-              <el-row class="form-line">
-                <el-col :span="12">
-                  <div class="text-label">退货类型：</div>
-                  <div class="text-value">
-                    <el-tag v-if="item.type==1" type="warning">退货</el-tag>
-                    <el-tag v-if="item.type==2">调货</el-tag>
-                    <el-tag v-if="item.type==3" type="success">发货</el-tag>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-col>
-            <el-col :span="6">
-              <el-button type="danger" @click="refuseOnClick(item)">拒绝</el-button>
-              <el-button type="success" @click="passOnClick(item)">通过</el-button>
-              <el-button type="primary" @click="showDetails(item.recordId)">详细信息</el-button>
-            </el-col>
-          </el-row>
-        </BasicCard>
-      </el-row>
+    </el-table>-->
+    <el-row v-for="item in checkOutItems" :key="item.recordId">
+      <BasicCard :header="'入库请求 '+item.recordId">
+        <el-row type="flex" align="center">
+          <el-col :span="18">
+            <el-row class="form-line">
+              <el-col :span="12">
+                <div class="text-label">商品ID：</div>
+                <div class="text-value">{{item.itemId}}</div>
+              </el-col>
+              <el-col :span="12">
+                <div class="text-label">商品数量：</div>
+                <div class="text-value">{{item.itemNum}}</div>
+              </el-col>
+            </el-row>
+            <el-row class="form-line">
+              <el-col :span="12">
+                <div class="text-label">退货类型：</div>
+                <div class="text-value">
+                  <el-tag v-if="item.type==1" type="warning">退货</el-tag>
+                  <el-tag v-if="item.type==2">调货</el-tag>
+                  <el-tag v-if="item.type==3" type="success">发货</el-tag>
+                </div>
+              </el-col>
+            </el-row>
+          </el-col>
+          <el-col :span="6">
+            <el-button type="danger" @click="refuseOnClick(item)">拒绝</el-button>
+            <el-button type="success" @click="passOnClick(item)">通过</el-button>
+            <el-button type="primary" @click="showDetails(item)">详细信息</el-button>
+          </el-col>
+        </el-row>
+      </BasicCard>
+    </el-row>
   </div>
 </template>
 
@@ -58,85 +58,94 @@
 import BasicCard from "../PanelCard/BasicCard";
 import router from "../../plugins/router";
 import { patchMainsiteOutRecord } from "../../api/storage";
-
+import mq from "@/plugins/rabbitmq";
 
 export default {
   components: { BasicCard },
   data: () => {
     return {
       mainsiteId: "",
-      checkOutItems: [
-        {
-          recordId: "5",
-          type: 1,
-          typeDescn: "退货",
-          formId: "75",
-          itemId: "24",
-          itemNum: 74
-        },
-        {
-          recordId: "18",
-          type: 2,
-          typeDescn: "调货",
-          formId: "80",
-          itemId: "77",
-          itemNum: 90
-        },
-        {
-          recordId: "75",
-          type: 3,
-          typeDescn: "发货",
-          formId: "25",
-          itemId: "50",
-          itemNum: 94
-        },
-        {
-          recordId: "23",
-          type: 1,
-          typeDescn: "退货",
-          formId: "85",
-          itemId: "43",
-          itemNum: 24
-        }
-      ]
+      checkOutItems: []
     };
   },
   methods: {
     methods: {
-    fetchData() {},
-    passOnClick: function(item) {
-      console.log(this);
-      patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
-        approvalStatus: "Y",
-        warehouseId: ""
-      }).then(res => {
-        console.log(res);
-        this.checkOutItems = this.checkOutItems.filter(tempItem => {
-          return tempItem.recordId !== item.recordId;
+      fetchData() {},
+      passOnClick: function(item) {
+        this.$confirm("确认通过出库请求" + item.recordId + "？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "success"
+        }).then(function() {
+          patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
+            approvalStatus: "Y",
+            warehouseId: ""
+          })
+            .then(res => {
+              console.log(res);
+              item.ack();
+              this.checkOutItems = this.checkOutItems.filter(tempItem => {
+                return tempItem.recordId !== item.recordId;
+              });
+              this.$message({
+                type: "success",
+                message: "请求审核成功"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "error",
+                message: "请求审核失败"
+              });
+            });
         });
-      });
-      console.debug(item);
-    },
-    refuseOnClick: function(item) {
-      console.log(this);
-      patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
-        approvalStatus: "F",
-        warehouseId: ""
-      }).then(res => {
-        console.log(res);
-        this.checkOutItems = this.checkOutItems.filter(tempItem => {
-          return tempItem.recordId !== item.recordId;
+        console.debug(item);
+      },
+      refuseOnClick: function(item) {
+        this.$confirm("确认拒绝出库请求" + item.recordId + "？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "success"
+        }).then(function() {
+          patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
+            approvalStatus: "F",
+            warehouseId: ""
+          }).then(res => {
+            console.log(res);
+            item.ack();
+            this.checkOutItems = this.checkOutItems.filter(tempItem => {
+              return tempItem.recordId !== item.recordId;
+            });
+          });
         });
-      });
-      console.debug(item);
+        console.debug(item);
+      },
+      showDetails(record) {
+        router.push({
+          path:
+            "mainsites/" +
+            this.mainsiteId +
+            "/inventory/siteout/" +
+            record.recordId,
+          query: { record }
+        });
+      },
+      onMessage(frame) {
+        console.log("msg" + frame.body);
+        var obj = JSON.parse(frame.body);
+        obj.ack = frame.ack;
+        this.checkOutItems.push(obj);
+      },
+      onFailed(frame) {
+        console.log("err:" + frame);
+      }
     },
-    showDetails(recordId) {
-      router.push(this.$route.path + "/" + recordId);
+    mounted() {
+      this.mainsiteId = this.$route.params.mainsiteId;
+      mq.client.heartbeat.outgoing = 0;
+      mq.client.heartbeat.incoming = 0;
+      mq.connect("unreviewed item out", this.onMessage, this.onFailed);
     }
-  },
-  mounted() {
-    this.mainsiteId = this.$route.params.mainsiteId
-  }
   }
 };
 </script>
