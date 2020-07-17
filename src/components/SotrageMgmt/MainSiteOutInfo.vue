@@ -122,7 +122,7 @@ export default {
       showDetails(record) {
         router.push({
           path:
-            "mainsites/" +
+            "/main/mainsites/" +
             this.mainsiteId +
             "/inventory/siteout/" +
             record.recordId,
