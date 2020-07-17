@@ -19,7 +19,7 @@
         </el-table-column>
     </el-table>-->
     <el-row v-for="item in checkOutItems" :key="item.recordId">
-      <BasicCard :header="'入库请求 '+item.recordId">
+      <BasicCard :header="'出库请求 '+item.recordId">
         <el-row type="flex" align="center">
           <el-col :span="18">
             <el-row class="form-line">
