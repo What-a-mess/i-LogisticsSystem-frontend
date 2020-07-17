@@ -113,7 +113,7 @@ export default {
 </script>
 <style>
 .small {
-  width: 600px;
-  height: 600px;
+  width:520px;
+  height: 520px;
 }
 </style>
