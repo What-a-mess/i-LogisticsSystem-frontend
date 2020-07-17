@@ -1,63 +1,59 @@
 <template>
   <div>
-  <el-row style="padding-top: 2%">
-    <el-col :span="2" :offset="21">
-      <AddSupplier />
-    </el-col>
-  </el-row>
+    <el-row style="padding-top: 2%">
+      <el-col :span="2" :offset="21">
+        <AddSupplier />
+      </el-col>
+    </el-row>
 
-  <el-row>
-    <el-col :span="24">
-      <BasicCard header="供应商管理">
-        <el-table :data="suppliers">
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="供应商ID：">{{props.row.supplierId}}</el-form-item>
-                <el-form-item label="供应商名称：">{{props.row.brandName}}</el-form-item>
-                <el-form-item label="经理姓名">{{props.row.managerName}}</el-form-item>
-                <el-form-item label="供应商电话：">{{props.row.tel}}</el-form-item>
-                <el-form-item
-                  label="供应商地址："
-                >{{props.row.province}} {{props.row.city}} {{props.row.diatrict}}</el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
-          <el-table-column :width="200" label="ID" prop="supplierId"></el-table-column>
-          <el-table-column :width="200" label="名称" prop="brandName"></el-table-column>
-          <el-table-column :width="250" label="省市">
-            <template slot-scope="props">{{props.row.province}} {{props.row.city}}</template>
-          </el-table-column>
-          <el-table-column label="详细地址" prop="addr"></el-table-column>
-          <el-table-column label="管理操作">
-            <template slot-scope="scope">
-            <el-button type="danger" @click="clickToDelSupplier(scope.row)">删除</el-button>
-            <el-button @click="clickToModifySupplier(scope.row)" type="warning">修改</el-button>
-              <el-button type="primary">查看供应商</el-button>
+    <el-row>
+      <el-col :span="24">
+        <BasicCard header="供应商管理">
+          <el-table :data="suppliers">
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="供应商ID：">{{props.row.supplierId}}</el-form-item>
+                  <el-form-item label="供应商名称：">{{props.row.brandName}}</el-form-item>
+                  <el-form-item label="经理姓名">{{props.row.managerName}}</el-form-item>
+                  <el-form-item label="供应商电话：">{{props.row.tel}}</el-form-item>
+                  <el-form-item
+                    label="供应商地址："
+                  >{{props.row.province}} {{props.row.city}} {{props.row.district}}</el-form-item>
+                  <el-form-item label="邮箱">{{props.row.email}}</el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
+            <el-table-column :width="200" label="ID" prop="supplierId"></el-table-column>
+            <el-table-column :width="200" label="名称" prop="brandName"></el-table-column>
+            <el-table-column :width="250" label="省市">
+              <template slot-scope="props">{{props.row.province}} {{props.row.city}}</template>
+            </el-table-column>
+            <el-table-column label="详细地址" prop="addr"></el-table-column>
+            <el-table-column label="管理操作">
+              <template slot-scope="scope">
+                <el-button type="danger" @click="clickToDelSupplier(scope.row)">删除</el-button>
+                <el-button @click="clickToModifySupplier(scope.row)" type="warning">修改</el-button>
+                <el-button type="primary" @click="showDetails(scope.row)">查看供应商</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
 
-
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <br />
-        <el-row>
-          <el-pagination
-                  :current-page.sync="pageNum"
-                  :page-count="totalPages"
-                  layout="prev, pager, next"
-                  @current-change="onPageChange"
-          ></el-pagination>
-        </el-row>
-      </BasicCard>
-    </el-col>
-  </el-row>
+          <br />
+          <el-row>
+            <el-pagination
+              :current-page.sync="pageNum"
+              :page-count="totalPages"
+              layout="prev, pager, next"
+              @current-change="onPageChange"
+            ></el-pagination>
+          </el-row>
+        </BasicCard>
+      </el-col>
+    </el-row>
 
     <el-dialog title="修改供应商" :visible.sync="dialogFormVisibleModify" width="35%" top="3%">
       <el-form label-width="100px">
-        <el-form-item label="供应商ID">
-          <el-input v-model="modifiedInfo.supplierId"  style="width:90%"></el-input>
-        </el-form-item>
         <el-form-item label="经理姓名">
           <el-input v-model="modifiedInfo.managerName" style="width:90%"></el-input>
         </el-form-item>
@@ -73,33 +69,53 @@
         <el-button type="primary" @click="modifySupplierInfo()">确 定</el-button>
       </div>
     </el-dialog>
-
-
   </div>
 </template>
 
 <script>
-  import BasicCard from "../PanelCard/BasicCard";
-  import AddSupplier from "../OrderFormMgmt/AddSupplier";
+import BasicCard from "../PanelCard/BasicCard";
+import AddSupplier from "../OrderFormMgmt/AddSupplier";
+import { getSuppliers, modifySupplier } from "../../api/clientele";
+import router from "../../plugins/router"
+
 export default {
-  components:{
+  components: {
     BasicCard,
     AddSupplier
   },
-  methods:{
-    fetchData(){
-
+  methods: {
+    fetchData() {
+      getSuppliers({
+        pageNum: this.pageNum,
+        pageSize: 10
+      }).then(res => {
+        this.suppliers = res.data.content;
+        this.totalPages = res.data.totalPages;
+      });
     },
     onPageChange() {
       this.fetchData();
     },
-    modifySupplierInfo(){
+    modifySupplierInfo() {
       //这个是点击确定按钮
-      this.dialogFormVisibleModify = false;
+      modifySupplier(this.modifiedInfo.supplierId, this.modifiedInfo)
+        .then(() => {
+          this.$message({
+            message: "修改成功",
+            type: "success"
+          });
+          this.dialogFormVisibleModify = false;
+        })
+        .catch(() => {
+          this.$message({
+            message: "修改失败",
+            type: "error"
+          });
+        });
 
       //用patch方法发送修改信息，发送的数为 this.modifiedInfo
     },
-    clickToModifySupplier(supplier){
+    clickToModifySupplier(supplier) {
       //这个是打开隐藏的对话框
       this.dialogFormVisibleModify = true;
       this.modifiedInfo.supplierId = supplier.supplierId;
@@ -107,25 +123,30 @@ export default {
       this.modifiedInfo.tel = supplier.tel;
       this.modifiedInfo.email = supplier.email;
     },
-    clickToDelSupplier:function (supplied) {
-      this.$confirm('此操作将删除该供应商, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        console.log(supplied);
-        //supplied为供应商对象 拿着suppliedId去请求删除   //删除成功则提示删除成功
-        this.suppliers.splice(this.suppliers.indexOf(supplied),1)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+    clickToDelSupplier: function(supplied) {
+      this.$confirm("此操作将删除该供应商, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          console.log(supplied);
+          //supplied为供应商对象 拿着suppliedId去请求删除   //删除成功则提示删除成功
+          this.suppliers.splice(this.suppliers.indexOf(supplied), 1);
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
         });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+    },
+    showDetails(supplier) {
+      router.push("suppliers/"+supplier.supplierId+"/supplyGoods")
     }
   },
   data: () => {
@@ -135,31 +156,31 @@ export default {
       totalSize: 13,
       totalPages: 18,
 
-      dialogFormVisibleModify:false,
+      dialogFormVisibleModify: false,
 
-      modifiedInfo:{
-        supplierId:"",
-        managerName:"",
-        tel:"",
-        email:"",
+      modifiedInfo: {
+        supplierId: "",
+        managerName: "",
+        tel: "",
+        email: ""
       },
 
       suppliers: [
         {
           supplierId: -97429195,
           brandName: "当情性通度",
-          managerName:"发分",
+          managerName: "发分",
           tel: "18610391758",
           email: "1062075107@qq.com",
           province: "西藏自治区",
           city: "固原市",
           diatrict: "天津天津市黄浦区",
-          addr:"aliquip amet dolore"
+          addr: "aliquip amet dolore"
         },
         {
           supplierId: "SUP-H-001",
           brandName: "且气认往",
-          managerName:"发分",
+          managerName: "发分",
           tel: "18170572554",
           email: "w.xdalw@qq.com",
           province: "河南省",
@@ -170,7 +191,7 @@ export default {
         {
           supplierId: "SUP-H-002",
           brandName: "系非毛从每",
-          managerName:"发分",
+          managerName: "发分",
           tel: "19831854924",
           email: "o.yhkyblpu@qq.com",
           province: "河南省",
@@ -180,6 +201,9 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    this.fetchData();
   }
 };
 </script>

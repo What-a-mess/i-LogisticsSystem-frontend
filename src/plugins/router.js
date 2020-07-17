@@ -52,7 +52,7 @@ const routes = [
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
-            { path: ':supplierId/supplyGoods', component: SupplierGoods },
+            { path: 'suppliers/:supplierId/supplyGoods', component: SupplierGoods },
             { path: 'catalogInfo', component: CatalogInfo },
             { path: 'mainsites/:mainsiteId/inventory/sitein', component: MainSiteInInfo },
             { path: 'mainsites/:mainsiteId/inventory/siteout', component: MainSiteOutInfo },
