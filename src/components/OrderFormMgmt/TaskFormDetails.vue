@@ -74,57 +74,58 @@
           <el-collapse
             style="width: 98%;padding-left: 3%"
             v-for="orderItem in taskFromData.orderItems"
-            v-bind:key="orderItem.orderId"
+            v-bind:key="orderItem.item.itemId"
           >
             <el-collapse-item :title="orderItem.item.name">
               <el-row>
-                <el-col :span="12">
-                  <b>商品大类ID：</b>
-                  {{orderItem.item.categoryId}}
+                <el-col :span="5">
+                  <img style="width: 100px; height: 100px" :src="orderItem.item.imgUrl" />
                 </el-col>
-                <el-col :span="12">
-                  <b>商品ID：</b>
-                  {{orderItem.item.itemId}}
-                </el-col>
-                <el-col :span="12">
-                  <b>任务单ID：</b>
-                  {{orderItem.taskId}}
-                </el-col>
-                <el-col :span="12">
-                  <b>任务单状态：</b>
-                  {{orderItem.status}}
-                </el-col>
-                <el-col :span="12">
-                  <b>商品下单数量：</b>
-                  {{orderItem.itemNum}}
-                </el-col>
-                <el-col :span="12">
-                  <b>商品状态：</b>
-                  <el-tag v-if="orderItem.taskId=='O'">运输中</el-tag>
-                  <el-tag v-else-if="orderItem.taskId=='Y'" type="success">已签收</el-tag>
-                  <el-tag v-else-if="orderItem.taskId=='W'" type="info">缺货待调货</el-tag>
-                  <el-tag v-else-if="orderItem.taskId=='U'" type="warning">未发出</el-tag>
-                  <el-tag v-else-if="orderItem.taskId=='N'" type="danger">未配送</el-tag>
-                </el-col>
-                <el-col :span="12">
-                  <b>商品成本：</b>
-                  {{orderItem.item.unitCost}}
-                </el-col>
-                <el-col :span="12">
-                  <b>商品售价：</b>
-                  {{orderItem.item.listPrice}}
-                </el-col>
-                <el-col :span="12">
-                  <b>商品购买总价：</b>
-                  {{orderItem.total}}
-                </el-col>
-                <el-col :span="12">
-                  <b>商品描述：</b>
-                  {{orderItem.item.descn}}
-                </el-col>
-                <el-col>
-                  <b>商品图片：</b>
-                  {{orderItem.item.imgUrl}}
+                <el-col :span="19">
+                  <el-col :span="12">
+                    <b>商品大类ID：</b>
+                    {{orderItem.item.categoryId}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品ID：</b>
+                    {{orderItem.item.itemId}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>任务单ID：</b>
+                    {{orderItem.taskId}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>任务单状态：</b>
+                    {{orderItem.status}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品下单数量：</b>
+                    {{orderItem.itemNum}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品状态：</b>
+                    <el-tag v-if="orderItem.taskId=='O'">运输中</el-tag>
+                    <el-tag v-else-if="orderItem.taskId=='Y'" type="success">已签收</el-tag>
+                    <el-tag v-else-if="orderItem.taskId=='W'" type="info">缺货待调货</el-tag>
+                    <el-tag v-else-if="orderItem.taskId=='U'" type="warning">未发出</el-tag>
+                    <el-tag v-else-if="orderItem.taskId=='N'" type="danger">未配送</el-tag>
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品成本：</b>
+                    {{orderItem.item.unitCost}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品售价：</b>
+                    {{orderItem.item.listPrice}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品购买总价：</b>
+                    {{orderItem.total}}
+                  </el-col>
+                  <el-col :span="12">
+                    <b>商品描述：</b>
+                    {{orderItem.item.descn}}
+                  </el-col>
                 </el-col>
               </el-row>
             </el-collapse-item>
@@ -213,9 +214,7 @@ export default {
   methods: {
     clickToDeliverMap: function() {
       let path =
-        "/main/taskforms/" +
-        this.$route.params.taskFormId +
-        "/deliverMap";
+        "/main/taskforms/" + this.$route.params.taskFormId + "/deliverMap";
       this.$router.push(path);
     },
     fecthData: function() {
