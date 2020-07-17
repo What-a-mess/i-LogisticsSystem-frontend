@@ -2,7 +2,7 @@
   <div>
     <el-button type="primary" @click="addNewOrder()" round>新增订单</el-button>
 
-    <el-dialog title="订单详情" :visible.sync="dialogFormVisible" width="35%" top="3%">
+    <el-dialog title="新增订单" :visible.sync="dialogFormVisible" width="35%" top="3%">
       <el-form label-width="80px">
         <el-form-item label="订单ID">
           <el-input v-model="order.orderId" style="width:90%"></el-input>
