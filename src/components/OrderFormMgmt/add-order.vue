@@ -34,7 +34,7 @@
         <el-form-item label="付款状态">
           <el-select v-model="order.payStatus" placeholder="请选择" style="left: -22%">
             <el-option
-              v-for="item in payOptions"
+              v-for="item in goodsOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
