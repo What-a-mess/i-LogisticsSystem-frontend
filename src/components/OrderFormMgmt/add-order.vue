@@ -203,7 +203,7 @@ export default {
         for (var j = 0; j < allGoods[i].itemList.length; j++) {
           if (this.orderItem.itemId == allGoods[i].itemList[j].itemId) {
             this.orderItem.total =
-              this.orderItem.itemNum * allGoods[i].itemList[j].listPrice;
+              parseInt(this.orderItem.itemNum) * allGoods[i].itemList[j].listPrice;
             inputValue =
               inputValue +
               this.number_of_Items +
@@ -279,6 +279,9 @@ export default {
         if(k == "payDateTime"){
           this.order[k] = null;
         }
+        else if(k == "totalPrice"){
+          this.order[k] = 0;
+        }
         else {
           this.order[k] = "";
         }
@@ -286,7 +289,7 @@ export default {
       this.orderItemList = [
         {
           itemNum: 1,
-          total: "",
+          total: 0,
           itemId: ""
         }
       ]
@@ -359,7 +362,7 @@ export default {
         orderId: "",
         createDateTime: "",
         payDateTime: null,
-        totalPrice: "",
+        totalPrice: 0,
         billName: "",
         shippingCost: "",
         payStatus: "",
@@ -375,7 +378,7 @@ export default {
       orderItemList: [],
       orderItem: {
         itemNum: 1,
-        total: "",
+        total: 0,
         itemId: ""
       },
       number_of_Items: 0,
