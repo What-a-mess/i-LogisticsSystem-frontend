@@ -203,7 +203,7 @@ export default {
         for (var j = 0; j < allGoods[i].itemList.length; j++) {
           if (this.orderItem.itemId == allGoods[i].itemList[j].itemId) {
             this.orderItem.total =
-              parseInt(this.orderItem.itemNum) * allGoods[i].itemList[j].listPrice;
+              this.orderItem.itemNum * allGoods[i].itemList[j].listPrice;
             inputValue =
               inputValue +
               this.number_of_Items +
@@ -240,9 +240,11 @@ export default {
       this.dialogFormVisible = false;
 
       //计算此订单的总价
+      var total = 0
       for (var k = 0; k < this.orderItemList.length; k++) {
-        this.order.totalPrice += this.orderItemList[k].total;
+         total += parseFloat(this.orderItemList[k].total);
       }
+      this.order.totalPrice = total
 
       for (var i in this.order) {
         if (this.order[i] == "") {
@@ -265,7 +267,14 @@ export default {
             message: "新增订单成功",
             type: "success"
           });
+        }else{
+          this.$notify({
+            title: "失败",
+            message: "新增订单失败",
+            type: "error"
+          });
         }
+
       }).catch(err => {
           console.warn(err)
       });
