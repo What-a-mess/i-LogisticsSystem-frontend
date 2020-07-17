@@ -307,7 +307,7 @@ export default {
       })
     },
     clickToTaskDetails:function (taskId) {
-      this.$router.push("/main/order/"+this.$route.params.orderId+"/"+taskId+"/details");
+      this.$router.push("/main/taskforms/"+taskId+"/details");
     }
     // heightChange:function (e) {
     //   console.log(e);

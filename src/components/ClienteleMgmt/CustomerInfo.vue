@@ -81,6 +81,7 @@ export default {
   },
   methods:{
     fetchData:function() {
+      //需要把请求结果 的 province  city district addr 合并处理到customers[i].customerAddress
 
     },
     onPageChange() {
