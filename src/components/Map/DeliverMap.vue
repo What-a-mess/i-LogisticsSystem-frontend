@@ -46,19 +46,22 @@ export default {
   data() {
     return {
       deliverStauts: 1,
+
       startPosition: {
         lng: 116.432045,
         lat: 39.910683
       },
       endPosition: { lng: 112.55, lat: 37.87 },
       nowPosition: [],
-      startDescrip: "",
-      nowDescrip: "",
-      endDescrip: "",
-      processStatus: "",
+
       startStep: "",
       nowStep: "",
       endStep: "",
+      startDescrip: "",
+      nowDescrip: "",
+      endDescrip: "",
+
+      processStatus: "",
       restDeliverDay: 1,
 
       first: {
@@ -150,6 +153,10 @@ export default {
           }
         ]
       },
+      status: "Y",
+      mainSiteName: "MAIN-004",
+      subSiteName: "SUB-005",
+
       taskId: null
     };
   },
@@ -165,8 +172,55 @@ export default {
     //     // this.nowPosition = res.data[2];
     //   });
     // }
-    updateStatus() {
-        this.startPosition = this.first.steps[0].start_location;
+    updateStatus() { 
+    if(this.status == "W") {//缺货
+      this.deliverStauts = 0; 
+      this.processStatus = "process"
+      this.startStep = "未发货";
+      this.startDescrip = this.mainSiteName+"商品缺货,调货中...";
+      this.nowStep = "运输";
+      this.nowDescrip = "";
+      this.endStep = "配送";
+      this.endDescrip = "";
+    } else if(this.status == "U") { //未发出
+      this.deliverStauts = 0; 
+      this.processStatus = "process";
+      this.startStep = "未发货";
+      this.startDescrip = "等待从"+ this.mainSiteName + "出库...";
+      this.nowStep = "运输";
+      this.nowDescrip = "";
+      this.endStep = "配送";
+      this.endDescrip = "";
+    } else if(this.status == "O") {//在途中
+      this.deliverStauts = 1; 
+      this.processStatus = "process";
+      this.startStep = "已发货";
+      this.startDescrip = this.mainSiteName + "已发出";
+      this.nowStep = "运输";
+      this.nowDescrip = "正在前往" + this.subSiteName + "...";
+      this.endStep = "配送";
+      this.endDescrip = "";
+    } else if(this.status == "N"){//未配送
+      this.deliverStauts = 2;
+      this.processStatus = "process";
+      this.startStep = "已发货";
+      this.startDescrip = this.mainSiteName + "已发出";
+      this.nowStep = "运输";
+      this.nowDescrip = this.subSiteName + "已到货";
+      this.endStep = "配送";
+      this.endDescrip = "等待配送...";
+    } else { //已签收
+      this.deliverStauts = 2;
+      this.processStatus = "success";
+      this.startStep = "已发货";
+      this.startDescrip = this.mainSiteName + "已发出";
+      this.nowStep = "运输";
+      this.nowDescrip = this.subSiteName + "已到货";
+      this.endStep = "配送";
+      this.endDescrip = "已签收";
+    }
+
+    this.startPosition = this.first.steps[0].start_location;
     this.endPosition = this.second.steps[
       this.second.steps.length - 1
     ].end_location;
@@ -174,27 +228,7 @@ export default {
       this.first.steps[this.first.steps.length - 1].end_location
     );
 
-    this.startDescrip = "买家已发货，正在发往集运中心";
-    this.startStep = "卖家已发货";
-    this.processStatus = "finish";
-
-    if (this.deliverStauts > 0) {
-      this.nowStep = "预计还有" + this.restDeliverDay + "天送达";
-      this.processStatus = "process";
-      this.nowDescrip =
-        "现已抵达经度为：" +
-        this.nowPosition[0].lng +
-        "\t纬度为：" +
-        this.nowPosition[0].lat +
-        "的位置";
-    }
-
-    if (this.deliverStauts > 1) {
-      this.nowPosition = [];
-      this.nowStep = "交易完成";
-      this.processStatus = "success";
-      this.endDescrip = "货物已送达";
-    }
+    this.nowPosition = [];
     }
   },
   mounted() {
@@ -203,6 +237,9 @@ export default {
     getDeliverPoints(this.taskId).then(res => {
         this.first = res.data.first;
         this.second = res.data.second;
+        this.status = res.data.status;
+        this.mainSiteName = res.data.mainSiteName;
+        this.subSiteName = res.data.subSiteName;
         this.updateStatus();
     })
   }
