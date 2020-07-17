@@ -80,7 +80,14 @@
           <el-input v-model="order.shippingCost" style="width:90%"></el-input>
         </el-form-item>
         <el-form-item label="支付方式">
-          <el-input v-model="order.payMethod" style="width:90%"></el-input>
+        <el-select v-model="order.payMethod" placeholder="请选择" style="left: -22%">
+          <el-option
+                  v-for="item in payOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+          ></el-option>
+        </el-select>
         </el-form-item>
 
         <el-form-item label="下单地址">
@@ -303,13 +310,21 @@ export default {
 
       payOptions: [
         {
-          value: "P",
-          label: "已付款"
+          value: "支付宝",
+          label: "支付宝"
         },
         {
-          value: "W",
-          label: "未付款"
-        }
+          value: "微信支付",
+          label: "微信支付"
+        },
+        {
+          value: "网银支付",
+          label: "网银支付"
+        },
+        {
+          value: "现金",
+          label: "现金"
+        },
       ],
       goodsOptions: [
         {
