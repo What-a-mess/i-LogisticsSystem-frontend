@@ -65,7 +65,7 @@
                     <el-menu-item-group>
                         <el-menu-item index="/main/siteMap"><span class="cursorHover"><a>站点地图</a></span></el-menu-item>
                     </el-menu-item-group>
-
+                    <el-menu-item index="/main/mainsites/MAIN-001/inventory/warehouses"><span class="cursorHover"><a>库内管理</a></span></el-menu-item>
                     <el-submenu index="4-3">
                         <span slot="title" class="cursorHover"><a>主站管理</a></span>
                         <el-menu-item index="/main/mainsites/:mainsiteId/inventory/sitein"><span class="cursorHover">出库审核</span></el-menu-item>
