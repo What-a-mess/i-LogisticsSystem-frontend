@@ -29,11 +29,9 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <!-- TODO: 目前还没有决定好这里面会有何条目 -->
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item>通知</el-dropdown-item>
+            <el-dropdown-item>消息</el-dropdown-item>
+            <el-dropdown-item disabled>快件信息</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
