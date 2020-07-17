@@ -29,11 +29,12 @@
                 </el-form-item>
                 <el-form-item label=" 日期">
                   <el-date-picker
-                    v-model="value1"
-                    type="datetimerange"
+                    v-model="dateRange"
+                    type="daterange"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
-                    :default-time="['12:00:00']"
+                    :default-time="['00:00:00', '23:59:59']"
+                    value-format="yyyy-MM-dd HH:mm:ss"
                   ></el-date-picker>
                 </el-form-item>
                 <el-button type="primary" @click="fetchData">搜索</el-button>
@@ -88,7 +89,7 @@ export default {
     return {
       input: "",
       select: "",
-      value1: "",
+      dateRange: "",
       value2: "",
       sDay: "",
       eDay: "",
@@ -206,24 +207,14 @@ export default {
       orderDetailRoute: ""
     };
   },
-  watch: {
-    value1(val) {
-      var startDate = JSON.stringify(val[0]).substr(0, 11) + " 00:00:00";
-      var endDate = JSON.stringify(val[1]).substr(0, 11) + " 23:59:59";
-      this.sDay = startDate;
-      this.eDay = endDate;
-      console.log(startDate);
-      console.log(endDate);
-    }
-  },
   methods: {
     fetchData() {
       getOrders({
         userId: this.inlineQuery.userIdQuery,
         orderId: this.inlineQuery.orderIdQuery,
         processStatus: this.inlineQuery.orderStatus,
-        dateFrom: this.sDay,
-        dateTo: this.eDay,
+        dateFrom: this.dateRange ? this.dateRange[0]: null,
+        dateTo: this.dateRange ? this.dateRange[1]: null,
         pageNum: this.curPage,
         pageSize: 8
       }).then(res => {
