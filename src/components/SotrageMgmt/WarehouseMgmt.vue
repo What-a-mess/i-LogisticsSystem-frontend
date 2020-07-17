@@ -22,7 +22,14 @@
         <el-row>
           <el-form :inline="true">
             <el-form-item label="大类ID">
-              <el-input v-model="categoryId" @blur="fetchItems"></el-input>
+              <el-select v-model="selectedCategory" multiple placeholder="请选择" @change="fetchItems">
+              <el-option
+                v-for="category in categoryOptions"
+                :key="category.categoryId"
+                :label="category.categoryName"
+                :value="category.categoryId"
+              ></el-option>
+            </el-select>
             </el-form-item>
             <el-form-item label="关键词">
               <el-input v-model="keyword" @blur="fetchItems"></el-input>
@@ -111,7 +118,7 @@
 // import BasicCard from "../PanelCard/BasicCard";
 import ItemCard from "../DataCard/ItemCard";
 // import myaxios from "../../plugins/mockaxios";
-import { getWarehousesList, getItems, transferItem } from "../../api/storage";
+import { getCatergies, getWarehousesList, getItems, transferItem } from "../../api/storage";
 
 export default {
   components: { ItemCard },
@@ -123,10 +130,15 @@ export default {
         this.fetchItems();
       });
     },
+    getCatorgyOptions() {
+      getCatergies().then(res => {
+        this.categoryOptions = res.data;
+      });
+    },
     fetchItems() {
       getItems(this.mainsiteId, {
         warehouseIdList: this.selectedWarehouse,
-        categoryIdList: this.categoryId,
+        categoryIdList: this.selectedCategory,
         keyword: this.keyword,
         pageNum: this.curPage,
         pageSize: 3
@@ -328,6 +340,18 @@ export default {
           maxSize: 15000
         }
       ],
+      categoryOptions: [
+        {
+          categoryId: 4,
+          categoryName: "世片切效适或界",
+          description: "dolore"
+        },
+        {
+          categoryId: 78,
+          categoryName: "气律年我",
+          description: "reprehenderit enim dolore"
+        }
+      ],
       mainsiteId: "",
       srcWarehouse: "",
       targetWarehouse: "",
@@ -335,6 +359,7 @@ export default {
       categoryId: "",
       transferNum: 0,
       selectedWarehouse: [],
+      selectedCategory: [],
       dialogVisible: false,
       keyword: "",
       maxNum: 0,
@@ -346,6 +371,7 @@ export default {
   mounted() {
     this.mainsiteId = this.$route.params.mainsiteId;
     this.fetchWarehouses();
+    this.getCatorgyOptions();
   }
 };
 </script>

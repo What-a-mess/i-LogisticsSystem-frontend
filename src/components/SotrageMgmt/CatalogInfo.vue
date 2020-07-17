@@ -59,7 +59,7 @@
       <el-row>
         <el-form :inline="true">
           <el-form-item label="大类ID">
-            <el-select v-model="selectedCategory" multiple placeholder="请选择" :on-change="getItems">
+            <el-select v-model="selectedCategory" multiple placeholder="请选择" @change="getItems">
               <el-option
                 v-for="category in categoryOptions"
                 :key="category.categoryId"
