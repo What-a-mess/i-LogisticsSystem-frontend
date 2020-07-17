@@ -292,6 +292,7 @@ export default {
     getUniqueOrder: function() {
       // 获取唯一订单号后
       console.log(this.$route.params.orderId);
+      
       //通过 $route.params.orderId 获取订单详情 分配到 this.order  this.orderItemList
     },
     fetchData() {

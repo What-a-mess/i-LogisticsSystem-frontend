@@ -190,7 +190,7 @@
                 </el-row>
               </template>
             </el-table-column>
-            <el-table-column label="订单ID" prop="orderId"></el-table-column>
+            <el-table-column label="商品ID" prop="orderId"></el-table-column>
             <el-table-column label="任务单ID" prop="taskId"></el-table-column>
             <el-table-column label="商品数量" prop="itemNum"></el-table-column>
             <el-table-column label="处理状态">
