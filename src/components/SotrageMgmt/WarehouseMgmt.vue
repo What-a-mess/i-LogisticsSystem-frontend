@@ -124,6 +124,7 @@ export default {
   components: { ItemCard },
   methods: {
     fetchWarehouses() {
+      console.log(this.mainsiteId)
       getWarehousesList(this.mainsiteId).then(res => {
         console.log(res);
         this.warehouseList = res.data;
