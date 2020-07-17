@@ -32,6 +32,7 @@ import GoodsItemDetails from "../components/SotrageMgmt/GoodsItemDetails";
 import TaskFormDetails from "../components/OrderFormMgmt/TaskFormDetails";
 import TaskFormInfo from "../components/TaskFormMgmt/TaskFormInfo";
 import TaskFormStatusChart from "../components/TaskFormMgmt/TaskFormStatusChart";
+import SupplierGoods from "../components/ClienteleMgmt/SupplierGoods";
 
 const routes = [
     // 组件测试路由
@@ -51,6 +52,7 @@ const routes = [
             { path: 'charts', component: Charts },
             { path: 'customers', component: CustomerInfo },
             { path: 'suppliers', component: SupplierInfo },
+            { path: ':supplierId/supplyGoods', component: SupplierGoods },
             { path: 'catalogInfo', component: CatalogInfo },
             { path: 'mainsites/:mainsiteId/inventory/sitein', component: MainSiteInInfo },
             { path: 'mainsites/:mainsiteId/inventory/siteout', component: MainSiteOutInfo },
