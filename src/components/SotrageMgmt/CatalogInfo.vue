@@ -36,6 +36,7 @@
             ref="upload"
             :limit="1"
             :on-exceed="exceeding"
+            :before-upload="beforeImgUpload"
           >
             <el-button type="primary">点击上传</el-button>
           </el-upload>
@@ -145,7 +146,14 @@ export default {
         message: "仅允许上传一张图片，请删除已上传图片并重试",
         type: "warning"
       })
-    }
+    },
+    beforeImgUpload(file) {
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJPG) {
+        this.$message.error("上传图片只能是 JPG 或 PNG 格式!");
+      }
+      return isJPG;
+    },
   },
   data: function() {
     return {

@@ -6,17 +6,6 @@
           <el-input v-model="itemForm.name"></el-input>
         </el-form-item>
         <br />
-        <el-form-item label="商品大类">
-          <el-select v-model="itemForm.categoryId">
-            <el-option
-              v-for="category in categoryOptions"
-              :key="category.categoryId"
-              :label="category.categoryName"
-              :value="category.categoryId"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <br />
         <el-form-item label="单价">
           <el-input-number v-model="itemForm.unitCost"></el-input-number>
         </el-form-item>
@@ -38,8 +27,11 @@
             :on-exceed="exceeding"
             :on-change="addingImg"
             :on-remove="addingImg"
+            :before-upload="beforeImgUpload"
           >
             <el-button type="primary">点击上传</el-button>
+            <br />
+            <img v-show="fileList.length==0" :src="item.imgUrl" />
           </el-upload>
         </el-form-item>
         <br />
@@ -103,7 +95,7 @@
 
 <script>
 import router from "../../plugins/router";
-import { getCatergies, updateItem, getItemDetails } from "../../api/storage";
+import { updateItem, getItemDetails } from "../../api/storage";
 
 export default {
   props: ["item", "quantity", "warehouseId", "editable"],
@@ -119,9 +111,6 @@ export default {
     },
     onShow() {
       this.dialogVisible = true;
-      getCatergies().then(res => {
-        this.categoryOptions = res.data;
-      });
     },
     addingImg(file, fileList) {
       this.fileList = fileList;
@@ -143,6 +132,9 @@ export default {
             message: "修改成功",
             type: "success"
           });
+          this.dialogVisible=false;
+          this.fetchData();
+          this.resetItemForm();
         })
         .catch(() => {
           this.$message({
@@ -151,30 +143,39 @@ export default {
           });
         });
     },
+    beforeImgUpload(file) {
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJPG) {
+        this.$message.error("上传图片只能是 JPG 或 PNG 格式!");
+      }
+      return isJPG;
+    },
     onSubmit() {
-      if(this.fileList.length>0) {
+      if (this.fileList.length > 0) {
         this.$refs.upload.submit();
       } else {
         updateItem(this.item.itemId, this.itemForm, null)
-        .then(() => {
-          this.$message({
-            message: "修改成功",
-            type: "success"
+          .then(() => {
+            this.$message({
+              message: "修改成功",
+              type: "success"
+            });
+            this.dialogVisible=false;
+            this.fetchData();
+            this.resetItemForm();
+          })
+          .catch(() => {
+            this.$message({
+              message: "修改失败",
+              type: "error"
+            });
           });
-          this.fetchData()
-        })
-        .catch(() => {
-          this.$message({
-            message: "修改失败",
-            type: "error"
-          });
-        });
       }
     },
     fetchData() {
       getItemDetails(this.item.itemId).then(res => {
         this.item = res.data.item;
-      })
+      });
     }
   },
   data: function() {
@@ -187,8 +188,6 @@ export default {
         unitCost: this.item.unitCost,
         listPrice: this.item.listPrice
       },
-      categoryOptions: [],
-      haveImg: false,
       fileList: []
     };
   },
