@@ -97,7 +97,20 @@ export function addItem(item, file) {
     formData.append("imgFile", file)
     var config = { headers: { 'Content-Type': 'multipart/form-data' } }
 
-    console.log(formData)
-
     return myaxios.post(url, formData, config)
+}
+
+export function updateItem(itemId, item, file) {
+    let url = "/goods/items/"+itemId
+
+    var formData = new FormData()
+    formData.append("categoryId", item.categoryId)
+    formData.append("name", item.name)
+    formData.append("descn", item.descn)
+    formData.append("unitCost", item.unitCost)
+    formData.append("listPrice", item.listPrice)
+    formData.append("imgFile", file)
+    var config = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+    return myaxios.put(url, formData, config)
 }

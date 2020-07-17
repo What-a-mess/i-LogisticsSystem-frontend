@@ -34,7 +34,8 @@
             :auto-upload="false"
             :http-request="submitItem"
             ref="upload"
-            :multiple="false"
+            :limit="1"
+            :on-exceed="exceeding"
           >
             <el-button type="primary">点击上传</el-button>
           </el-upload>
@@ -73,7 +74,7 @@
       </el-row>
       <el-row>
         <el-col :span="20" :offset="2">
-          <ItemCard v-for="item in items" :key="item.itemId" :item="item" class="item-box"></ItemCard>
+          <ItemCard v-for="item in items" :key="item.itemId" :item="item" class="item-box" :editable="true"></ItemCard>
         </el-col>
       </el-row>
       <el-row>
@@ -138,6 +139,12 @@ export default {
     },
     onSubmit() {
       this.$refs.upload.submit();
+    },
+    exceeding() {
+      this.$message({
+        message: "仅允许上传一张图片，请删除已上传图片并重试",
+        type: "warning"
+      })
     }
   },
   data: function() {
