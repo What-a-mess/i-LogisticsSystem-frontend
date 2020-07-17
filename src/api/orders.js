@@ -1,5 +1,5 @@
 import myaxios from "../plugins/myaxios"
-import mockaxios from "../plugins/mockaxios"
+// import mockaxios from "../plugins/mockaxios"
 
 export function getOrders(params) {
     return myaxios({ // TODO:改为myaxios
@@ -10,21 +10,21 @@ export function getOrders(params) {
 }
 
 export function getOrderDetail(orderId) {
-    return mockaxios({ // TODO: 改为myaxios
+    return myaxios({ // TODO: 改为myaxios
         url: "/orders/" + orderId,
         method: "GET"
     })
 }
 
 export function getReturnForms(orderId) {
-    return mockaxios({
+    return myaxios({
         url: "/orders/" + orderId + "/returnforms",
         method: "GET"
     })
 }
 
 export function getTaskForms(orderId) {
-    return mockaxios({
+    return myaxios({
         url: "/orders/"+orderId+"/taskforms"
     })
 }
