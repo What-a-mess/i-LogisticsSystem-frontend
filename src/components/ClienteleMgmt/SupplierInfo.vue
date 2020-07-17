@@ -7,7 +7,7 @@
   </el-row>
 
   <el-row>
-    <el-col :span="23">
+    <el-col :span="24">
       <BasicCard header="供应商管理">
         <el-table :data="suppliers">
           <el-table-column type="expand">
@@ -15,7 +15,7 @@
               <el-form label-position="left" inline class="demo-table-expand">
                 <el-form-item label="供应商ID：">{{props.row.supplierId}}</el-form-item>
                 <el-form-item label="供应商名称：">{{props.row.brandName}}</el-form-item>
-<!--                <el-form-item label="联系人姓名">{{props.row.contactName}}</el-form-item>-->
+                <el-form-item label="经理姓名">{{props.row.managerName}}</el-form-item>
                 <el-form-item label="供应商电话：">{{props.row.tel}}</el-form-item>
                 <el-form-item
                   label="供应商地址："
@@ -23,17 +23,19 @@
               </el-form>
             </template>
           </el-table-column>
-          <el-table-column label="ID" prop="supplierId"></el-table-column>
-          <el-table-column label="名称" prop="brandName"></el-table-column>
-          <el-table-column label="省市">
+          <el-table-column :width="200" label="ID" prop="supplierId"></el-table-column>
+          <el-table-column :width="200" label="名称" prop="brandName"></el-table-column>
+          <el-table-column :width="250" label="省市">
             <template slot-scope="props">{{props.row.province}} {{props.row.city}}</template>
           </el-table-column>
           <el-table-column label="详细地址" prop="addr"></el-table-column>
           <el-table-column label="管理操作">
             <template slot-scope="scope">
             <el-button type="danger" @click="clickToDelSupplier(scope.row)">删除</el-button>
-            <el-button type="warning">修改</el-button>
+            <el-button @click="clickToModifySupplier(scope.row)" type="warning">修改</el-button>
               <el-button type="primary">查看供应商</el-button>
+
+
             </template>
           </el-table-column>
         </el-table>
@@ -50,6 +52,29 @@
       </BasicCard>
     </el-col>
   </el-row>
+
+    <el-dialog title="修改供应商" :visible.sync="dialogFormVisibleModify" width="35%" top="3%">
+      <el-form label-width="100px">
+        <el-form-item label="供应商ID">
+          <el-input v-model="modifiedInfo.supplierId"  style="width:90%"></el-input>
+        </el-form-item>
+        <el-form-item label="经理姓名">
+          <el-input v-model="modifiedInfo.managerName" style="width:90%"></el-input>
+        </el-form-item>
+        <el-form-item label="供应商电话">
+          <el-input v-model="modifiedInfo.tel" style="width:90%"></el-input>
+        </el-form-item>
+        <el-form-item label="供应商邮箱">
+          <el-input v-model="modifiedInfo.email" style="width:90%"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleModify = false">取 消</el-button>
+        <el-button type="primary" @click="modifySupplierInfo()">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
@@ -62,8 +87,25 @@ export default {
     AddSupplier
   },
   methods:{
+    fetchData(){
+
+    },
     onPageChange() {
       this.fetchData();
+    },
+    modifySupplierInfo(){
+      //这个是点击确定按钮
+      this.dialogFormVisibleModify = false;
+
+      //用patch方法发送修改信息，发送的数为 this.modifiedInfo
+    },
+    clickToModifySupplier(supplier){
+      //这个是打开隐藏的对话框
+      this.dialogFormVisibleModify = true;
+      this.modifiedInfo.supplierId = supplier.supplierId;
+      this.modifiedInfo.managerName = supplier.managerName;
+      this.modifiedInfo.tel = supplier.tel;
+      this.modifiedInfo.email = supplier.email;
     },
     clickToDelSupplier:function (supplied) {
       this.$confirm('此操作将删除该供应商, 是否继续?', '提示', {
@@ -93,11 +135,20 @@ export default {
       totalSize: 13,
       totalPages: 18,
 
+      dialogFormVisibleModify:false,
+
+      modifiedInfo:{
+        supplierId:"",
+        managerName:"",
+        tel:"",
+        email:"",
+      },
 
       suppliers: [
         {
           supplierId: -97429195,
           brandName: "当情性通度",
+          managerName:"发分",
           tel: "18610391758",
           email: "1062075107@qq.com",
           province: "西藏自治区",
@@ -108,6 +159,7 @@ export default {
         {
           supplierId: "SUP-H-001",
           brandName: "且气认往",
+          managerName:"发分",
           tel: "18170572554",
           email: "w.xdalw@qq.com",
           province: "河南省",
@@ -118,6 +170,7 @@ export default {
         {
           supplierId: "SUP-H-002",
           brandName: "系非毛从每",
+          managerName:"发分",
           tel: "19831854924",
           email: "o.yhkyblpu@qq.com",
           province: "河南省",

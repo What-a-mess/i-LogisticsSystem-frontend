@@ -10,6 +10,9 @@
                 <el-form-item label="供应商名称">
                     <el-input v-model="supplier.brandName" style="width:90%"></el-input>
                 </el-form-item>
+                <el-form-item label="经理姓名">
+                    <el-input v-model="supplier.managerName" style="width:90%"></el-input>
+                </el-form-item>
                 <el-form-item label="供应商电话">
                     <el-input v-model="supplier.tel" style="width:90%"></el-input>
                 </el-form-item>
@@ -55,8 +58,15 @@
             emitSupplier:function () {
                 this.dialogFormVisible = false;
                 this.SupplierAddReq.supplier = this.supplier;
-                this.SupplierAddReq.itemSupplyList = this.itemSupplyList
+                this.SupplierAddReq.itemSupplyList = this.itemSupplyList;
                 //post把SupplierAddReq 发出去
+
+                setTimeout(this.clear,2000);
+            },
+            clear(){
+                for(var k in this.suppliers){
+                    this.suppliers[k] = "";
+                }
             }
         },
         mounted() {
@@ -74,6 +84,7 @@
                 supplier: {
                     supplierId: "",
                     brandName: "",
+                    managerName: "",
                     tel: "",
                     email: "",
                     province: "",
