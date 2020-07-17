@@ -49,11 +49,12 @@
                     </template>
                     <el-menu-item-group>
                         <el-menu-item index="/main/orderForm"><span class="cursorHover"><a>订单查询</a></span></el-menu-item>
-                        <el-menu-item index="/main/charts"><span class="cursorHover" ><a>统计报表</a></span></el-menu-item>
+
                         <!--                        <el-menu-item index="3-2"><span class="cursorHover"><a>新增订单</a></span></el-menu-item>-->
                     </el-menu-item-group>
                     <el-menu-item index="/main/orderExamine"><span class="cursorHover"><a>订单审核</a></span></el-menu-item>
                     <el-menu-item index="/main/returnForm"><span class="cursorHover"><a>退货换单</a></span></el-menu-item>
+                    <el-menu-item index="/main/charts"><span class="cursorHover" ><a>统计报表</a></span></el-menu-item>
                 </el-submenu>
 
                 <el-submenu index="4" class="center">
@@ -67,11 +68,11 @@
 
                     <el-submenu index="4-3">
                         <span slot="title" class="cursorHover"><a>主站管理</a></span>
-                        <router-link to="/main/mainsites/:mainsiteId/inventory/sitein"><el-menu-item index="1-4-1">出库审核</el-menu-item></router-link>
-                        <router-link to="/main/mainsites/:mainsiteId/inventory/siteout"><el-menu-item index="1-4-1">入库审核</el-menu-item></router-link>
+                       <el-menu-item index="/main/mainsites/:mainsiteId/inventory/sitein">出库审核</el-menu-item>
+                        <el-menu-item index="/main/mainsites/:mainsiteId/inventory/siteout">入库审核</el-menu-item>
                     </el-submenu>
 
-                    <el-menu-item index="4-3" style="padding-left: 68px"><span class="cursorHover"><a>整体商品信息</a></span></el-menu-item>
+                    <el-menu-item index="/main/catalogInfo" style="padding-left: 68px"><span class="cursorHover"><a>整体商品信息</a></span></el-menu-item>
                 </el-submenu>
 
                 <el-submenu index="5" class="center">
