@@ -1,11 +1,11 @@
 import myaxios from "../plugins/myaxios"
 import mockaxios from "../plugins/mockaxios"
 
-export function getOrders(props) {
-    return mockaxios({ // TODO:改为myaxios
+export function getOrders(params) {
+    return myaxios({ // TODO:改为myaxios
         url: "/orders",
         method: "GET",
-        props
+        params
     })
 }
 

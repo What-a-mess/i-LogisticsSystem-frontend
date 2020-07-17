@@ -68,7 +68,6 @@ export default {
       checkOutItems: []
     };
   },
-  methods: {
     methods: {
       fetchData() {},
       passOnClick: function(item) {
@@ -146,7 +145,7 @@ export default {
       mq.client.heartbeat.incoming = 0;
       mq.connect("unreviewed item out", this.onMessage, this.onFailed);
     }
-  }
+  
 };
 </script>
 

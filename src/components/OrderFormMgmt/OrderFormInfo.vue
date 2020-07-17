@@ -20,7 +20,7 @@
                   <el-input style="width: 140px" v-model="inlineQuery.orderIdQuery"></el-input>
                 </el-form-item>
                 <el-form-item label=" 订单状态">
-                  <el-select style="width: 150px" v-model="inlineQuery.orderStatus">
+                  <el-select style="width: 150px" v-model="inlineQuery.orderStatus" clearable>
                     <el-option label="未处理" value="N"></el-option>
                     <el-option label="处理中" value="P"></el-option>
                     <el-option label="交易成功" value="D"></el-option>
@@ -225,9 +225,10 @@ export default {
         dateFrom: this.sDay,
         dateTo: this.eDay,
         pageNum: this.curPage,
-        pageSize: 10
+        pageSize: 8
       }).then(res => {
-        this.orderForms = res.data;
+        this.orderForms = res.data.content;
+        this.totalPages = res.data.totalPages;
       });
     },
     clickToOrderDetails: function(e) {
@@ -235,6 +236,7 @@ export default {
     },
 
     onPageChange() {
+      console.log("page", this.curPage);
       this.fetchData();
     },
 
