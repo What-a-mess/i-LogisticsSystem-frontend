@@ -2,6 +2,7 @@ import myaxios from "../plugins/myaxios"
 // import mockaxios from "../plugins/mockaxios"
 
 export function getOrders(params) {
+    console.log(params)
     return myaxios({ // TODO:改为myaxios
         url: "/orders",
         method: "GET",
