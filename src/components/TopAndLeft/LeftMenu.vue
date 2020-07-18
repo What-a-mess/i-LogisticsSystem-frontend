@@ -65,9 +65,10 @@
                     <el-menu-item-group>
                         <el-menu-item index="/main/siteMap"><span class="cursorHover"><a>站点地图</a></span></el-menu-item>
                     </el-menu-item-group>
-                    <el-menu-item index="/main/mainsites/MAIN-001/inventory/warehouses"><span class="cursorHover"><a>库内管理</a></span></el-menu-item>
+
                     <el-submenu index="4-3">
                         <span slot="title" class="cursorHover"><a>主站管理</a></span>
+                        <el-menu-item index="/main/mainsites/MAIN-001/inventory/warehouses"><span class="cursorHover"><a>库内管理</a></span></el-menu-item>
                         <el-menu-item index="/main/mainsites/MAIN-001/inventory/siteout"><span class="cursorHover">出库审核</span></el-menu-item>
                         <el-menu-item index="/main/mainsites/MAIN-001/inventory/sitein"><span class="cursorHover">入库审核</span></el-menu-item>
                     </el-submenu>
@@ -82,7 +83,7 @@
                     </template>
                     <el-menu-item-group>
                         <el-menu-item index="/main/taskForm" style="padding-left: 52px"><span class="cursorHover"><a>任务单管理</a></span></el-menu-item>
-                        <el-menu-item index="5-2"><span class="cursorHover"><a>路径管理</a></span></el-menu-item>
+                        <el-menu-item index="/main/taskFormStatusChart"><span class="cursorHover"><a>任务单状态</a></span></el-menu-item>
                     </el-menu-item-group>
                     <el-menu-item index="5-3" style="padding-left: 52px"><span class="cursorHover"><a>配送站管理</a></span></el-menu-item>
                 </el-submenu>

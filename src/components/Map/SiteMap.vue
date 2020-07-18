@@ -7,8 +7,25 @@
             </bm-marker>
         </div>
 
+        <bm-context-menu>
+            <bm-context-menu-item :callback="JiaXing" text="嘉兴主站"></bm-context-menu-item>
+            <bm-context-menu-item :callback="GuangZhou" text="广州主站"></bm-context-menu-item>
+            <bm-context-menu-item :callback="SuZhou" text="苏州主站"></bm-context-menu-item>
+            <bm-context-menu-item :callback="ChangSha" text="长沙主站"></bm-context-menu-item>
+            <bm-context-menu-item :callback="XiAn" text="西安主站"></bm-context-menu-item>
+        </bm-context-menu>
 
-
+        <bm-control>
+            <el-select v-model="selectedCity" placeholder="请选择主站">
+                <el-option
+                        v-for="item in siteCity"
+                        :key="item.assign"
+                        :label="item"
+                        :value="item">
+                </el-option>
+            </el-select>
+            <el-button type="primary" @click="clickToMainSite">进入</el-button>
+        </bm-control>
         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
     </baidu-map>
     </BasicCard>
@@ -25,6 +42,41 @@
             BmlCurveLine,
         },
         methods: {
+            clickToMainSite(){
+                if(this.selectedCity == "嘉兴"){
+                    this.JiaXing();
+                }
+                else if(this.selectedCity == "广州"){
+                    this.GuangZhou();
+                }
+                else if(this.selectedCity == "苏州"){
+                    this.SuZhou();
+                }
+                else if(this.selectedCity == "长沙"){
+                    this.ChangSha();
+                }
+                else {
+                    this.XiAn();
+                }
+            },
+
+            JiaXing(){
+                this.$router.push("mainsites/MAIN-001/inventory/warehouses");
+                console.log("001");
+            },
+            GuangZhou(){
+                this.$router.push("mainsites/MAIN-002/inventory/warehouses");
+            },
+            SuZhou(){
+                this.$router.push("mainsites/MAIN-003/inventory/warehouses");
+            },
+            ChangSha(){
+                this.$router.push("mainsites/MAIN-004/inventory/warehouses");
+            },
+            XiAn(){
+                this.$router.push("mainsites/MAIN-005/inventory/warehouses");
+            },
+
             update (e) {
                 this.points = e.target.cornerPoints
             },
@@ -44,13 +96,14 @@
         },
         data () {
             return {
+                selectedCity:"",
+
                 points: [
                     {lng: 120.565, lat: 30.630},
                     {lng: 113.273, lat: 23.158},
                     {lng: 121.109, lat: 31.450},
                     {lng:112.820, lat:28.347},
                     {lng: 108.961, lat: 34.266},
-
 
                 ],
                 siteCity:['嘉兴','广州','苏州','长沙','西安'],
