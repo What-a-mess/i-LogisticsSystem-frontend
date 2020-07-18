@@ -34,6 +34,9 @@ import TaskFormInfo from "../components/TaskFormMgmt/TaskFormInfo";
 import TaskFormStatusChart from "../components/TaskFormMgmt/TaskFormStatusChart";
 import SupplierGoods from "../components/ClienteleMgmt/SupplierGoods";
 
+// SettingsMgmt
+import OrderSettings from "../components/SettingsMgmt/OrderSettings"
+
 const routes = [
     // 组件测试路由
     { path: '/test', components: { default: TestComponents} },
@@ -63,7 +66,8 @@ const routes = [
             { path: 'orderExamine', component: OrderExamine, name: 'OrderExamine', meta: {keepAlive: true} },
             { path: 'siteMap', component: SiteMap },
             { path: 'taskforms/:taskId/deliverMap', component: DeliverMap },
-            { path: 'orderExamine/:orderId', component: ExamineDetail }
+            { path: 'orderExamine/:orderId', component: ExamineDetail },
+            { path: 'settings/ordersettings', component: OrderSettings }
         ]
     }
 ]
