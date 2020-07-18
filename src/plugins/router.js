@@ -36,6 +36,7 @@ import SupplierGoods from "../components/ClienteleMgmt/SupplierGoods";
 
 // SettingsMgmt
 import OrderSettings from "../components/SettingsMgmt/OrderSettings"
+import DeliverStrategy from "../components/DeliverStrategy";
 
 const routes = [
     // 组件测试路由
@@ -47,6 +48,7 @@ const routes = [
             { path: '', component: OrderFormInfo },
             { path: 'returnForm', component: ReturnFormInfo },
             { path: 'orderForm', component: OrderFormInfo },
+            { path: 'deliverStrategy', component: DeliverStrategy },
             { path: 'taskForm', component: TaskFormInfo },
             { path: 'taskFormStatusChart', component: TaskFormStatusChart },
             { path: 'order/:orderId/details', component: OrderFormDetails },

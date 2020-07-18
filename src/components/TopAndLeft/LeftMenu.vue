@@ -36,7 +36,7 @@
                     </template>
                     <el-menu-item-group>
                         <el-menu-item index="2-1" ><span class="cursorHover"><a>调货策略</a></span></el-menu-item>
-                        <el-menu-item index="2-2"><span class="cursorHover"><a>补货策略</a></span></el-menu-item>
+                        <el-menu-item index="/main/deliverStrategy"><span class="cursorHover"><a>配送策略</a></span></el-menu-item>
                     </el-menu-item-group>
                     <el-menu-item index="2-3"><span class="cursorHover"><a>分配策略</a></span></el-menu-item>
                     <el-menu-item index="2-4"><span class="cursorHover"><a>发货策略</a></span></el-menu-item>
@@ -85,7 +85,7 @@
                         <el-menu-item index="/main/taskForm" style="padding-left: 52px"><span class="cursorHover"><a>任务单管理</a></span></el-menu-item>
                         <el-menu-item index="/main/taskFormStatusChart" style="padding-left: 52px"><span class="cursorHover"><a>任务单状态</a></span></el-menu-item>
                     </el-menu-item-group>
-                    <el-menu-item index="5-3" style="padding-left: 52px"><span class="cursorHover"><a>配送站管理</a></span></el-menu-item>
+<!--                    <el-menu-item index="5-3" style="padding-left: 52px"><span class="cursorHover"><a>配送站管理</a></span></el-menu-item>-->
                 </el-submenu>
 
             </el-menu>
