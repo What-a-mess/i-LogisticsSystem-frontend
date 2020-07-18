@@ -73,9 +73,9 @@
           </el-form-item>
         </el-form>
       </el-row>
-      <el-row>
-        <el-col :span="20" :offset="2">
-          <ItemCard v-for="item in items" :key="item.itemId" :item="item" class="item-box" :editable="true"></ItemCard>
+      <el-row >
+        <el-col v-for="item in items" :key="item.itemId" :span="6">
+          <ItemCard :item="item" class="item-box" :editable="true"></ItemCard>
         </el-col>
       </el-row>
       <el-row>
