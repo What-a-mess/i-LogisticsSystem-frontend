@@ -36,6 +36,7 @@ import SupplierGoods from "../components/ClienteleMgmt/SupplierGoods";
 
 // SettingsMgmt
 import OrderSettings from "../components/SettingsMgmt/OrderSettings"
+import StorageSettings from "../components/SettingsMgmt/StorageSettings"
 import DeliverStrategy from "../components/DeliverStrategy";
 
 const routes = [
@@ -69,7 +70,8 @@ const routes = [
             { path: 'siteMap', component: SiteMap },
             { path: 'taskforms/:taskId/deliverMap', component: DeliverMap },
             { path: 'orderExamine/:orderId', component: ExamineDetail },
-            { path: 'settings/ordersettings', component: OrderSettings }
+            { path: 'settings/ordersettings', component: OrderSettings },
+            { path: 'settings/storagesettings', component: StorageSettings }
         ]
     }
 ]
