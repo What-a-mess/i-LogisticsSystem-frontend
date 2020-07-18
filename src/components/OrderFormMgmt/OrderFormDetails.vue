@@ -131,13 +131,16 @@
                       <b>商品售价：</b>
                       {{orderItem.item.listPrice}}
                     </el-col>
-                    <el-col>
+                    <el-col :span="12">
+
+                      <b>商品图片：</b><br />
+
+                      <el-image style="width: 90%;height: 90%" :src="orderItem.item.imgUrl"></el-image>
+                    </el-col>
+                    <el-col :span="12">
+                      <br /><br /><br /><br />
                       <b>商品描述：</b>
                       {{orderItem.item.descn}}
-                    </el-col>
-                    <el-col>
-                      <b>商品图片：</b>
-                      {{orderItem.item.imgUrl}}
                     </el-col>
                   </el-row>
                 </el-collapse-item>
