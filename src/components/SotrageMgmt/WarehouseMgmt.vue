@@ -6,6 +6,7 @@
           <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
           <el-breadcrumb-item to="/main/siteMap">主站信息</el-breadcrumb-item>
+          <el-breadcrumb-item>主站{{mainsiteId}}</el-breadcrumb-item>
           <el-breadcrumb-item>库内管理</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
