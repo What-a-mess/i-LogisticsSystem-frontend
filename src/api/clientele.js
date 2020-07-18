@@ -1,6 +1,6 @@
 import myaxios from "../plugins/myaxios"
 
-export function getCustomers(params){
+export function getCustomers(params) {
     return myaxios({
         url: "/clientele/customers",
         method: "GET",
@@ -25,7 +25,7 @@ export function deleteSupplier(supplierId) {
 
 export function modifySupplier(supplierId, params) {
     return myaxios({
-        url: "/clientele/supplier/"+supplierId,
+        url: "/clientele/supplier/" + supplierId,
         method: "PATCH",
         params
     })
@@ -33,7 +33,15 @@ export function modifySupplier(supplierId, params) {
 
 export function getSupplierItems(supplierId) {
     return myaxios({
-        url: "/clientele/suppliers/"+supplierId+"/itemSupply",
+        url: "/clientele/suppliers/" + supplierId + "/itemSupply",
         method: "GET"
+    })
+}
+
+export function billNameAutoCompl(key) {
+    return myaxios({
+        url: "/orders/billNames",
+        method: "GET",
+        params: { infix: key }
     })
 }

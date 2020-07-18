@@ -26,7 +26,12 @@
                   ></el-autocomplete>
                 </el-form-item>
                 <el-form-item label=" 订单ID">
-                  <el-input style="width: 140px" v-model="inlineQuery.orderIdQuery"></el-input>
+                  <el-autocomplete
+                    style="width: 140px"
+                    v-model="inlineQuery.orderIdQuery"
+                    :fetch-suggestions="fetchOrderIdSugs"
+                    :trigger-on-focus="false"
+                  ></el-autocomplete>
                 </el-form-item>
                 <el-form-item label=" 订单状态">
                   <el-select style="width: 150px" v-model="inlineQuery.orderStatus" clearable>
@@ -87,7 +92,8 @@
 
 <script>
 // import myaxios from "../../plugins/myaxios";
-import { getOrders } from "../../api/orders";
+import { getOrders, orderIdAutoCompl } from "../../api/orders";
+import { billNameAutoCompl } from "../../api/clientele";
 import BasicCard from "../PanelCard/BasicCard";
 
 export default {
@@ -148,8 +154,24 @@ export default {
     // },
 
     userIdAutoCmpl(queryString, cb) {
-      queryString;
-      cb([{ value: "123" }, { value: "321" }]);
+      billNameAutoCompl(queryString).then(res => {
+        let fillRes = res.data.map(billName => {
+          return {
+            value: billName
+          };
+        });
+        cb(fillRes);
+      });
+    },
+    fetchOrderIdSugs(queryString, cb) {
+      orderIdAutoCompl(queryString).then(res => {
+        let fillRes = res.data.slice(0, 5).map(orderId => {
+          return {
+            value: orderId
+          };
+        });
+        cb(fillRes);
+      });
     }
   },
   mounted: function() {

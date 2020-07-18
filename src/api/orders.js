@@ -55,3 +55,11 @@ export function getExamineDetails(orderId) {
         method: "GET"
     })
 }
+
+export function orderIdAutoCompl(key) {
+    return myaxios({
+        url: "/orders/Ids",
+        method: "GET",
+        params: { infix: key }
+    })
+}
