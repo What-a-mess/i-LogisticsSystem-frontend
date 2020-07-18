@@ -8,8 +8,13 @@
           <el-input v-model="order.orderId" style="width:90%"></el-input>
         </el-form-item>
 
-        <el-form-item label="收件人ID">
-          <el-input v-model="order.customerId" style="width:90%"></el-input>
+        <el-form-item label="买家ID">
+          <el-autocomplete
+            style="width: 90%"
+            v-model="order.customerId"
+            :fetch-suggestions="fetchCusIdSuggestions"
+            :trigger-on-focus="false"
+          ></el-autocomplete>
         </el-form-item>
         <el-form-item label="收件人">
           <el-input v-model="order.billName" style="width:90%"></el-input>
@@ -62,15 +67,15 @@
           ></el-date-picker>
         </el-form-item>
 
-<!--        <el-form-item label="付款日期">-->
-<!--          <el-date-picker-->
-<!--            v-model="order.payDateTime"-->
-<!--            type="date"-->
-<!--            placeholder="选择日期"-->
-<!--            style="left: -22%"-->
-<!--            value-format="yyyy-MM-dd HH:mm:ss"-->
-<!--          ></el-date-picker>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="付款日期">-->
+        <!--          <el-date-picker-->
+        <!--            v-model="order.payDateTime"-->
+        <!--            type="date"-->
+        <!--            placeholder="选择日期"-->
+        <!--            style="left: -22%"-->
+        <!--            value-format="yyyy-MM-dd HH:mm:ss"-->
+        <!--          ></el-date-picker>-->
+        <!--        </el-form-item>-->
 
         <!--            <el-form-item label="总付款">-->
         <!--                <el-input v-model="order.totalPrice" style="width:90%"></el-input>-->
@@ -80,14 +85,14 @@
           <el-input v-model="order.shippingCost" style="width:90%"></el-input>
         </el-form-item>
         <el-form-item label="支付方式">
-        <el-select v-model="order.payMethod" placeholder="请选择" style="left: -22%">
-          <el-option
-                  v-for="item in payOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-          ></el-option>
-        </el-select>
+          <el-select v-model="order.payMethod" placeholder="请选择" style="left: -22%">
+            <el-option
+              v-for="item in payOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item label="下单地址">
@@ -96,7 +101,6 @@
         <el-form-item label="详细地址">
           <el-input v-model="order.billAddr" style="width:90%"></el-input>
         </el-form-item>
-
 
         <el-form-item label="备注信息">
           <el-input type="textarea" v-model="order.note" style="width:90%"></el-input>
@@ -114,6 +118,7 @@
 import cascadeSelection from "./cascadeSelection";
 import GoodsSelection from "./goodsSelection";
 import myaxios from "../../plugins/myaxios";
+import { userIdAutoCompl } from "../../api/clientele"
 // import {Loading} from 'element-ui'
 export default {
   name: "add-order",
@@ -226,8 +231,6 @@ export default {
         }
       }
 
-
-
       this.orderItem = {
         itemNum: 1,
         total: "",
@@ -240,11 +243,11 @@ export default {
       this.dialogFormVisible = false;
 
       //计算此订单的总价
-      var total = 0
+      var total = 0;
       for (var k = 0; k < this.orderItemList.length; k++) {
-         total += parseFloat(this.orderItemList[k].total);
+        total += parseFloat(this.orderItemList[k].total);
       }
-      this.order.totalPrice = total
+      this.order.totalPrice = total;
 
       for (var i in this.order) {
         if (this.order[i] == "") {
@@ -260,24 +263,26 @@ export default {
       this.OrderAddReq.order = this.order;
       this.OrderAddReq.orderItemList = this.orderItemList;
       this.OrderAddReq.manual = this.manual;
-      myaxios.post("/orders", this.OrderAddReq).then(res => {
-        if (res.status == 200) {
-          this.$notify({
-            title: "成功",
-            message: "新增订单成功",
-            type: "success"
-          });
-        }else{
-          this.$notify({
-            title: "失败",
-            message: "新增订单失败",
-            type: "error"
-          });
-        }
-
-      }).catch(err => {
-          console.warn(err)
-      });
+      myaxios
+        .post("/orders", this.OrderAddReq)
+        .then(res => {
+          if (res.status == 200) {
+            this.$notify({
+              title: "成功",
+              message: "新增订单成功",
+              type: "success"
+            });
+          } else {
+            this.$notify({
+              title: "失败",
+              message: "新增订单失败",
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.warn(err);
+        });
 
       //setTimeout(loadingInstance1.close(),1000)
       console.log(this.OrderAddReq);
@@ -285,13 +290,11 @@ export default {
     },
     clear: function() {
       for (var k in this.order) {
-        if(k == "payDateTime"){
+        if (k == "payDateTime") {
           this.order[k] = null;
-        }
-        else if(k == "totalPrice"){
+        } else if (k == "totalPrice") {
           this.order[k] = 0;
-        }
-        else {
+        } else {
           this.order[k] = "";
         }
       }
@@ -301,7 +304,7 @@ export default {
           total: 0,
           itemId: ""
         }
-      ]
+      ];
       this.OrderAddReq = { order: null, orderItemList: null, manual: true };
     },
     handleClose(tag) {
@@ -310,6 +313,16 @@ export default {
       this.orderItemList.splice(index, 1);
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
       console.log(this.orderItemList);
+    },
+    fetchCusIdSuggestions(queryString, cb) {
+      userIdAutoCompl(queryString).then(res => {
+        let fillRes = res.data.map(customerId => {
+          return {
+            value: customerId
+          };
+        });
+        cb(fillRes);
+      })
     }
   },
   data: function() {
@@ -336,7 +349,7 @@ export default {
         {
           value: "现金",
           label: "现金"
-        },
+        }
       ],
       goodsOptions: [
         {

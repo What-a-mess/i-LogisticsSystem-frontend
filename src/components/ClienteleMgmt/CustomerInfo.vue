@@ -55,7 +55,7 @@
 
 <script>
 import BasicCard from "../PanelCard/BasicCard";
-import { getCustomers } from "../../api/clientele";
+import { getCustomers, billNameAutoCompl } from "../../api/clientele";
 
 export default {
   components: {
@@ -146,13 +146,14 @@ export default {
     },
     customerIdAutoCmpl(queryString, cb) {
       //以queryString为依据获取cb提示  cb( Array )
-
-      cb([
-        { value: "dengyepeng" },
-        { value: "wuzhijing" },
-        { value: "fanshixu" }
-      ]);
-      console.log(cb);
+      billNameAutoCompl(queryString).then(res => {
+        let fillRes = res.data.map(billName => {
+          return {
+            value: billName
+          };
+        });
+        cb(fillRes);
+      });
     }
   },
   mounted() {

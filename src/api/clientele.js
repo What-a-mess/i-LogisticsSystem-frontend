@@ -45,3 +45,11 @@ export function billNameAutoCompl(key) {
         params: { infix: key }
     })
 }
+
+export function userIdAutoCompl(key) {
+    return myaxios({
+        url: "/clientele/customerIds",
+        method: "GET",
+        params: { infix: key }
+    })
+}
