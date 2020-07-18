@@ -7,7 +7,7 @@
         <el-form-item label="订单ID">
           <el-input v-model="order.orderId" style="width:90%"></el-input>
         </el-form-item>
-        <el-button @click="c">查看tag</el-button>
+
         <el-form-item label="买家ID">
           <el-autocomplete
             style="width: 90%"
@@ -128,9 +128,6 @@ export default {
     cascadeSelection
   },
   methods: {
-    c(){
-      console.log(this.dynamicTags)
-    },
     addNewOrder: function() {
       this.dialogFormVisible = true;
     },

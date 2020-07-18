@@ -153,6 +153,13 @@
                 for(var k in this.suppliers){
                     this.suppliers[k] = "";
                 }
+
+                this.SupplierAddReq = {
+                    supplier:null,
+                    itemSupplyList:[],
+                }
+                this.dynamicTags = [];
+                this.itemSupplyList= [];
             }
         },
         mounted() {
