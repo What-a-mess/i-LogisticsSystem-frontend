@@ -1,11 +1,7 @@
 <template>
     <BasicCard header="站点地图" style="left: 1.5%;top: 1.5%;width: 98.5%">
-    <baidu-map class="map" :center="{lng: 118.454, lat: 32.955}" :zoom="6" :scroll-wheel-zoom="false">
+    <baidu-map class="map" :center="{lng: 103.854, lat: 31.455}" :zoom="6" :scroll-wheel-zoom="false">
         <bml-curve-line :points="points" :editing="true" @lineupdate="update"></bml-curve-line>
-        <div v-for="(point,index) in points" v-bind:key="point.assign">
-            <bm-marker :position="point" :dragging="false"  @click="infoWindowOpen(index)">
-            </bm-marker>
-        </div>
 
         <bm-context-menu>
             <bm-context-menu-item :callback="JiaXing" text="嘉兴主站"></bm-context-menu-item>
@@ -18,14 +14,69 @@
         <bm-control>
             <el-select v-model="selectedCity" placeholder="请选择主站">
                 <el-option
-                        v-for="item in siteCity"
-                        :key="item.assign"
-                        :label="item"
-                        :value="item">
+                        v-for="item in siteOption"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
                 </el-option>
             </el-select>
             <el-button type="primary" @click="clickToMainSite">进入</el-button>
         </bm-control>
+
+        <bm-overlay class="sample" :style="{visibility:adjustVision}">
+            <el-table
+                    :data="AdjustForms"
+                    style="width: 100%;"
+                    height="400">
+                <el-table-column
+                        prop="adjustid"
+                        label="调货单ID"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="itemid"
+                        label="被调商品ID"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="itemnum"
+                        label="调货数量"
+                        width="100">
+                </el-table-column>
+                <el-table-column
+                        prop="from"
+                        label="货源地"
+                        width="300">
+                </el-table-column>
+                <el-table-column
+                        prop="to"
+                        label="缺货地"
+                        width="300">
+                </el-table-column>
+                <el-table-column
+                        prop="status"
+                        label="调货状态"
+                        width="120">
+                </el-table-column>
+                <el-table-column
+                        fixed="right"
+                        label="操作"
+                        width="100">
+                    <template slot-scope="scope">
+                        <el-button @click="clickToAdjustRoute(scope.row)" type="text" size="small">查看</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </bm-overlay>
+
+        <bm-driving
+                :start="pointToDrawRouter.fromPoint"
+                :end="pointToDrawRouter.toPoint"
+                :auto-viewport="true"
+                policy="BMAP_DRIVING_POLICY_LEAST_TIME"
+                :panel="false"
+        ></bm-driving>
+
         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
     </baidu-map>
     </BasicCard>
@@ -34,7 +85,6 @@
 <script>
     import {BmlCurveLine} from 'vue-baidu-map'
     import BasicCard from "../PanelCard/BasicCard";
-    import myaxios from "../../plugins/myaxios";
     export default {
         name: "SiteMap",
         components:{
@@ -43,19 +93,19 @@
         },
         methods: {
             clickToMainSite(){
-                if(this.selectedCity == "嘉兴"){
+                if(this.selectedCity == "嘉兴主站"){
                     this.JiaXing();
                 }
-                else if(this.selectedCity == "广州"){
+                else if(this.selectedCity == "广州主站"){
                     this.GuangZhou();
                 }
-                else if(this.selectedCity == "苏州"){
+                else if(this.selectedCity == "苏州主站"){
                     this.SuZhou();
                 }
-                else if(this.selectedCity == "长沙"){
+                else if(this.selectedCity == "长沙主站"){
                     this.ChangSha();
                 }
-                else {
+                else if(this.selectedCity == "西安主站"){
                     this.XiAn();
                 }
             },
@@ -80,22 +130,19 @@
             update (e) {
                 this.points = e.target.cornerPoints
             },
-            getSitePoints:function () {
-                myaxios.get("/goods/catalog").then(res => {
-                    this.points = res.data;
-                });
-            },
-            infoWindowOpen (index) {
 
-                const h = this.$createElement;
-                this.$notify({
-                    title: '主站',
-                    message: h('i', { style: 'color: teal'}, this.siteCity[index]+"主站, 美丽富饶")
-                });
+            getAdjustFormByMainSiteId(MainSiteId){
+                console.log(MainSiteId);
+            },
+            clickToAdjustRoute(adjustItem){
+                console.log(adjustItem);
+                this.pointToDrawRouter = adjustItem;
             }
         },
         data () {
             return {
+                adjustVision:"hidden",
+
                 selectedCity:"",
 
                 points: [
@@ -107,8 +154,76 @@
 
                 ],
                 siteCity:['嘉兴','广州','苏州','长沙','西安'],
+                siteOption:[{
+                    value: 'MAIN-001',
+                    label: '嘉兴主站'
+                },{
+                    value: 'MAIN-002',
+                    label: '广州主站'
+                },{
+                    value: 'MAIN-003',
+                    label: '苏州主站'
+                },{
+                    value: 'MAIN-004',
+                    label: '长沙主站'
+                },{
+                    value: 'MAIN-005',
+                    label: '西安主站'
+                },{
+                    value: "",
+                    label: '查看地图'
+                }],
+
+                AdjustForms:[
+                    {
+                        adjustid: 52,
+                        itemid: "78677",
+                        itemnum: 9,
+                        from: "tempor aliqua consectetur commodo in",
+                        to: "Lorem",
+                        status: "adipisicing officia cupidatat magna laboris",
+                        toPoint: {
+                            lng: 113.273,
+                            lat: 23.158
+                        },
+                        fromPoint: {
+                            lng:112.820,
+                            lat:28.347
+                        }
+                    },
+                    {
+                        adjustid: 59,
+                        itemid: "68868",
+                        itemnum: 34,
+                        from: "consequat ullamco",
+                        to: "officia laboris culpa sed",
+                        status: "occaecat enim",
+                        toPoint: {
+                            lng: 113.273,
+                            lat: 23.158
+                        },
+                        fromPoint: {
+                            lng: 108.961,
+                            lat: 34.266
+                        }
+                    }
+                ],
+                pointToDrawRouter:{},
             }
         },
+        watch:{
+            selectedCity(val){
+                console.log(val);
+                if(val != ""){
+                    //先发请求 通过 val（就是主站的ID） 来获取配送单信息，填充到 this.AdjustForms
+                    this.getAdjustFormByMainSiteId(val);
+                    this.adjustVision = "visible";
+                }
+                else {
+                    this.adjustVision = "hidden";
+                }
+            }
+        }
     }
 </script>
 
@@ -117,5 +232,19 @@
     width: 100%;
     height: 610px;
 
+}
+.sample {
+    width: 600px;
+    height: 400px;
+    line-height: 40px;
+    background: rgba(0,0,0,0.3);
+    overflow: hidden;
+    box-shadow: 0 0 5px #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    left: 20px;
+    top:150px;
 }
 </style>
