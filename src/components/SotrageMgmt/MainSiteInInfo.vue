@@ -64,7 +64,7 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import router from "../../plugins/router";
-import {patchMainsiteInRecord, patchMainsiteOutRecord} from '../../api/storage';
+import { patchMainsiteOutRecord} from '../../api/storage';  //patchMainsiteInRecord, 被我删去
 import mq from "@/plugins/rabbitmq";
 
 export default {

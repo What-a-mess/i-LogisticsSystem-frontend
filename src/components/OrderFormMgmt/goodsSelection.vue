@@ -23,6 +23,7 @@ export default {
   methods: {
     handleChange(value1) {
       this.$emit("emitGoodsItemId", value1[1]);
+      this.$emit("emitCaAndItemId",value1)
     }
   },
 //   created() {

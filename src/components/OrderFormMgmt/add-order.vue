@@ -7,7 +7,7 @@
         <el-form-item label="订单ID">
           <el-input v-model="order.orderId" style="width:90%"></el-input>
         </el-form-item>
-
+        <el-button @click="c">查看tag</el-button>
         <el-form-item label="买家ID">
           <el-autocomplete
             style="width: 90%"
@@ -128,6 +128,9 @@ export default {
     cascadeSelection
   },
   methods: {
+    c(){
+      console.log(this.dynamicTags)
+    },
     addNewOrder: function() {
       this.dialogFormVisible = true;
     },
@@ -200,6 +203,7 @@ export default {
     },
     clickAddItem: function() {
       this.number_of_Items += 1;
+      var length = this.dynamicTags.length;
       //inputValue为标签内容
       let inputValue = "";
       //获取全部货物 来匹配价格 和 名字
@@ -229,6 +233,9 @@ export default {
             break;
           }
         }
+      }
+      if(this.dynamicTags.length == length){
+        this.number_of_Items = this.number_of_Items - 1;
       }
 
       this.orderItem = {
@@ -312,6 +319,7 @@ export default {
       index = parseInt(index) - 1;
       this.orderItemList.splice(index, 1);
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      this.number_of_Items = this.number_of_Items - 1;
       console.log(this.orderItemList);
     },
     fetchCusIdSuggestions(queryString, cb) {

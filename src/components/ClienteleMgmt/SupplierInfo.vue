@@ -81,7 +81,7 @@
 
 <script>
 import BasicCard from "../PanelCard/BasicCard";
-import AddSupplier from "../OrderFormMgmt/AddSupplier";
+import AddSupplier from "./AddSupplier";
 import { getSuppliers, modifySupplier } from "../../api/clientele";
 import router from "../../plugins/router"
 
