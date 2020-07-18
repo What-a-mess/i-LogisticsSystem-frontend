@@ -75,49 +75,20 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "success"
-        }).then(function() {
-          patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
-            approvalStatus: "Y",
-            warehouseId: ""
-          })
-            .then(res => {
-              console.log(res);
-              item.ack();
-              this.checkOutItems = this.checkOutItems.filter(tempItem => {
-                return tempItem.recordId !== item.recordId;
-              });
-              this.$message({
-                type: "success",
-                message: "请求审核成功"
-              });
-            })
-            .catch(() => {
-              this.$message({
-                type: "error",
-                message: "请求审核失败"
-              });
-            });
+        }).then(()=> {
+          console.log("确认通过 出库请求" + item.recordId)
+          this.confirmCheck(item, 'Y')
         });
-        console.debug(item);
       },
       refuseOnClick: function(item) {
         this.$confirm("确认拒绝出库请求" + item.recordId + "？", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "success"
-        }).then(function() {
-          patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
-            approvalStatus: "F",
-            warehouseId: ""
-          }).then(res => {
-            console.log(res);
-            item.ack();
-            this.checkOutItems = this.checkOutItems.filter(tempItem => {
-              return tempItem.recordId !== item.recordId;
-            });
-          });
+        }).then(()=> {
+          console.log("拒绝 出库请求" + item.recordId)
+          this.confirmCheck(item, 'F')
         });
-        console.debug(item);
       },
       showDetails(record) {
         router.push({
@@ -137,6 +108,39 @@ export default {
       },
       onFailed(frame) {
         console.log("err:" + frame);
+      },
+      confirmCheck(item, status){
+        var msg; //提示消息
+        if (status == "Y") {
+          msg = "出库请求 " + item.recordId + " 成功通过!";
+        } else if (status == "F") {
+          msg = "出库请求 " + item.recordId + " 已拒绝";
+        } else {
+          msg = "approvalStatus:'" + status + "' 不存在!";
+        }
+        //向后端发送消息
+        patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
+          approvalStatus: status,
+          warehouseId: ""
+        })
+        .then(res => {
+          if(res.status == 200){
+            item.ack();
+            this.checkOutItems = this.checkOutItems.filter(tempItem => {
+              return tempItem.recordId !== item.recordId;
+            });
+            this.$message({
+              type: "success",
+              message: msg
+            });
+          }
+          else{
+            this.$message({
+              type: "error",
+              message: "出库请求确认失败, 服务端异常"
+            });
+          }
+        })
       }
     },
     mounted() {

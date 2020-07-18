@@ -71,22 +71,33 @@ import AddOrder from "./add-order";
         //   location.reload();
         // }
 
-
         //从vuex中取出值
         this.orderMsgs = this.$store.state.orderMsgList
 
         //连接待审核消息队列
-        mq.client.heartbeat.outgoing=0;
-        mq.client.heartbeat.incoming=0;
-        // mq.connect('unreviewed order',this.onMessage, this.onFailed);
+        // mq.client.heartbeat.outgoing=0;
+        // mq.client.heartbeat.incoming=0;
         mq.connect('unreviewed order',this.onMessage, this.onFailed);
-
+        // mq.connect('test',this.onMessage, this.onFailed);
       },
+      // watch: { //失败
+      //   orderMsgs: function (val, oldVal) {
+      //     console.log(val.length + ' ' + oldVal.length)
+      //     if(val.length >= 5){
+      //       mq.client.unsubscribe('test', {})
+      //     }
+      //     if(val.length == 4 ){
+      //       mq.client.subscribe('test', this.onMessage, {})
+      //     }
+      //   }
+      // },
       methods: {
       onMessage(frame){
-        //超过指定数目的消息不接收
-        // if(this.orderMsgs.length>=5){
-        //   mq.client.unsubscribe('unreviewed order');
+        // if(this.orderMsgs.length >= 10){
+        //   console.warn("unsubcribe Queue")
+        //
+        //   mq.client.unsubscribe('unreviewed order')
+        //   frame.nack()
         //   return
         // }
 
@@ -154,7 +165,8 @@ import AddOrder from "./add-order";
         }
 
         //修改订单状态
-        patchOrderStatus(rowFrame.orderId, status).then(resp => {
+        patchOrderStatus(rowFrame.orderId, status)
+        .then(resp => {
           if (resp.status == 200) {
             console.log(resp.status);
             this.$message({

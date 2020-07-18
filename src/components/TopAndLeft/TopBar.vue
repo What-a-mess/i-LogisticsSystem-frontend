@@ -110,7 +110,7 @@ export default {
 }
 .bg-white {
   background-color: #fff !important;
-  box-shadow: 0px 6px 5px #a89dac;
+  box-shadow: 0px 3px 5px rgba(157, 164, 172, 0.89);
 }
 .topnav .navbar-brand {
   /* width: 15rem;
