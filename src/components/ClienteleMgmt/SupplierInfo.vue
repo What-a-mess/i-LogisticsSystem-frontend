@@ -1,6 +1,13 @@
 <template>
   <div>
-    <el-row style="padding-top: 2%">
+    <el-row>
+      <el-col :offset="1" :span="10">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item>供应商管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
       <el-col :span="2" :offset="21">
         <AddSupplier />
       </el-col>

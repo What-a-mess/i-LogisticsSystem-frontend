@@ -1,5 +1,15 @@
 <template>
-  <el-row style="padding-top: 3%">
+<div>
+  <el-row>
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item>买家管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
+  <el-row>
     <el-col :span="22" :offset="1">
       <BasicCard header="买家管理">
         <el-row>
@@ -40,6 +50,7 @@
       </BasicCard>
     </el-col>
   </el-row>
+</div>
 </template>
 
 <script>

@@ -1,5 +1,15 @@
 <template>
   <div>
+    <el-row>
+      <el-col :offset="1" style="padding-top: 20px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
+          <el-breadcrumb-item to="/main/siteMap">主站信息</el-breadcrumb-item>
+          <el-breadcrumb-item>库内管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
     <el-dialog
       :title="'将'+targetItemId+'从库房'+srcWarehouse+'转移至库房'+targetWarehouse"
       :visible.sync="dialogVisible"
@@ -17,7 +27,7 @@
       </el-row>
     </el-dialog>
     <el-row>
-      <el-col :span="14" class="display-box">
+      <el-col :span="15" class="display-box">
         <!-- <BasicCard header="库房商品" class="display-box"> -->
         <el-row>
           <el-form :inline="true">
@@ -58,7 +68,7 @@
         </el-row>
         <!-- </BasicCard> -->
       </el-col>
-      <el-col :span="7" style="margin: 50px 10px 100px;">
+      <el-col :span="6" style="margin: 50px 10px 100px;">
         <el-checkbox-group v-model="selectedWarehouse" @change="fetchItems">
           <el-row
             v-for="warehouse in warehouseList"
@@ -380,7 +390,7 @@ export default {
 <style scoped>
 .item-box {
   float: left;
-  margin: 35px;
+  margin: 35px 2%;
 }
 .display-box {
   margin: 50px 50px 100px;

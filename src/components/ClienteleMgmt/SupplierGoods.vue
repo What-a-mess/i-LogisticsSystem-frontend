@@ -1,5 +1,16 @@
 <template>
-  <el-row style="padding-top: 3%;">
+<div>
+  <el-row>
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item to="/main/suppliers">供应商管理</el-breadcrumb-item>
+          <el-breadcrumb-item>供应商{{supplierId}}</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
+  <el-row>
     <el-col :span="22" :offset="1">
       <BasicCard header="供应商商品信息">
         <el-row style="text-align: left">
@@ -35,6 +46,7 @@
       </BasicCard>
     </el-col>
   </el-row>
+</div>
 </template>
 
 <script>
@@ -92,4 +104,7 @@ export default {
 </script>
 
 <style scoped>
+.el-col {
+  padding: 20px;
+}
 </style>
