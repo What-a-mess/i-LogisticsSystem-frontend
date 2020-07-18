@@ -16,6 +16,17 @@ export function getSuppliers(params) {
     })
 }
 
+export function addSupplier(data) {
+    return myaxios({
+        url: "/suppliers",
+        method: "POST",
+        data: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json;"
+        }
+    })
+}
+
 export function deleteSupplier(supplierId) {
     return myaxios({
         url: "/clientele/suppliers/" + supplierId,

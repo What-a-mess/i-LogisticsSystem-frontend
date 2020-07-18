@@ -150,6 +150,7 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import { getCatergies } from "../../api/storage";
+import { getsiteIOSettings } from "../../api/settings"
 
 export default {
   components: { BasicCard },
@@ -202,6 +203,11 @@ export default {
     };
   },
   methods: {
+    fetchSiteIOSettings() {
+      getsiteIOSettings().then(res => {
+        this.formData = res.data;
+      })
+    },
     fetchCategories() {
       getCatergies().then(res => {
         this.categoryList = res.data;
@@ -224,6 +230,7 @@ export default {
   },
   mounted() {
     this.fetchCategories();
+    this.fetchSiteIOSettings();
   }
 };
 </script>

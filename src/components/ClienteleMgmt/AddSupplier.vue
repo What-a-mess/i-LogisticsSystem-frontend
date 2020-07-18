@@ -59,6 +59,8 @@
     import AddrSelector from "./AddrSelector";
     import GoodsSelection from  "../OrderFormMgmt/goodsSelection"
     import myaxios from "../../plugins/myaxios";
+    import { addSupplier } from "../../api/clientele"
+
     export default {
         name: "AddSupplier",
         components:{
@@ -114,7 +116,7 @@
                                 this.dynamicTags.push(inputValue);
                                 var newItem = {};
                                 newItem = this.item;
-                                this.orderItemList.push(newItem);
+                                this.itemSupplyList.push(newItem);
                             }
 
                             break;
@@ -146,7 +148,13 @@
                 this.SupplierAddReq.supplier = this.supplier;
                 this.SupplierAddReq.itemSupplyList = this.itemSupplyList;
                 //post把SupplierAddReq 发出去
-
+                addSupplier(this.SupplierAddReq).then(() => {
+                    this.$message({
+                        message: "添加成功",
+                        type: "success"
+                    })
+                })
+                console.log(this.SupplierAddReq);
                 setTimeout(this.clear,2000);
             },
             clear(){
@@ -187,9 +195,7 @@
                     diatrict: "",
                     addr: ""
                 },
-                itemSupplyList: [
-
-                ],
+                itemSupplyList: [],
                 item:{
                     itemId: "",
                     categoryId: "",
