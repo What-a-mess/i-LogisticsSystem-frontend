@@ -29,7 +29,7 @@
             <b>
         <el-form-item label="是否按时间分拣" :label-width="80">
             <el-col :span="4" >
-            <el-switch active-color="#13ce66"  inactive-color="#ff4949" v-model="deliveryStrategy.byTime"></el-switch>
+            <el-switch active-color="#13ce66"  v-model="deliveryStrategy.byTime"></el-switch>
             </el-col>
         </el-form-item>
                 </b>
@@ -39,7 +39,7 @@
             <b>
         <el-form-item label="出货主站优先设定" :label-width="100">
             <el-col :span="7">
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="deliveryStrategy.transferSite" placeholder="请选择">
             <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -57,7 +57,7 @@
             <b>
         <el-form-item>
             <el-button type="primary" @click="onSubmit">修改提交</el-button>
-            <el-button>取消</el-button>
+            <el-button type="danger" @click="onClear">恢复默认</el-button>
         </el-form-item>
             </b>
         </el-col>
@@ -94,7 +94,7 @@
                     byTime:false,
                     outStockRatio:0,
                     transferNum:0,
-                    transferSite:"",
+                    transferSite:"D",
                 },
             }
         },
@@ -105,6 +105,12 @@
             onSubmit() {
                 console.log('submit!');
                 //提交内容为 this.deliveryStrategy
+            },
+            onClear(){
+                this.deliveryStrategy.byTime = false;
+                this.deliveryStrategy.outStockRatio = 1;
+                this.deliveryStrategy.transferNum = 0;
+                this.deliveryStrategy.transferSite = "D";
             }
         },
         mounted() {
