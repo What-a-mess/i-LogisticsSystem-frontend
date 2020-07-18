@@ -2,7 +2,7 @@
     <el-row style="padding-top: 4%">
         <el-col :span="18" :offset="3">
     <BasicCard header="配送策略">
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="form" :model="deliveryStrategy" label-width="80px">
 
         <el-col :span="10" :offset="1">
             <b>
@@ -27,7 +27,7 @@
 
         <el-col :span="20" :offset="1">
             <b>
-        <el-form-item label="是否按时间分拣" :label-width="80">
+        <el-form-item label="是否按时间分拣" label-width="80">
             <el-col :span="4" >
             <el-switch active-color="#13ce66"  v-model="deliveryStrategy.byTime"></el-switch>
             </el-col>
@@ -37,7 +37,7 @@
 
         <el-col :span="20" :offset="1">
             <b>
-        <el-form-item label="出货主站优先设定" :label-width="100">
+        <el-form-item label="出货主站优先设定" label-width="100">
             <el-col :span="7">
             <el-select v-model="deliveryStrategy.transferSite" placeholder="请选择">
             <el-option
