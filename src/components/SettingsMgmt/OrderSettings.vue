@@ -41,7 +41,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-table :data="formData.categoryIdWhiteList">
+              <el-table :data="formData.categoryIdWhiteList" height="180">
                 <el-table-column label="白名单大类">
                   <template slot-scope="scope">{{scope.row}}</template>
                 </el-table-column>
@@ -78,7 +78,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-table :data="formData.customerIdWhiteList">
+              <el-table :data="formData.customerIdWhiteList" height="180">
                 <el-table-column label="白名单用户">
                   <template slot-scope="scope">{{scope.row}}</template>
                 </el-table-column>
