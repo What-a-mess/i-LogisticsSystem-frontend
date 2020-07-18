@@ -8,7 +8,7 @@
           </el-form-item>
           <el-divider content-position="left" style="font-weight: bold">订单总额自动审核规则</el-divider>
           <el-form-item label="启用规则">
-            <el-switch v-model="formData.totalPriceLimit"></el-switch>
+            <el-switch :disabled="!formData.enable" v-model="formData.totalPriceLimit"></el-switch>
           </el-form-item>
           <el-form-item label="总额上限">
             <el-input-number
@@ -21,7 +21,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="启用规则">
-                <el-switch v-model="formData.categoryIdLimit"></el-switch>
+                <el-switch :disabled="!formData.enable" v-model="formData.categoryIdLimit"></el-switch>
               </el-form-item>
               <el-form-item label="大类白名单">
                 <el-select
@@ -58,7 +58,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="启用规则">
-                <el-switch v-model="formData.customerIdLimit"></el-switch>
+                <el-switch :disabled="!formData.enable" v-model="formData.customerIdLimit"></el-switch>
               </el-form-item>
               <el-form-item label="用户白名单">
                 <el-select
