@@ -41,9 +41,9 @@
                     </template>
                     <el-menu-item-group>
                         <template slot="title" >策略配置设置入口</template>
-                        <el-menu-item index="2-1" ><span class="cursorHover"><a>订单审核策略</a></span></el-menu-item>
-                        <el-menu-item index="2-2"><span class="cursorHover"><a>出入库策略</a></span></el-menu-item>
-                        <el-menu-item index="2-2"><span class="cursorHover"><a>配送策略</a></span></el-menu-item>
+                        <el-menu-item index="/main/settings/ordersettings" ><span class="cursorHover"><a>订单审核策略</a></span></el-menu-item>
+                        <el-menu-item index="/main/settings/storagesettings"><span class="cursorHover"><a>出入库策略</a></span></el-menu-item>
+                        <el-menu-item index="/main/deliverStrategy"><span class="cursorHover"><a>配送策略</a></span></el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
 
