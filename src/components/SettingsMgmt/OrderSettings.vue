@@ -112,6 +112,7 @@
 import BasicCard from "../PanelCard/BasicCard";
 import { getCustomers } from "../../api/clientele";
 import { getCatergies } from "../../api/storage";
+import { getOrderSettings } from "../../api/settings"
 
 export default {
   components: { BasicCard },
@@ -156,6 +157,11 @@ export default {
         });
       });
     },
+    fetchOrderSettings() {
+      getOrderSettings().then(res => {
+        this.formData = res.data;
+      })
+    },
     delUserFromWhiteList(userId) {
       this.formData.customerIdWhiteList = this.formData.customerIdWhiteList.filter(
         id => {
@@ -174,6 +180,7 @@ export default {
   mounted() {
     this.fetchCategories();
     this.fetchCustomerId();
+    this.fetchOrderSettings();
   }
 };
 </script>
