@@ -77,7 +77,7 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import router from "../../plugins/router";
-import { patchMainsiteOutRecord} from '../../api/storage';  //patchMainsiteInRecord, 被我删去
+import {patchMainsiteInRecord} from '../../api/storage';
 import mq from "@/plugins/rabbitmq";
 
 export default {
@@ -138,7 +138,7 @@ export default {
         msg = "approvalStatus:'" + status + "' 不存在!";
       }
       //向后端发送消息
-      patchMainsiteOutRecord(this.mainsiteId, item.recordId, {
+      patchMainsiteInRecord(this.mainsiteId, item.recordId, {
         approvalStatus: status,
         warehouseId: ""
       })
@@ -159,6 +159,13 @@ export default {
             message: "入库请求确认失败, 服务端报错"
           });
         }
+      })
+      .catch(res=>{
+        console.error(res)
+        this.$message({
+          type: "error",
+          message: "审核提交失败"
+        });
       })
     }
   },

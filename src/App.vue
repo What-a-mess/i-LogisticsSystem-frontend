@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
       <router-view v-if="isRouterAlive"/>
 
       <!-- 需要缓存的视图组件 -->
@@ -59,11 +59,16 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    height:100%;
+  /*margin-top: 60px;*/
+}
+html,body{
+    height:100%;
+    margin: 0;
 }
 </style>

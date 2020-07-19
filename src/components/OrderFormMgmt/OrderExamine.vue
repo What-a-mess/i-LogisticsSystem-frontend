@@ -75,8 +75,8 @@ import AddOrder from "./add-order";
         this.orderMsgs = this.$store.state.orderMsgList
 
         //连接待审核消息队列
-        // mq.client.heartbeat.outgoing=0;
-        // mq.client.heartbeat.incoming=0;
+        mq.client.heartbeat.outgoing=0;
+        mq.client.heartbeat.incoming=0;
         mq.connect('unreviewed order',this.onMessage, this.onFailed);
         // mq.connect('test',this.onMessage, this.onFailed);
       },

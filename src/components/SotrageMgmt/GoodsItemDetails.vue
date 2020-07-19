@@ -35,7 +35,7 @@
                 <!-- <el-button type="primary" @click="getUniqueItemId" round>操作按钮</el-button> -->
               </div>
             </el-col>
-            <el-col :span="6" :offset="1" style="text-align: left">
+            <el-col :span="6" :offset="1" class="data-col">
               <el-row>
                 <b>商品大类ID：</b>
                 {{item.categoryId}}
@@ -52,16 +52,7 @@
                 <el-tag v-else-if="item.status=='F'" type="danger">下架</el-tag>
               </el-row>
               <br />
-              <el-row>
-                <b>各主站库存情况：</b>
-              </el-row>
-              <br />
-              <el-table :data="mainsiteInventoryList" style="width: 100%" height="250">
-                <el-table-column fixed prop="mainsiteId" label="主站ID" width="150"></el-table-column>
-                <el-table-column prop="itemInventory" label="主站库存" width="150"></el-table-column>
-              </el-table>
-            </el-col>
-            <el-col :span="6" :offset="1" style="text-align: left">
+
               <el-row>
                 <b>商品ID：</b>
                 {{item.itemId}}
@@ -78,6 +69,17 @@
               </el-row>
               <br />
             </el-col>
+
+            <el-col :span="6" :offset="1" class="table-col">
+              <el-row>
+                <b>各主站库存情况：</b>
+              </el-row>
+              <el-table :data="mainsiteInventoryList" class="inv-table">
+                <el-table-column fixed prop="mainsiteId" label="主站ID" width="150"></el-table-column>
+                <el-table-column prop="itemInventory" label="主站库存" width="150"></el-table-column>
+              </el-table>
+            </el-col>
+
           </el-row>
         </BasicCard>
       </el-col>
@@ -149,4 +151,15 @@ img {
   width: 250px;
   border-radius: 0.35rem 0.35rem 0 0;
 }
+.inv-table{
+
+}
+  .data-col{
+    text-align: left;
+    margin-top: 30px;
+  }
+  .table-col{
+    text-align: left;
+    margin-top: 20px;
+  }
 </style>
