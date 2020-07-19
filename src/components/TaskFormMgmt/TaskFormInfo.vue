@@ -78,39 +78,11 @@ export default {
     return {
       keyWords_of_searchTaskForm: "",
 
-      pageNum: 2,
-      content: [
-        {
-          taskFormId: 64,
-          subSiteId: "21",
-          status: "O",
-          shipTime: "2006-03-02 05:22:09",
-          receiverName: "成身快只",
-          receiverAddress: "香港特别行政区昌吉回族自治州丘北县",
-          receiverTel: "13146345441"
-        },
-        {
-          taskFormId: 76,
-          subSiteId: "41",
-          status: "Y",
-          shipTime: "2006-03-20 08:11:34",
-          receiverName: "生千特果加",
-          receiverAddress: "辽宁省重庆市大渡口区",
-          receiverTel: "18635042682"
-        },
-        {
-          taskFormId: 73,
-          subSiteId: "7",
-          status: "W",
-          shipTime: "1971-07-14 18:04:27",
-          receiverName: "二心集山两",
-          receiverAddress: "湖北省徐州市其它区",
-          receiverTel: "18614272768"
-        }
-      ],
-      totalPages: 22,
-      totalSize: 79,
-      pageSize: 24 //我不是很清楚这是俩干啥的
+      pageNum: 1, 
+      content: [],
+      totalPages: 0,
+      totalSize: 0,
+      pageSize: 10 //我不是很清楚这是俩干啥的
     };
   },
   methods: {

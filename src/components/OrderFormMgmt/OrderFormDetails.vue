@@ -95,7 +95,7 @@
               <el-collapse
                 style="width: 98%;padding-left: 3%"
                 v-for="orderItem in orderItemList"
-                v-bind:key="orderItem.orderId"
+                v-bind:key="orderItem.item.itemId"
               >
                 <el-collapse-item :title="orderItem.item.name">
                   <el-row>

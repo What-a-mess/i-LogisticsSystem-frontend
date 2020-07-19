@@ -1,4 +1,14 @@
 <template>
+<div>
+  <el-row style="padding-top: 20px">
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>配置策略</el-breadcrumb-item>
+          <el-breadcrumb-item>配送策略</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+  </el-row>
   <el-row style="padding-top: 4%">
     <el-col :span="18" :offset="3">
       <BasicCard header="配送策略">
@@ -63,6 +73,7 @@
       </BasicCard>
     </el-col>
   </el-row>
+  </div>
 </template>
 
 <script>
