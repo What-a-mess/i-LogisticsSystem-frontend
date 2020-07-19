@@ -8,7 +8,7 @@
           <el-breadcrumb-item>订单审核</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
-      <el-col :span="1" :offset="22">
+      <el-col :span="1" :offset="21">
         <AddOrder />
       </el-col>
     </el-row>
