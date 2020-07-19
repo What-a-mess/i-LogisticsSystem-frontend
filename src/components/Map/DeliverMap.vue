@@ -11,7 +11,7 @@
         </el-breadcrumb>
       </el-col> 
     </el-row>
-  <el-row style="padding-top: 2%">
+  <el-row :gutter="20" class="display-box" style="padding-left: 2%">
     <el-col :span="11">
       <BasicCard header="配送信息" style="left: 0.75%;height: 600px">
         <el-steps direction="vertical" :active="deliverStauts" :process-status="processStatus">
@@ -263,5 +263,9 @@ export default {
 .map {
   width: 100%;
   height: 610px;
+}
+.display-box {
+  margin: 1.5% 1.5%;
+  width: 97.5%;
 }
 </style>
