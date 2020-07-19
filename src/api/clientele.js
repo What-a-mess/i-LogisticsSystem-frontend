@@ -20,10 +20,10 @@ export function addSupplier(data) {
     return myaxios({
         url: "/suppliers",
         method: "POST",
-        data: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json;"
-        }
+        data
+        // headers: {
+        //     "Content-Type": "application/json;"
+        // }
     })
 }
 

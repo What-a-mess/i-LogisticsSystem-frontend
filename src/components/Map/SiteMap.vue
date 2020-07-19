@@ -1,250 +1,240 @@
 <template>
+  <div>
+    <el-row>
+      <el-col :offset="1" style="padding-top: 20px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
+          <el-breadcrumb-item>主站管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
     <BasicCard header="站点地图" style="left: 1.5%;top: 1.5%;width: 98.5%">
-    <baidu-map class="map" :center="{lng: 103.854, lat: 31.455}" :zoom="6" :scroll-wheel-zoom="false">
+      <baidu-map
+        class="map"
+        :center="{lng: 103.854, lat: 31.455}"
+        :zoom="6"
+        :scroll-wheel-zoom="false"
+      >
         <bml-curve-line :points="points" :editing="true" @lineupdate="update"></bml-curve-line>
 
         <bm-context-menu>
-            <bm-context-menu-item :callback="JiaXing" text="嘉兴主站"></bm-context-menu-item>
-            <bm-context-menu-item :callback="GuangZhou" text="广州主站"></bm-context-menu-item>
-            <bm-context-menu-item :callback="SuZhou" text="苏州主站"></bm-context-menu-item>
-            <bm-context-menu-item :callback="ChangSha" text="长沙主站"></bm-context-menu-item>
-            <bm-context-menu-item :callback="XiAn" text="西安主站"></bm-context-menu-item>
+          <bm-context-menu-item :callback="JiaXing" text="嘉兴主站"></bm-context-menu-item>
+          <bm-context-menu-item :callback="GuangZhou" text="广州主站"></bm-context-menu-item>
+          <bm-context-menu-item :callback="SuZhou" text="苏州主站"></bm-context-menu-item>
+          <bm-context-menu-item :callback="ChangSha" text="长沙主站"></bm-context-menu-item>
+          <bm-context-menu-item :callback="XiAn" text="西安主站"></bm-context-menu-item>
         </bm-context-menu>
 
         <bm-control>
-            <el-select v-model="selectedCity" placeholder="请选择主站">
-                <el-option
-                        v-for="item in siteOption"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                </el-option>
-            </el-select>
-            <el-button type="primary" @click="clickToMainSite">进入</el-button>
+          <el-select v-model="selectedCity" placeholder="请选择主站">
+            <el-option
+              v-for="item in siteOption"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-button type="primary" @click="clickToMainSite">进入</el-button>
         </bm-control>
 
         <bm-overlay class="sample" :style="{visibility:adjustVision}">
-            <el-table
-                    :data="AdjustForms"
-                    style="width: 100%;"
-                    height="400">
-                <el-table-column
-                        prop="adjustid"
-                        label="调货单ID"
-                        width="150">
-                </el-table-column>
-                <el-table-column
-                        prop="itemid"
-                        label="被调商品ID"
-                        width="150">
-                </el-table-column>
-                <el-table-column
-                        prop="itemnum"
-                        label="调货数量"
-                        width="100">
-                </el-table-column>
-                <el-table-column
-                        prop="from"
-                        label="货源地"
-                        width="300">
-                </el-table-column>
-                <el-table-column
-                        prop="to"
-                        label="缺货地"
-                        width="300">
-                </el-table-column>
-                <el-table-column
-                        prop="status"
-                        label="调货状态"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        fixed="right"
-                        label="操作"
-                        width="100">
-                    <template slot-scope="scope">
-                        <el-button @click="clickToAdjustRoute(scope.row)" type="text" size="small">查看</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+          <el-table :data="AdjustForms" style="width: 100%;" height="400">
+            <el-table-column prop="adjustId" label="调货单ID" width="150"></el-table-column>
+            <el-table-column prop="itemId" label="被调商品ID" width="150"></el-table-column>
+            <el-table-column prop="itemNum" label="调货数量" width="100"></el-table-column>
+            <el-table-column prop="from" label="货源地" width="300"></el-table-column>
+            <el-table-column prop="to" label="缺货地" width="300"></el-table-column>
+            <el-table-column prop="status" label="调货状态" width="120"></el-table-column>
+            <el-table-column fixed="right" label="操作" width="100">
+              <template slot-scope="scope">
+                <el-button @click="clickToAdjustRoute(scope.row)" type="text" size="small">查看</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </bm-overlay>
 
         <bm-driving
-                :start="pointToDrawRouter.fromPoint"
-                :end="pointToDrawRouter.toPoint"
-                :auto-viewport="true"
-                policy="BMAP_DRIVING_POLICY_LEAST_TIME"
-                :panel="false"
+          :start="pointToDrawRouter.fromPoint"
+          :end="pointToDrawRouter.toPoint"
+          :auto-viewport="true"
+          policy="BMAP_DRIVING_POLICY_LEAST_TIME"
+          :panel="false"
         ></bm-driving>
 
         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-    </baidu-map>
+      </baidu-map>
     </BasicCard>
+  </div>
 </template>
 
 <script>
-    import {BmlCurveLine} from 'vue-baidu-map'
-    import BasicCard from "../PanelCard/BasicCard";
-    export default {
-        name: "SiteMap",
-        components:{
-            BasicCard,
-            BmlCurveLine,
-        },
-        methods: {
-            clickToMainSite(){
-                if(this.selectedCity == "嘉兴主站"){
-                    this.JiaXing();
-                }
-                else if(this.selectedCity == "广州主站"){
-                    this.GuangZhou();
-                }
-                else if(this.selectedCity == "苏州主站"){
-                    this.SuZhou();
-                }
-                else if(this.selectedCity == "长沙主站"){
-                    this.ChangSha();
-                }
-                else if(this.selectedCity == "西安主站"){
-                    this.XiAn();
-                }
-            },
+import { BmlCurveLine } from "vue-baidu-map";
+import { getTrasferInfo } from "../../api/taskform";
+import BasicCard from "../PanelCard/BasicCard";
+export default {
+  name: "SiteMap",
+  components: {
+    BasicCard,
+    BmlCurveLine
+  },
+  methods: {
+    clickToMainSite() {
+      if (this.selectedCity == "MAIN-001") {
+        this.JiaXing();
+      } else if (this.selectedCity == "MAIN-002") {
+        this.GuangZhou();
+      } else if (this.selectedCity == "MAIN-003") {
+        this.SuZhou();
+      } else if (this.selectedCity == "MAIN-004") {
+        this.ChangSha();
+      } else if (this.selectedCity == "MAIN-005") {
+        this.XiAn();
+      }
+    },
 
-            JiaXing(){
-                this.$router.push("mainsites/MAIN-001/inventory/warehouses");
-                console.log("001");
-            },
-            GuangZhou(){
-                this.$router.push("mainsites/MAIN-002/inventory/warehouses");
-            },
-            SuZhou(){
-                this.$router.push("mainsites/MAIN-003/inventory/warehouses");
-            },
-            ChangSha(){
-                this.$router.push("mainsites/MAIN-004/inventory/warehouses");
-            },
-            XiAn(){
-                this.$router.push("mainsites/MAIN-005/inventory/warehouses");
-            },
+    JiaXing() {
+      this.$router.push("mainsites/MAIN-001/inventory/warehouses");
+      console.log("001");
+    },
+    GuangZhou() {
+      this.$router.push("mainsites/MAIN-002/inventory/warehouses");
+    },
+    SuZhou() {
+      this.$router.push("mainsites/MAIN-003/inventory/warehouses");
+    },
+    ChangSha() {
+      this.$router.push("mainsites/MAIN-004/inventory/warehouses");
+    },
+    XiAn() {
+      this.$router.push("mainsites/MAIN-005/inventory/warehouses");
+    },
 
-            update (e) {
-                this.points = e.target.cornerPoints
-            },
+    update(e) {
+      this.points = e.target.cornerPoints;
+    },
 
-            getAdjustFormByMainSiteId(MainSiteId){
-                console.log(MainSiteId);
-            },
-            clickToAdjustRoute(adjustItem){
-                console.log(adjustItem);
-                this.pointToDrawRouter = adjustItem;
-            }
-        },
-        data () {
-            return {
-                adjustVision:"hidden",
-
-                selectedCity:"",
-
-                points: [
-                    {lng: 120.565, lat: 30.630},
-                    {lng: 113.273, lat: 23.158},
-                    {lng: 121.109, lat: 31.450},
-                    {lng:112.820, lat:28.347},
-                    {lng: 108.961, lat: 34.266},
-
-                ],
-                siteCity:['嘉兴','广州','苏州','长沙','西安'],
-                siteOption:[{
-                    value: 'MAIN-001',
-                    label: '嘉兴主站'
-                },{
-                    value: 'MAIN-002',
-                    label: '广州主站'
-                },{
-                    value: 'MAIN-003',
-                    label: '苏州主站'
-                },{
-                    value: 'MAIN-004',
-                    label: '长沙主站'
-                },{
-                    value: 'MAIN-005',
-                    label: '西安主站'
-                },{
-                    value: "",
-                    label: '查看地图'
-                }],
-
-                AdjustForms:[
-                    {
-                        adjustid: 52,
-                        itemid: "78677",
-                        itemnum: 9,
-                        from: "tempor aliqua consectetur commodo in",
-                        to: "Lorem",
-                        status: "adipisicing officia cupidatat magna laboris",
-                        toPoint: {
-                            lng: 113.273,
-                            lat: 23.158
-                        },
-                        fromPoint: {
-                            lng:112.820,
-                            lat:28.347
-                        }
-                    },
-                    {
-                        adjustid: 59,
-                        itemid: "68868",
-                        itemnum: 34,
-                        from: "consequat ullamco",
-                        to: "officia laboris culpa sed",
-                        status: "occaecat enim",
-                        toPoint: {
-                            lng: 113.273,
-                            lat: 23.158
-                        },
-                        fromPoint: {
-                            lng: 108.961,
-                            lat: 34.266
-                        }
-                    }
-                ],
-                pointToDrawRouter:{},
-            }
-        },
-        watch:{
-            selectedCity(val){
-                console.log(val);
-                if(val != ""){
-                    //先发请求 通过 val（就是主站的ID） 来获取配送单信息，填充到 this.AdjustForms
-                    this.getAdjustFormByMainSiteId(val);
-                    this.adjustVision = "visible";
-                }
-                else {
-                    this.adjustVision = "hidden";
-                }
-            }
-        }
+    getAdjustFormByMainSiteId(MainSiteId) {
+      console.log(MainSiteId);
+    },
+    clickToAdjustRoute(adjustItem) {
+      console.log(adjustItem);
+      this.pointToDrawRouter = adjustItem;
     }
+  },
+  data() {
+    return {
+      adjustVision: "hidden",
+
+      selectedCity: "",
+
+      points: [
+        { lng: 120.565, lat: 30.63 },
+        { lng: 113.273, lat: 23.158 },
+        { lng: 121.109, lat: 31.45 },
+        { lng: 112.82, lat: 28.347 },
+        { lng: 108.961, lat: 34.266 }
+      ],
+      siteCity: ["嘉兴", "广州", "苏州", "长沙", "西安"],
+      siteOption: [
+        {
+          value: "MAIN-001",
+          label: "嘉兴主站"
+        },
+        {
+          value: "MAIN-002",
+          label: "广州主站"
+        },
+        {
+          value: "MAIN-003",
+          label: "苏州主站"
+        },
+        {
+          value: "MAIN-004",
+          label: "长沙主站"
+        },
+        {
+          value: "MAIN-005",
+          label: "西安主站"
+        },
+        {
+          value: "",
+          label: "查看地图"
+        }
+      ],
+
+      AdjustForms: [
+        {
+          adjustid: 52,
+          itemid: "78677",
+          itemnum: 9,
+          from: "tempor aliqua consectetur commodo in",
+          to: "Lorem",
+          status: "adipisicing officia cupidatat magna laboris",
+          toPoint: {
+            lng: 113.273,
+            lat: 23.158
+          },
+          fromPoint: {
+            lng: 112.82,
+            lat: 28.347
+          }
+        },
+        {
+          adjustid: 59,
+          itemid: "68868",
+          itemnum: 34,
+          from: "consequat ullamco",
+          to: "officia laboris culpa sed",
+          status: "occaecat enim",
+          toPoint: {
+            lng: 113.273,
+            lat: 23.158
+          },
+          fromPoint: {
+            lng: 108.961,
+            lat: 34.266
+          }
+        }
+      ],
+      pointToDrawRouter: {}
+    };
+  },
+  watch: {
+    selectedCity(val) {
+      console.log(val);
+      if (val != "") {
+        //先发请求 通过 val（就是主站的ID） 来获取配送单信息，填充到 this.AdjustForms
+        getTrasferInfo(this.selectedCity).then(res => {
+          this.AdjustForms = res.data;
+        });
+        this.getAdjustFormByMainSiteId(val);
+        this.adjustVision = "visible";
+      } else {
+        this.adjustVision = "hidden";
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-.map{
-    width: 100%;
-    height: 610px;
-
+.map {
+  width: 100%;
+  height: 610px;
 }
 .sample {
-    width: 600px;
-    height: 400px;
-    line-height: 40px;
-    background: rgba(0,0,0,0.3);
-    overflow: hidden;
-    box-shadow: 0 0 5px #000;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    position: absolute;
-    left: 20px;
-    top:150px;
+  width: 600px;
+  height: 400px;
+  line-height: 40px;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  box-shadow: 0 0 5px #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  left: 20px;
+  top: 150px;
 }
 </style>

@@ -21,3 +21,10 @@ export function getTaskFormsStatus() {
         method: "GET"
     })
 }
+
+export function getTrasferInfo(mainsiteId) {
+    return myaxios({
+        url: "/transfer/" + mainsiteId,
+        method: "GET"
+    })
+}
