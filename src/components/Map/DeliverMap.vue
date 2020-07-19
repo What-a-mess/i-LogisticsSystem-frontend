@@ -1,5 +1,17 @@
 <template>
+<div>
   <el-row>
+      <el-col :offset="1" style="padding-top: 20px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>配送管理</el-breadcrumb-item>
+          <el-breadcrumb-item to="/main/taskForm">任务单列表</el-breadcrumb-item>
+          <el-breadcrumb-item :to="'/main/taskforms/'+taskId+'/details'">任务单{{taskId}}</el-breadcrumb-item>
+          <el-breadcrumb-item>配送信息</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col> 
+    </el-row>
+  <el-row style="padding-top: 2%">
     <el-col :span="11">
       <BasicCard header="配送信息" style="left: 0.75%;height: 600px">
         <el-steps direction="vertical" :active="deliverStauts" :process-status="processStatus">
@@ -31,6 +43,7 @@
       </BasicCard>
     </el-col>
   </el-row>
+</div>
 </template>
 
 <script>
