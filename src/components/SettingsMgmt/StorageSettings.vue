@@ -5,9 +5,9 @@
         <BasicCard header="仓储自动审核策略" style="text-align: left" class="display-box">
           <el-form label-width="100px">
             <el-form-item label="启用策略" style="font-weight: bold; zoom: 1.3">
-              <el-switch v-model="formData.enable"></el-switch>
+              <el-switch active-color="#13ce66" v-model="formData.enable"></el-switch>
             </el-form-item>
-            <el-divider content-position="left" style="font-weight: bold">出入库单总额自动审核规则</el-divider>
+            <el-divider content-position="left" style="font-weight: bold"><b>出入库单总额自动审核规则</b></el-divider>
             <el-form-item label="启用规则">
               <el-switch :disabled="!formData.enable" v-model="formData.totalPriceLimit"></el-switch>
             </el-form-item>
@@ -17,8 +17,8 @@
                 :disabled="!formData.enable || !formData.totalPriceLimit"
               ></el-input-number>
             </el-form-item>
-            <small style="padding-left: 40px">总额低于上限的出入库单将会被自动审核</small>
-            <el-divider content-position="left" style="font-weight: bold">出入库数量自动审核规则</el-divider>
+            <small style="padding-left: 35px;color: #858796">总额低于上限的出入库单将会被自动审核</small><br /><br />
+            <el-divider content-position="left" style="font-weight: bold"><b>出入库数量自动审核规则</b></el-divider>
             <el-form-item label="启用规则">
               <el-switch :disabled="!formData.enable" v-model="formData.totalNumLimit"></el-switch>
             </el-form-item>
@@ -28,8 +28,8 @@
                 :disabled="!formData.enable || !formData.totalNumLimit"
               ></el-input-number>
             </el-form-item>
-            <small style="padding-left: 40px">出入库数量低于上限的出入库单将会被自动审核</small>
-            <el-divider content-position="left" style="font-weight: bold">商品大类自动审核规则</el-divider>
+            <small style="padding-left: 35px;color: #858796">出入库数量低于上限的出入库单将会被自动审核</small><br /><br />
+            <el-divider content-position="left" style="font-weight: bold"><b>商品大类自动审核规则</b></el-divider>
             <el-row>
               <el-col :span="12">
                 <el-form-item label="启用规则">
@@ -51,6 +51,7 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
+                <small style="padding-left: 35px;color: #858796">处于白名单中的大类出入库单将会被自动审核</small><br /><br />
               </el-col>
               <el-col :span="10">
                 <el-table :data="formData.categoryIdWhiteList" height="180">
@@ -65,8 +66,9 @@
                 </el-table>
               </el-col>
             </el-row>
-            <small style="padding-left: 40px">处于白名单中的大类出入库单将会被自动审核</small>
-            <el-divider content-position="left" style="font-weight: bold">入库状态自动审核规则</el-divider>
+
+
+            <el-divider content-position="left" style="font-weight: bold"><b>入库状态自动审核规则</b></el-divider>
             <el-row>
               <el-col :span="12">
                 <el-form-item label="启用规则">
@@ -87,9 +89,9 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-              </el-col>
+              </el-col><br />
             </el-row>
-            <el-divider content-position="left" style="font-weight: bold">出库状态自动审核规则</el-divider>
+            <el-divider content-position="left" style="font-weight: bold"><b>出库状态自动审核规则</b></el-divider>
             <el-row>
               <el-col :span="12">
                 <el-form-item label="启用规则">

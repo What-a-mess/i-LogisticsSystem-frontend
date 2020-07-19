@@ -37,7 +37,7 @@ import SupplierGoods from "../components/ClienteleMgmt/SupplierGoods";
 // SettingsMgmt
 import OrderSettings from "../components/SettingsMgmt/OrderSettings"
 import StorageSettings from "../components/SettingsMgmt/StorageSettings"
-import DeliverStrategy from "../components/DeliverStrategy";
+import DeliverStrategy from "../components/SettingsMgmt/DeliverStrategy";
 
 const routes = [
     // 组件测试路由
