@@ -1,5 +1,17 @@
 <template>
   <div>
+    <el-row>
+      <el-col :offset="1" style="padding-top: 20px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
+          <el-breadcrumb-item to="/main/siteMap">主站管理</el-breadcrumb-item>
+          <el-breadcrumb-item>主站{{mainsiteId}}</el-breadcrumb-item>
+          <el-breadcrumb-item>入库请求审核</el-breadcrumb-item>
+          <el-breadcrumb-item>入库请求{{recordId}}</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
     <el-dialog title="调整库房编号" :visible.sync="dialogVisible">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-row>

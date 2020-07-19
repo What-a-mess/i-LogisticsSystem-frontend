@@ -1,4 +1,14 @@
 <template>
+<div>
+  <el-row style="padding-top: 20px">
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>配送管理</el-breadcrumb-item>
+          <el-breadcrumb-item>任务单状态</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
   <el-row style="padding-top: 3%">
     <el-col :span="12" :offset="6">
       <div class="small">
@@ -9,6 +19,7 @@
       <el-button @click="clickToBack" type="primary" plain round>返回任务单列表</el-button>
     </el-col>
   </el-row>
+</div>
 </template>
 <script>
 import Chart from "chart.js";

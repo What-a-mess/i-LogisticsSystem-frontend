@@ -1,4 +1,14 @@
 <template>
+<div>
+    <el-row style="padding-top: 20px">
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>订单管理</el-breadcrumb-item>
+          <el-breadcrumb-item>统计报表</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
     <div class="vue-funnel-graph-lib-dev">
         <div class="funnels">
             <vue-funnel-graph :width="width" :height="height" :labels="labels"
@@ -14,6 +24,7 @@
             <button @click="toggleGradient()">Toggle Gradient Direction</button>
         </div>
     </div>
+</div>
 </template>
 
 
