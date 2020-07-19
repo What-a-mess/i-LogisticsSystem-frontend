@@ -116,7 +116,7 @@
                                 this.dynamicTags.push(inputValue);
                                 var newItem = {};
                                 newItem = this.item;
-                                this.itemSupplyList.push(newItem);
+                                this.itemSupplyList.push(newItem.itemId);
                             }
 
                             break;
