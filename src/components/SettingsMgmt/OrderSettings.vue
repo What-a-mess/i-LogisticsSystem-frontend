@@ -1,23 +1,25 @@
 <template>
-  <div>
     <el-row>
+      <el-col :span="22" :offset="1" style="padding-top: 1.5%">
       <BasicCard header="订单自动审核策略" style="text-align: left" class="display-box">
         <el-form label-width="100px">
           <el-form-item label="启用策略" style="font-weight: bold; zoom: 1.3">
-            <el-switch v-model="formData.enable"></el-switch>
+            <el-switch active-color="#13ce66" v-model="formData.enable"></el-switch>
           </el-form-item>
-          <el-divider content-position="left" style="font-weight: bold">订单总额自动审核规则</el-divider>
+          <el-divider content-position="left" style="font-weight: bold"><b>订单总额自动审核规则</b></el-divider>
+          <el-col>
           <el-form-item label="启用规则">
             <el-switch :disabled="!formData.enable" v-model="formData.totalPriceLimit"></el-switch>
           </el-form-item>
+          </el-col>
           <el-form-item label="总额上限">
             <el-input-number
               v-model="formData.totalPriceAmount"
               :disabled="!formData.enable || !formData.totalPriceLimit"
             ></el-input-number>
           </el-form-item>
-          <small style="padding-left: 40px">总额低于上限的订单将会被自动审核</small>
-          <el-divider content-position="left" style="font-weight: bold">商品大类自动审核规则</el-divider>
+          <small style="padding-left: 35px;color: #858796">总额低于上限的订单将会被自动审核</small><br /><br /><br />
+          <el-divider content-position="left" style="font-weight: bold"><b>商品大类自动审核规则</b></el-divider>
           <el-row>
             <el-col :span="12">
               <el-form-item label="启用规则">
@@ -39,6 +41,9 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+              <el-col>
+                <small style="padding-left: 40px;color: #858796">处于白名单中的大类订单将会被自动审核</small>
+              </el-col>
             </el-col>
             <el-col :span="8">
               <el-table :data="formData.categoryIdWhiteList" height="180">
@@ -51,10 +56,12 @@
                   </template>
                 </el-table-column>
               </el-table>
+
             </el-col>
-          </el-row>
-          <small style="padding-left: 40px">处于白名单中的大类订单将会被自动审核</small>
-          <el-divider content-position="left" style="font-weight: bold">下单用户自动审核规则</el-divider>
+
+          </el-row><br />
+
+          <el-divider content-position="left" style="font-weight: bold"><b>下单用户自动审核规则</b></el-divider>
           <el-row>
             <el-col :span="12">
               <el-form-item label="启用规则">
@@ -96,8 +103,9 @@
           <el-button type="primary">提交</el-button>
         </el-col>
       </BasicCard>
+      </el-col>
     </el-row>
-  </div>
+
 </template>
 
 <script>
@@ -122,6 +130,16 @@ export default {
       customerIdList: []
     };
   },
+  // watch:{
+  //   enable(val){
+  //     console.log(val);
+  //     if(val == false){
+  //       this.formData.totalPriceLimit = false;
+  //       this.formData.categoryIdLimit = false;
+  //       this.formData.customerIdLimit = false;
+  //     }
+  //   }
+  // },
   methods: {
     fetchCategories() {
       getCatergies().then(res => {

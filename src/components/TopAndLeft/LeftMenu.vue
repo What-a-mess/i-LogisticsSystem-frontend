@@ -34,12 +34,9 @@
                         <i class="el-icon-location"></i>
                         <span>配置策略</span>
                     </template>
-                    <el-menu-item-group>
-                        <el-menu-item index="2-1" ><span class="cursorHover"><a>调货策略</a></span></el-menu-item>
-                        <el-menu-item index="/main/deliverStrategy"><span class="cursorHover"><a>配送策略</a></span></el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item index="2-3"><span class="cursorHover"><a>分配策略</a></span></el-menu-item>
-                    <el-menu-item index="2-4"><span class="cursorHover"><a>发货策略</a></span></el-menu-item>
+                        <el-menu-item index="/main/settings/ordersettings" ><span class="cursorHover"><a>订单策略</a></span></el-menu-item>
+                    <el-menu-item index="/main/settings/storagesettings"><span class="cursorHover"><a>仓储策略</a></span></el-menu-item>
+                    <el-menu-item index="/main/deliverStrategy"><span class="cursorHover"><a>调货策略</a></span></el-menu-item>
                 </el-submenu>
 
                 <el-submenu index="3" class="center">
@@ -112,10 +109,10 @@
                     var routerArr = route.path.split("/");
                     var details = routerArr[routerArr.length-1];
                     if(details=="details"){
-                        document.getElementById("page").style.height = "1500px";
+                        document.getElementById("page").style.height = "1600px";
                     }
                     else{
-                        document.getElementById("page").style.height = "738px";
+                        document.getElementById("page").style.height = "1300px";
                     }
 
                     if(route.path == "/main/charts"){

@@ -69,7 +69,7 @@
 </template>
 
 <script>
-    import BasicCard from "./PanelCard/BasicCard";
+    import BasicCard from "../PanelCard/BasicCard";
     export default {
         name: "DeliverStrategy",
         components:{
