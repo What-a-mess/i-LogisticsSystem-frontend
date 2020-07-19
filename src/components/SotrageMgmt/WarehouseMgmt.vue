@@ -34,13 +34,13 @@
           <el-form :inline="true">
             <el-form-item label="大类ID">
               <el-select v-model="selectedCategory" multiple placeholder="请选择" @change="fetchItems">
-              <el-option
-                v-for="category in categoryOptions"
-                :key="category.categoryId"
-                :label="category.categoryName"
-                :value="category.categoryId"
-              ></el-option>
-            </el-select>
+                <el-option
+                  v-for="category in categoryOptions"
+                  :key="category.categoryId"
+                  :label="category.categoryName"
+                  :value="category.categoryId"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="关键词">
               <el-input v-model="keyword" @blur="fetchItems"></el-input>
@@ -48,16 +48,16 @@
           </el-form>
         </el-row>
         <el-row>
-          <ItemCard
-            draggable="true"
-            v-for="item in curInventory"
-            :key="item.item.itemId"
-            :item="item.item"
-            :quantity="item.inventory"
-            :warehouseId="item.warehouseId"
-            class="item-box"
-            @dragstart.native="drag($event, item)"
-          ></ItemCard>
+          <el-col :span="7" :offset="1" v-for="item in curInventory" :key="item.item.itemId">
+            <ItemCard
+              draggable="true"
+              :item="item.item"
+              :quantity="item.inventory"
+              :warehouseId="item.warehouseId"
+              class="item-box"
+              @dragstart.native="drag($event, item)"
+            ></ItemCard>
+          </el-col>
         </el-row>
         <el-row>
           <el-pagination
@@ -129,13 +129,18 @@
 // import BasicCard from "../PanelCard/BasicCard";
 import ItemCard from "../DataCard/ItemCard";
 // import myaxios from "../../plugins/mockaxios";
-import { getCatergies, getWarehousesList, getItems, transferItem } from "../../api/storage";
+import {
+  getCatergies,
+  getWarehousesList,
+  getItems,
+  transferItem
+} from "../../api/storage";
 
 export default {
   components: { ItemCard },
   methods: {
     fetchWarehouses() {
-      console.log(this.mainsiteId)
+      console.log(this.mainsiteId);
       getWarehousesList(this.mainsiteId).then(res => {
         console.log(res);
         this.warehouseList = res.data;
@@ -204,10 +209,10 @@ export default {
           console.log(res.status);
           this.dialogVisible = false;
           this.transferNum = 0;
-          this.fetchItems()
+          this.fetchItems();
         })
         .catch(() => {
-          alert("目标库房无法存储该商品")
+          alert("目标库房无法存储该商品");
           this.dialogVisible = false;
           this.transferNum = 0;
         });
@@ -226,144 +231,47 @@ export default {
         {
           warehouseId: "94",
           item: {
-            itemId: "150000200403234864",
-            categoryId: "35000020100701014X",
-            name: "dtmsqcwd",
-            descn: "京号划图个认带由引运声采层天龙联意。",
-            unitCost: 21985411.368915252,
-            listPrice: 25068823.904894244,
-            imgUrl: "http://dummyimage.com/180x150",
-            status: "ea veniam"
+            itemId: "",
+            categoryId: "",
+            name: "",
+            descn: "",
+            unitCost: 0,
+            listPrice: 0,
+            imgUrl: "",
+            status: ""
           },
-          inventory: 4
+          inventory: 0
         },
         {
-          warehouseId: "77",
+          warehouseId: "",
           item: {
-            itemId: "630000197203073357",
-            categoryId: "150000201805043651",
-            name: "jiljum",
-            descn: "候华主段再引始都资色图品号白。",
-            unitCost: 9554652.617325332,
-            listPrice: 2479658.4495110977,
-            imgUrl: "http://dummyimage.com/720x300",
-            status: "labore Duis qui anim"
+            itemId: "",
+            categoryId: "",
+            name: "",
+            descn: "",
+            unitCost: 0,
+            listPrice: 0,
+            imgUrl: "",
+            status: ""
           },
-          inventory: 6
+          inventory: 0
         },
         {
-          warehouseId: "86",
+          warehouseId: "",
           item: {
-            itemId: "520000197804137365",
-            categoryId: "460000198607217815",
-            name: "fzkhwnx",
-            descn: "各厂已级价规话解省进式所道它非度四。",
-            unitCost: 22343684.804108933,
-            listPrice: 8774210.858108198,
-            imgUrl: "http://dummyimage.com/234x60",
-            status: "aute officia sunt in consectetur"
+            itemId: "",
+            categoryId: "",
+            name: "",
+            descn: "",
+            unitCost: 0,
+            listPrice: 0,
+            imgUrl: "",
+            status: ""
           },
-          inventory: 77
-        },
-        {
-          warehouseId: "42",
-          item: {
-            itemId: "460000200707097240",
-            categoryId: "710000199807182932",
-            name: "gwgqkm",
-            descn: "走表分情石总切系写利它高导被持什。",
-            unitCost: 98919673.98554613,
-            listPrice: 30799510.484512243,
-            imgUrl: "http://dummyimage.com/336x280",
-            status: "ad minim"
-          },
-          inventory: 76
+          inventory: 0
         }
       ],
-      warehouseList: [
-        {
-          siteId: "MAIN-002",
-          warehouseId: "WH-006",
-          categoryId: "SHOES",
-          category: {
-            categoryId: "SHOES",
-            name: "shoes",
-            descn:
-              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/shoes.jpg"
-          },
-          kindNumOfItem: 3,
-          totalSize: 1600,
-          maxSize: 20000
-        },
-        {
-          siteId: "MAIN-002",
-          warehouseId: "WH-007",
-          categoryId: "APPLIANCES",
-          category: {
-            categoryId: "APPLIANCES",
-            name: "appliances",
-            descn:
-              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/appliances.jpg"
-          },
-          kindNumOfItem: 3,
-          totalSize: 301,
-          maxSize: 800
-        },
-        {
-          siteId: "MAIN-002",
-          warehouseId: "WH-008",
-          categoryId: "DRINK",
-          category: {
-            categoryId: "DRINK",
-            name: "drink",
-            descn:
-              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/drink.jpg"
-          },
-          kindNumOfItem: 3,
-          totalSize: 545,
-          maxSize: 6000
-        },
-        {
-          siteId: "MAIN-002",
-          warehouseId: "WH-009",
-          categoryId: "FRUITS",
-          category: {
-            categoryId: "FRUITS",
-            name: "fruits",
-            descn:
-              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/fruits.jpg"
-          },
-          kindNumOfItem: 3,
-          totalSize: 850,
-          maxSize: 1000
-        },
-        {
-          siteId: "MAIN-002",
-          warehouseId: "WH-010",
-          categoryId: "CLOTHES",
-          category: {
-            categoryId: "CLOTHES",
-            name: "clothes",
-            descn:
-              "https://i-petstore.oss-cn-shenzhen.aliyuncs.com/i-logistics-system/image/category/clothes.jpg"
-          },
-          kindNumOfItem: 8,
-          totalSize: 5513,
-          maxSize: 15000
-        }
-      ],
-      categoryOptions: [
-        {
-          categoryId: 4,
-          categoryName: "世片切效适或界",
-          description: "dolore"
-        },
-        {
-          categoryId: 78,
-          categoryName: "气律年我",
-          description: "reprehenderit enim dolore"
-        }
-      ],
+      warehouseList: [],
       mainsiteId: "",
       srcWarehouse: "",
       targetWarehouse: "",
