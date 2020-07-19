@@ -93,7 +93,7 @@
         </el-form>
         <el-divider></el-divider>
         <el-col :span="4" :offset="20">
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" @click="submitOrderSettings">提交</el-button>
         </el-col>
       </BasicCard>
     </el-row>
@@ -104,7 +104,7 @@
 import BasicCard from "../PanelCard/BasicCard";
 import { getCustomers } from "../../api/clientele";
 import { getCatergies } from "../../api/storage";
-import { getOrderSettings } from "../../api/settings"
+import { getOrderSettings, setOrderSettings } from "../../api/settings"
 
 export default {
   components: { BasicCard },
@@ -142,6 +142,16 @@ export default {
     fetchOrderSettings() {
       getOrderSettings().then(res => {
         this.formData = res.data;
+      })
+    },
+    submitOrderSettings() {
+      setOrderSettings(this.formData).then(res => {
+        if (res.status == 200) {
+          this.$message({
+            message: "修改成功",
+            type: "success"
+          })
+        }
       })
     },
     delUserFromWhiteList(userId) {

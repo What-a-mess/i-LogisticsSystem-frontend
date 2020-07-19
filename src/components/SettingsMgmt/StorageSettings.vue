@@ -115,7 +115,7 @@
           </el-form>
           <el-divider></el-divider>
           <el-col :span="4" :offset="20">
-            <el-button type="primary">提交</el-button>
+            <el-button type="primary" @click="submitSiteIOSettings">提交</el-button>
           </el-col>
         </BasicCard>
       </el-col>
@@ -134,13 +134,17 @@
                   <el-option :value="sortOption.value" :label="sortOption.label"></el-option>
                 </el-tooltip>
               </el-select>
-              <br>
+              <br />
               <small>{{selectedSortOpt ? sortOptions[selectedSortOpt-1].desc : ""}}</small>
             </el-form-item>
             <el-form-item v-show="selectedSortOpt==3" label="阈值">
               <el-input-number v-model="threshold"></el-input-number>
             </el-form-item>
           </el-form>
+          <el-divider></el-divider>
+          <el-col :span="4" :offset="20">
+            <el-button type="primary" @click="submitSiteIOSettings">提交</el-button>
+          </el-col>
         </BasicCard>
       </el-col>
     </el-row>
@@ -150,7 +154,12 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import { getCatergies } from "../../api/storage";
-import { getsiteIOSettings, getSiteoutSettings } from "../../api/settings"
+import {
+  getSiteIOSettings,
+  getSiteoutSettings,
+  setSiteIOSettings,
+  setSiteoutSettings
+} from "../../api/settings";
 
 export default {
   components: { BasicCard },
@@ -204,20 +213,45 @@ export default {
   },
   methods: {
     fetchSiteIOSettings() {
-      getsiteIOSettings().then(res => {
+      getSiteIOSettings().then(res => {
         this.formData = res.data;
-      })
+      });
     },
     fetchSiteoutSettings() {
       getSiteoutSettings().then(res => {
         this.selectedSortOpt = res.data.option;
         this.threshold = res.data.threshold;
-      })
+      });
     },
     fetchCategories() {
       getCatergies().then(res => {
         this.categoryList = res.data;
       });
+    },
+    submitSiteIOSettings() {
+      setSiteIOSettings(this.formData)
+        .then(res => {
+          if (res.status == 200) {
+            this.$message({
+              message: "修改出入库策略审核成功",
+              type: "success"
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            message: "修改失败",
+            type: "error"
+          });
+        });
+    },
+    submitSiteoutSettings() {
+      setSiteoutSettings({
+        option: this.selectedSortOpt,
+        threshold: this.threshold
+      }).then(() => {
+        this.message()
+      })
     },
     delUserFromWhiteList(userId) {
       this.formData.customerIdWhiteList = this.formData.customerIdWhiteList.filter(
