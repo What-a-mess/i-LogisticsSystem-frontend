@@ -40,13 +40,13 @@
 
         <bm-overlay class="sample" :style="{visibility:adjustVision}">
           <el-table :data="AdjustForms" style="width: 100%;" height="400">
-            <el-table-column prop="adjustId" label="调货单ID" width="150"></el-table-column>
-            <el-table-column prop="itemId" label="被调商品ID" width="150"></el-table-column>
-            <el-table-column prop="itemNum" label="调货数量" width="100"></el-table-column>
-            <el-table-column prop="from" label="货源地" width="300"></el-table-column>
-            <el-table-column prop="to" label="缺货地" width="300"></el-table-column>
-            <el-table-column prop="status" label="调货状态" width="120"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column prop="adjustId" width="100" label="调货单ID" ></el-table-column>
+            <el-table-column prop="itemId" width="100" label="被调商品ID"></el-table-column>
+            <el-table-column prop="itemNum" width="100" label="调货数量" ></el-table-column>
+            <el-table-column prop="from" width="100" label="货源地" ></el-table-column>
+            <el-table-column prop="to" width="100" label="缺货地"></el-table-column>
+            <el-table-column prop="status" width="100" label="调货状态" ></el-table-column>
+            <el-table-column fixed="right" width="100" label="操作" >
               <template slot-scope="scope">
                 <el-button @click="clickToAdjustRoute(scope.row)" type="text" size="small">查看</el-button>
               </template>
@@ -224,7 +224,7 @@ export default {
   height: 610px;
 }
 .sample {
-  width: 600px;
+  width: 500px;
   height: 400px;
   line-height: 40px;
   background: rgba(0, 0, 0, 0.3);

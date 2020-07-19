@@ -7,7 +7,7 @@
 <!--            <i class="el-icon-menu" id="btn"></i>-->
 <!--            <i class="el-icon-menu" id="cancel"></i>-->
 <!--        </label>-->
-    <el-row class="sidebar-self">
+    <el-row>
         <el-col>
 
             <!--侧边栏控制按钮-->
@@ -112,30 +112,30 @@
               isDeepColor:false,
           }
         },
-        watch: {
-            $route: {
-                handler: function(route) {
-                    var routerArr = route.path.split("/");
-                    var details = routerArr[routerArr.length-1];
-                    if(details=="details"){
-                        document.getElementById("page").style.height = "1500px";
-                    }
-                    else{
-                        document.getElementById("page").style.height = "738px";
-                    }
+        // watch: {
+            // $route: {
+                // handler: function(route) {
+                //     var routerArr = route.path.split("/");
+                //     var details = routerArr[routerArr.length-1];
+                //     if(details=="details"){
+                //         document.getElementById("page").style.height = "1500px";
+                //     }
+                //     else{
+                //         document.getElementById("page").style.height = "738px";
+                //     }
+                //
+                //     if(route.path == "/main/charts"){
+                //         document.getElementById("page").style.background = "#706caa";
+                //         document.getElementById("page").style.transition = "1.5s";
+                //     }
+                //     else{
+                //         document.getElementById("page").style.background = "#eff3f9";
+                //         document.getElementById("page").style.transition = "1s";
+                //     }
+                // },
 
-                    if(route.path == "/main/charts"){
-                        document.getElementById("page").style.background = "#706caa";
-                        document.getElementById("page").style.transition = "1.5s";
-                    }
-                    else{
-                        document.getElementById("page").style.background = "#eff3f9";
-                        document.getElementById("page").style.transition = "1s";
-                    }
-                },
-
-            }
-        },
+            // }
+        // },
 
     }
 </script>

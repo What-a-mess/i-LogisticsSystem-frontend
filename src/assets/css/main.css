@@ -10,8 +10,8 @@
 }
 .el-aside{
     /*position: fixed;*/
-    margin-left: -19rem;
-    /*width: 0rem !important;*/
+    margin-left: -19.5rem;
+    width: 19.5rem !important;
     z-index: 1038;
     transition: all .7s;
 }

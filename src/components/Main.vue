@@ -1,5 +1,5 @@
 <template>
-    <el-container>
+    <el-container :style="{height: window_height}">
         <el-header class="flex shadow-down bg-white"
                    style="height: 4.325rem;">
             <TopBar />
@@ -32,6 +32,16 @@
     export default {
         name: "Main",
         components: {LeftMenu, TopBar},
+        data(){
+          return{
+            window_height: '',
+          }
+        },
+      created() {
+        // this.window_height='766px'
+          // document.documentElement.clientHeight + 'px'
+        console.log(this.window_height)
+      }
     }
 </script>
 

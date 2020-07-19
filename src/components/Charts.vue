@@ -9,21 +9,29 @@
         </el-breadcrumb>
       </el-col>
     </el-row>
-    <div class="vue-funnel-graph-lib-dev">
-        <div class="funnels">
-            <vue-funnel-graph :width="width" :height="height" :labels="labels"
-                              :values="values" :colors="colors" :sub-labels="subLabels" :direction="direction"
-                              :gradient-direction="gradientDirection"
-                              :animated="true" :display-percentage="true"
-                              :sub-label-value="subLabelValue"
-            ></vue-funnel-graph>
-        </div>
-        <div class="controls">
-            <button @click="getNextSet()">Change Data</button>
-            <button @click="toggleDirection()">Toggle Direction</button>
-            <button @click="toggleGradient()">Toggle Gradient Direction</button>
-        </div>
-    </div>
+
+    <el-row style="margin: 50px 50px 0 60px;">
+        <el-col>
+            <el-card shadow="hover" class="chart-panel">
+                <div class="vue-funnel-graph-lib-dev">
+                    <div class="funnels">
+                        <vue-funnel-graph :width="width" :height="height" :labels="labels"
+                                          :values="values" :colors="colors" :sub-labels="subLabels" :direction="direction"
+                                          :gradient-direction="gradientDirection"
+                                          :animated="true" :display-percentage="true"
+                                          :sub-label-value="subLabelValue"
+                        ></vue-funnel-graph>
+                    </div>
+                    <div class="controls">
+                        <button @click="getNextSet()">Change Data</button>
+                        <button @click="toggleDirection()">Toggle Direction</button>
+                        <button @click="toggleGradient()">Toggle Gradient Direction</button>
+                    </div>
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
+
 </div>
 </template>
 
@@ -141,23 +149,21 @@
 </script>
 
 <style>
-    /*body {*/
-    /*    background-color: #393862;*/
-    /*}*/
-
+    .chart-panel{
+        background-image: linear-gradient(to right,
+        rgba(61, 22, 142, 0.69) , rgba(61, 42, 172, 0.69) ,rgba(61, 62, 202, 0.69));
+    }
     .vue-funnel-graph-lib-dev {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         display: flex;
         flex-direction: column;
         align-items: center;
-
     }
 
     .funnels {
-        height: 580px;
-        margin-top: 32px;
-
+        height: 560px;
+        margin-top: 0px;
     }
 
     .funnel:not(.svg-funnel-js--vertical) {

@@ -14,7 +14,7 @@
                 <div class="inputBox">
                     <input type="text" class="verify" name="" required="" />
                     <label>VerifyCode</label>
-                    <verify-code style="position:absolute;left: 300px;top:10x"></verify-code>
+                    <verify-code style="position:absolute;left: 300px;top:10px;"></verify-code>
                 </div>
 
                 <router-link to="/main"><input type="submit" name="" value="submit" /></router-link>

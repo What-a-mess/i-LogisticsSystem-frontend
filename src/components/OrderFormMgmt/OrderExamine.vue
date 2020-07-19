@@ -18,9 +18,9 @@
       <el-table :data="orderMsgs.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                 :current-page.sync="currentPage">
         <el-table-column label="订单ID" prop="orderId"></el-table-column>
-        <el-table-column :width="240" label="收件人姓名" prop="billName"></el-table-column>
-        <el-table-column label="订单创建时间" prop="createDateTime"></el-table-column>
-        <el-table-column :width="240" label="订单总价" prop="totalPrice"></el-table-column>
+        <el-table-column :width="170" label="收件人姓名" prop="billName"></el-table-column>
+        <el-table-column  label="订单创建时间" prop="createDateTime"></el-table-column>
+        <el-table-column :width="170" label="订单总价" prop="totalPrice"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="danger" @click="handleRefuse(scope.row)">拒绝</el-button>
@@ -181,7 +181,14 @@ import AddOrder from "./add-order";
               message: "订单" + rowFrame.orderId + "确认失败!"
             });
           }
-        });
+        })
+        .catch(res=>{
+          console.error(res)
+          this.$message({
+            type: "error",
+            message: "审核提交失败"
+          });
+        })
 
         //更新dom组件
         var index = this.orderMsgs.indexOf(rowFrame);

@@ -117,7 +117,7 @@ export default {
       });
     },
     clickToBack: function() {
-      this.$router.push("main/taskForm")
+      this.$router.push("taskForm")
     }
   }
 };

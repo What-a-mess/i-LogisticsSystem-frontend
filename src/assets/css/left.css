@@ -18,11 +18,11 @@
     /*width: 450px;*/
     /*height: 100%;*/
     /*background: #ffffff;*/
-    transition: all .4s ease;
+    /*transition: all .4s ease;*/
 }
 
 .menu-heading {
-    padding: 1.75rem 1rem 0.75rem 2.5rem;
+    padding: 1.75rem 0.3rem 0.75rem 2.3rem;
     font-size: 0.9rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -32,6 +32,7 @@
 }
 
 .el-menu{
+    border: none;
     padding-left: 1.7rem;
     text-align: left;
 }
@@ -49,7 +50,7 @@
 }
 
 .el-menu-item-group span{
-    padding-left: 1.2rem;
+    padding-left: 1rem;
 }
 /*.el-menu-item-group .item-title{*/
 /*    margin-left: -1.5rem;*/

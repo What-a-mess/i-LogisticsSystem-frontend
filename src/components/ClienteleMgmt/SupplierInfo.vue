@@ -33,15 +33,15 @@
             </el-table-column>
             <el-table-column :width="200" label="ID" prop="supplierId"></el-table-column>
             <el-table-column :width="200" label="名称" prop="brandName"></el-table-column>
-            <el-table-column :width="250" label="省市">
+            <el-table-column :width="220" label="省市">
               <template slot-scope="props">{{props.row.province}} {{props.row.city}}</template>
             </el-table-column>
             <el-table-column label="详细地址" prop="addr"></el-table-column>
-            <el-table-column label="管理操作">
+            <el-table-column  label="管理操作">
               <template slot-scope="scope">
                 <el-button type="danger" @click="clickToDelSupplier(scope.row)">删除</el-button>
                 <el-button @click="clickToModifySupplier(scope.row)" type="warning">修改</el-button>
-                <el-button type="primary" @click="showDetails(scope.row)">查看供应商</el-button>
+                <el-button type="primary" @click="showDetails(scope.row)">查看</el-button>
               </template>
             </el-table-column>
           </el-table>
