@@ -1,4 +1,16 @@
 <template>
+<div>
+  <el-row>
+      <el-col :offset="1" style="padding-top: 20px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
+          <el-breadcrumb-item to="/main/siteMap">主站管理</el-breadcrumb-item>
+          <el-breadcrumb-item>主站{{mainsiteId}}</el-breadcrumb-item>
+          <el-breadcrumb-item>入库请求审核</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
   <!-- <div class="display-box">
     <BasicCard header="审核入库申请">
       <el-table :data="checkInItems">
@@ -59,6 +71,7 @@
       </BasicCard>
     </el-row>
   </div>
+</div>
 </template>
 
 <script>
