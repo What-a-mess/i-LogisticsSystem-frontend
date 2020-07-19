@@ -9,7 +9,7 @@
         </el-breadcrumb>
       </el-col>
       <el-col :span="2" :offset="21">
-        <AddSupplier />
+        <AddSupplier @submitted="fetchData" />
       </el-col>
     </el-row>
 
@@ -22,12 +22,12 @@
                 <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="供应商ID：">{{props.row.supplierId}}</el-form-item>
                   <el-form-item label="供应商名称：">{{props.row.brandName}}</el-form-item>
-                  <el-form-item label="经理姓名">{{props.row.managerName}}</el-form-item>
+                  <el-form-item label="经理姓名：">{{props.row.managerName}}</el-form-item>
                   <el-form-item label="供应商电话：">{{props.row.tel}}</el-form-item>
                   <el-form-item
                     label="供应商地址："
                   >{{props.row.province}} {{props.row.city}} {{props.row.district}}</el-form-item>
-                  <el-form-item label="邮箱">{{props.row.email}}</el-form-item>
+                  <el-form-item label="邮箱：">{{props.row.email}}</el-form-item>
                 </el-form>
               </template>
             </el-table-column>
@@ -82,8 +82,12 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import AddSupplier from "./AddSupplier";
-import { getSuppliers, modifySupplier } from "../../api/clientele";
-import router from "../../plugins/router"
+import {
+  getSuppliers,
+  modifySupplier,
+  deleteSupplier
+} from "../../api/clientele";
+import router from "../../plugins/router";
 
 export default {
   components: {
@@ -111,6 +115,7 @@ export default {
             message: "修改成功",
             type: "success"
           });
+          this.fetchData()
           this.dialogFormVisibleModify = false;
         })
         .catch(() => {
@@ -139,11 +144,18 @@ export default {
         .then(() => {
           console.log(supplied);
           //supplied为供应商对象 拿着suppliedId去请求删除   //删除成功则提示删除成功
-          this.suppliers.splice(this.suppliers.indexOf(supplied), 1);
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          deleteSupplier(supplied.supplierId).then(() => {
+            this.suppliers.splice(this.suppliers.indexOf(supplied), 1);
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+          }).catch(() => {
+            this.$message({
+              type: "error",
+              message: "删除失败!"
+            })
+          })
         })
         .catch(() => {
           this.$message({
@@ -153,7 +165,7 @@ export default {
         });
     },
     showDetails(supplier) {
-      router.push("suppliers/"+supplier.supplierId+"/supplyGoods")
+      router.push("suppliers/" + supplier.supplierId + "/supplyGoods");
     }
   },
   data: () => {
@@ -172,41 +184,7 @@ export default {
         email: ""
       },
 
-      suppliers: [
-        {
-          supplierId: -97429195,
-          brandName: "当情性通度",
-          managerName: "发分",
-          tel: "18610391758",
-          email: "1062075107@qq.com",
-          province: "西藏自治区",
-          city: "固原市",
-          diatrict: "天津天津市黄浦区",
-          addr: "aliquip amet dolore"
-        },
-        {
-          supplierId: "SUP-H-001",
-          brandName: "且气认往",
-          managerName: "发分",
-          tel: "18170572554",
-          email: "w.xdalw@qq.com",
-          province: "河南省",
-          city: "天津市",
-          diatrict: "sunt do",
-          addr: "aliquip amet dolore"
-        },
-        {
-          supplierId: "SUP-H-002",
-          brandName: "系非毛从每",
-          managerName: "发分",
-          tel: "19831854924",
-          email: "o.yhkyblpu@qq.com",
-          province: "河南省",
-          city: "洛阳市",
-          diatrict: "deserunt ea Duis",
-          addr: "qui amet dolore"
-        }
-      ]
+      suppliers: []
     };
   },
   mounted() {

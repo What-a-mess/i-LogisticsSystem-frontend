@@ -141,7 +141,7 @@
             handlerSupplierAddr:function(supplierAddr){
                 this.supplier.province = supplierAddr[0];
                 this.supplier.city = supplierAddr[1];
-                this.supplier.diatrict = supplierAddr[2];
+                this.supplier.district = supplierAddr[2];
             },
             emitSupplier:function () {
                 this.dialogFormVisible = false;
@@ -153,6 +153,7 @@
                         message: "添加成功",
                         type: "success"
                     })
+                    this.$emit("submitted")
                 })
                 console.log(this.SupplierAddReq);
                 setTimeout(this.clear,2000);
@@ -168,6 +169,7 @@
                 }
                 this.dynamicTags = [];
                 this.itemSupplyList= [];
+                this.number_of_Items = 0;
             }
         },
         mounted() {
@@ -192,7 +194,7 @@
                     email: "",
                     province: "",
                     city: "",
-                    diatrict: "",
+                    district: "",
                     addr: ""
                 },
                 itemSupplyList: [],
