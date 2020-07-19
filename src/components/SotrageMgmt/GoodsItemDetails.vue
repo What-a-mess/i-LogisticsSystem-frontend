@@ -1,4 +1,15 @@
 <template>
+<div>
+  <el-row style="padding-top: 20px">
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
+          <el-breadcrumb-item to="/main/catalogInfo">商品整体信息</el-breadcrumb-item>
+          <el-breadcrumb-item>商品{{itemId}}</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
   <el-col>
     <el-row>
       <br />
@@ -72,6 +83,7 @@
       </el-col>
     </el-row>
   </el-col>
+</div>
 </template>
 
 <script>

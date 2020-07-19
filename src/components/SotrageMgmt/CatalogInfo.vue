@@ -1,5 +1,14 @@
 <template>
   <div>
+    <el-row style="padding-top: 20px; padding-bottom: 20px">
+      <el-col :offset="1">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>仓储管理</el-breadcrumb-item>
+          <el-breadcrumb-item>商品整体信息</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+    </el-row>
     <el-dialog :visible.sync="dialogVisible">
       <el-form :inline="true">
         <el-form-item label="商品名称">
@@ -41,7 +50,6 @@
             <el-button type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
-        <br />
         <el-form-item label="描述">
           <el-input type="textarea" v-model="itemForm.descn"></el-input>
         </el-form-item>
@@ -51,12 +59,9 @@
       </el-form>
     </el-dialog>
     <div class="display-box">
+      <br>
       <el-row>
-        <el-col :offset="7">
-          <el-button type="primary" @click="dialogVisible=true">新增商品</el-button>
-        </el-col>
-      </el-row>
-      <el-row>
+        <el-col :span="18" :offset="2">
         <el-form :inline="true">
           <el-form-item label="大类ID">
             <el-select v-model="selectedCategory" multiple placeholder="请选择" @change="getItems">
@@ -72,6 +77,10 @@
             <el-input v-model="keyword" @blur="getItems"></el-input>
           </el-form-item>
         </el-form>
+        </el-col>
+        <el-col :span="1">
+          <el-button type="primary" @click="dialogVisible=true">新增商品</el-button>
+        </el-col>
       </el-row>
       <el-row >
         <el-col v-for="item in items" :key="item.itemId" :span="6">
@@ -199,7 +208,7 @@ export default {
   margin: 35px;
 }
 .display-box {
-  margin: 50px 50px 50px;
+  margin: 0px 50px 50px;
 }
 .text-label {
   float: left;
