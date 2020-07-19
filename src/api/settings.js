@@ -66,3 +66,19 @@ export function setSiteoutSettings(params) {
         params
     })
 }
+
+// 配送策略
+export function getTaskSettings() {
+    return myaxios({
+        url: "/settings/taskSettings",
+        method: "GET"
+    })
+}
+
+export function setTaskSettings(data) {
+    return myaxios({
+        url: "/settings/taskSettings",
+        method: "PUT",
+        data
+    })
+}

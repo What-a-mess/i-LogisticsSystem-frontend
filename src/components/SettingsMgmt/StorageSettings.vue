@@ -15,6 +15,7 @@
               <el-input-number
                 v-model="formData.totalPriceAmount"
                 :disabled="!formData.enable || !formData.totalPriceLimit"
+                :min="0"
               ></el-input-number>
             </el-form-item>
             <small style="padding-left: 35px;color: #858796">总额低于上限的出入库单将会被自动审核</small><br /><br />
@@ -26,6 +27,7 @@
               <el-input-number
                 v-model="formData.totalNum"
                 :disabled="!formData.enable || !formData.totalNumLimit"
+                :min="0"
               ></el-input-number>
             </el-form-item>
             <small style="padding-left: 35px;color: #858796">出入库数量低于上限的出入库单将会被自动审核</small><br /><br />
@@ -116,7 +118,8 @@
             </el-row>
           </el-form>
           <el-divider></el-divider>
-          <el-col :span="4" :offset="20">
+          <el-col :span="10" :offset="18">
+            <el-button @click="fetchSiteIOSettings">重置</el-button>
             <el-button type="primary" @click="submitSiteIOSettings">提交</el-button>
           </el-col>
         </BasicCard>
@@ -140,12 +143,13 @@
               <small>{{selectedSortOpt ? sortOptions[selectedSortOpt-1].desc : ""}}</small>
             </el-form-item>
             <el-form-item v-show="selectedSortOpt==3" label="阈值">
-              <el-input-number v-model="threshold"></el-input-number>
+              <el-input-number :min="0" v-model="threshold"></el-input-number>
             </el-form-item>
           </el-form>
           <el-divider></el-divider>
-          <el-col :span="4" :offset="20">
-            <el-button type="primary" @click="submitSiteIOSettings">提交</el-button>
+          <el-col :span="10" :offset="15">
+            <el-button @click="fetchSiteIOSettings">重置</el-button>
+            <el-button type="primary" @click="fetchSiteoutSettings">提交</el-button>
           </el-col>
         </BasicCard>
       </el-col>
@@ -252,7 +256,15 @@ export default {
         option: this.selectedSortOpt,
         threshold: this.threshold
       }).then(() => {
-        this.message()
+        this.$message({
+          message: "修改出库分拣策略成功",
+          type: "success"
+        })
+      }).catch(() => {
+        this.$message({
+          message: "修改失败",
+          type: "error"
+        })
       })
     },
     delUserFromWhiteList(userId) {

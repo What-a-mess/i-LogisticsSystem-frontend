@@ -16,6 +16,7 @@
             <el-input-number
               v-model="formData.totalPriceAmount"
               :disabled="!formData.enable || !formData.totalPriceLimit"
+              :min="0"
             ></el-input-number>
           </el-form-item>
           <small style="padding-left: 35px;color: #858796">总额低于上限的订单将会被自动审核</small><br /><br /><br />
@@ -100,6 +101,7 @@
         </el-form>
         <el-divider></el-divider>
         <el-col :span="4" :offset="20">
+          <el-button @click="fetchOrderSettings">重置</el-button>
           <el-button type="primary" @click="submitOrderSettings">提交</el-button>
         </el-col>
       </BasicCard>
