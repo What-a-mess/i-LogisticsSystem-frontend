@@ -150,7 +150,7 @@
 <script>
 import BasicCard from "../PanelCard/BasicCard";
 import { getCatergies } from "../../api/storage";
-import { getsiteIOSettings } from "../../api/settings"
+import { getsiteIOSettings, getSiteoutSettings } from "../../api/settings"
 
 export default {
   components: { BasicCard },
@@ -208,6 +208,12 @@ export default {
         this.formData = res.data;
       })
     },
+    fetchSiteoutSettings() {
+      getSiteoutSettings().then(res => {
+        this.selectedSortOpt = res.data.option;
+        this.threshold = res.data.threshold;
+      })
+    },
     fetchCategories() {
       getCatergies().then(res => {
         this.categoryList = res.data;
@@ -231,6 +237,7 @@ export default {
   mounted() {
     this.fetchCategories();
     this.fetchSiteIOSettings();
+    this.fetchSiteoutSettings();
   }
 };
 </script>
